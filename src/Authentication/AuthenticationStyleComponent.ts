@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// SingIn
+
 // 로그인 페이지 전체 컴포넌트를 감싸는 컨테이너
 const SignInContainer = styled.div`
   margin: auto;
@@ -62,3 +64,75 @@ export {
   AutoLogin,
   LoginButton,
 };
+
+// SingIn
+// ----------------------------------------------------------------------------------------------------------------
+
+// SingUp
+
+//회원가입 전체를 감사는 컨테이너
+const SignUpContainer = styled.div`
+  margin: auto;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+`;
+
+// 회원가입 정보를 기입하는 inputarea를 감싸는 컨테이너
+const SignUpInputAreaContainer = styled.div`
+  margin-top: 20px;
+  position: relative;
+
+  & h4{
+    color: red;
+    margin: -10px;
+  }
+`;
+// 회원가입 정보를 입력하는 input
+const SignUpInputArea = styled.input`
+  width: 80%;
+  padding: 10px;
+  border: #e5e5e5 solid 1px;
+  font-size: 15px;
+  &::placeholder {
+    text-align: center;
+  }
+
+  & {
+    margin: 20px;
+  }
+`;
+
+// 회원가입 버튼
+const SignUpButton = styled.button`
+  width: 86%;
+  height: 40px;
+  background: #3763ff;
+  border: white;
+  margin: auto;
+  margin-top: 2rem;
+  color: white;
+  cursor: pointer;
+`;
+
+
+export { SignUpContainer, SignUpInputAreaContainer, SignUpInputArea,SignUpButton };
+// SingUp
+
+// ------------------------------------------------------------------------------------
+
+// AddProfile
+
+// 프로필 추가 전체를 감싸는 컨테이너
+const AddProfileContainer = styled.div`
+  margin: auto;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+`;
+
+export {AddProfileContainer}

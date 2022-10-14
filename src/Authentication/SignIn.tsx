@@ -18,7 +18,9 @@ const EccText = styled.h3`
 
 const SignIn = () => {
   const check = useRef<HTMLInputElement>(null);
-  const [isChecked, setIschecked] = useState(false);
+  const [isChecked, setIschecked] = useState<boolean>(false);
+
+
 
   // useEffect(() => {
   //   alert(`${isChecked === true ? "자동로그인 적용" : "자동로그인 해제"}`);
@@ -50,7 +52,7 @@ const SignIn = () => {
         </label>
       </AutoLoginCotainer>
       <LoginButton>
-        <span style={{'color':'white','fontSize':'x-large'}}>로그인</span>
+        <span style={{ color: "white", fontSize: "x-large" }}>로그인</span>
       </LoginButton>
     </SignInContainer>
   );

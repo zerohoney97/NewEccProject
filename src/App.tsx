@@ -1,6 +1,9 @@
 import React from "react";
 import logo from "./logo.svg";
+import { Link, Route, Routes } from "react-router-dom";
+import SignUp from "./Authentication/SignUp";
 import SignIn from "./Authentication/SignIn";
+import AddProfile from "./Authentication/AddProfile";
 
 import "./App.css";
 export const firebaseConfig = {
@@ -16,7 +19,11 @@ export const firebaseConfig = {
 function App() {
   return (
     <div className="App">
-      <SignIn />
+      <Routes>
+        <Route path="/signIn" element={<SignIn></SignIn>} />
+        <Route path="/signUp" element={<SignUp></SignUp>} />
+        <Route path="/addProfile" element={<AddProfile></AddProfile>} />
+      </Routes>
     </div>
   );
 }
