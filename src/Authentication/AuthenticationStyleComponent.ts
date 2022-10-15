@@ -26,7 +26,7 @@ const SignInInputArea = styled.input`
   width: 80%;
   margin: 10px;
   padding: 10px;
-  border: black solid 1px;
+  border: #e5e5e5 solid 1px;
   font-size: 15px;
 `;
 
@@ -52,6 +52,9 @@ const LoginButton = styled.button`
   height: 40px;
   background: #3763ff;
   border: white;
+  border-radius: 5px;
+  color: white;
+  font-size: x-large;
   margin: auto;
   cursor: pointer;
 `;
@@ -85,7 +88,7 @@ const SignUpInputAreaContainer = styled.div`
   margin-top: 20px;
   position: relative;
 
-  & h4{
+  & h4 {
     color: red;
     margin: -10px;
   }
@@ -111,14 +114,20 @@ const SignUpButton = styled.button`
   height: 40px;
   background: #3763ff;
   border: white;
+  border-radius: 5px;
+
   margin: auto;
   margin-top: 2rem;
   color: white;
   cursor: pointer;
 `;
 
-
-export { SignUpContainer, SignUpInputAreaContainer, SignUpInputArea,SignUpButton };
+export {
+  SignUpContainer,
+  SignUpInputAreaContainer,
+  SignUpInputArea,
+  SignUpButton,
+};
 // SingUp
 
 // ------------------------------------------------------------------------------------
@@ -134,5 +143,32 @@ const AddProfileContainer = styled.div`
   flex-direction: column;
   width: 30vw;
 `;
+// 건너뛰기 버튼
+const SkipButton = styled.button`
+  width: 86%;
+  height: 40px;
+  background: #3763ff;
+  border: white;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 2rem;
+  color: white;
+  cursor: pointer;
+`;
 
-export {AddProfileContainer}
+export { AddProfileContainer, SkipButton };
+// AddProfile
+// ------------------------------------------------------------------------------------
+// CompleteSignUp
+
+// 회원가입 완료 페이지를 감싸는 컨테이너
+const CompleteSignUpContainer = styled.div`
+  margin: auto;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+`;
+
+export { CompleteSignUpContainer };

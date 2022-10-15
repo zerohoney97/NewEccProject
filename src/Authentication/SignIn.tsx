@@ -10,17 +10,46 @@ import {
   AutoLoginCotainer,
   LoginButton,
 } from "./AuthenticationStyleComponent";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 const EccText = styled.h3`
   font-family: "roboto";
   color: #3763ff;
   opacity: 0.4;
 `;
+export const firebaseConfig = {
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASEURL,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_APPID,
+  measurementId: process.env.REACT_APP_MEASUREMENTID,
+};
+const app = initializeApp(firebaseConfig);
+
+// 파이어베이스 권한 초기화
+const auth = getAuth();
+
+// 파이어베이스를 활용한 회원인증(로그인)
+const signIn = (auth: any, email: any, password: any) => {
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential) => {
+      console.log(userCredential);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      alert(errorCode);
+      const errorMessage = error.message;
+    });
+};
 
 const SignIn = () => {
   const check = useRef<HTMLInputElement>(null);
   const [isChecked, setIschecked] = useState<boolean>(false);
-
-
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
 
   // useEffect(() => {
   //   alert(`${isChecked === true ? "자동로그인 적용" : "자동로그인 해제"}`);
@@ -32,8 +61,12 @@ const SignIn = () => {
       <GlobalFont />
       <EccText>EXPANDED CORE CURRICULUM</EccText>
       <SignInInputAreaContainer>
-        <SignInInputArea />
-        <SignInInputArea />
+        <SignInInputArea ref={email} placeholder="이메일" type={"email"} />
+        <SignInInputArea
+          ref={password}
+          placeholder="비밀번호"
+          type={"password"}
+        />
       </SignInInputAreaContainer>
       <AutoLoginCotainer>
         <AutoLogin
@@ -51,8 +84,12 @@ const SignIn = () => {
           자동 로그인
         </label>
       </AutoLoginCotainer>
-      <LoginButton>
-        <span style={{ color: "white", fontSize: "x-large" }}>로그인</span>
+      <LoginButton
+        onClick={() => {
+          signIn(auth, email.current, password.current);
+        }}
+      >
+        로그인
       </LoginButton>
     </SignInContainer>
   );
