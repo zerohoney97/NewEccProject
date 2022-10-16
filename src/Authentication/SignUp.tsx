@@ -77,7 +77,7 @@ const SignUp = () => {
       <SignUpButton
         onClick={() => {
           if (email.current !== null && password.current !== null) {
-            createUserWithEmailAndPassword(auth, email.current, password.current)
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
               .then((userCredential) => {
                 const user = userCredential.user;
               })
