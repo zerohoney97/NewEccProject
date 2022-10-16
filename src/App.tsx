@@ -10,15 +10,18 @@ import { initializeApp } from "firebase/app";
 import FindUserPass from "./Authentication/FindUserPass";
 import "./App.css";
 
-
 function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<></>} />
         <Route path="/signIn" element={<SignIn></SignIn>} />
         <Route path="/signUp" element={<SignUp></SignUp>} />
         <Route path="/addProfile" element={<AddProfile></AddProfile>} />
-        <Route path="/completeSignUp" element={<CompleteSignUp></CompleteSignUp>} />
+        <Route
+          path="/completeSignUp"
+          element={<CompleteSignUp></CompleteSignUp>}
+        />
         <Route path="/findEmail" element={<FindUserEmail></FindUserEmail>} />
         <Route path="/findPass" element={<FindUserPass></FindUserPass>} />
       </Routes>
