@@ -9,6 +9,7 @@ import FindUserEmail from "./Authentication/FindUserEmail";
 import { initializeApp } from "firebase/app";
 import FindUserPass from "./Authentication/FindUserPass";
 import "./App.css";
+import StudentList from "./studentList/StudentList";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         />
         <Route path="/findEmail" element={<FindUserEmail></FindUserEmail>} />
         <Route path="/findPass" element={<FindUserPass></FindUserPass>} />
+        <Route path="/studentList" element={<StudentList></StudentList>} />
       </Routes>
     </div>
   );
