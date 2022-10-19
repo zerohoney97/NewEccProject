@@ -2,18 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg";
-import { NavBar, SearchBar } from "./studentListStyleComponent";
-import GlobalFont from "../Resource/font/fonts";
-
+import {
+  StudentListContainer,
+} from "./studentListStyleComponent";
+import Table from "./StudentTable";
+import NavBar from "../util/NavBar";
 const StudentList = () => {
   return (
-    <NavBar>
-      <EccLogo width={100} />
-      <SearchBar>
-        <Magnify />
-      </SearchBar>
-      <h3 style={{'color':'#00CF15'}}>홍길동 선생님</h3><h3>환영합니다!</h3>
-    </NavBar>
+    <>
+      <NavBar />
+      <StudentListContainer>
+        <h1 style={{ textAlign: "initial" }}>학생리스트</h1>
+        <Table />
+      </StudentListContainer>
+    </>
   );
 };
 
