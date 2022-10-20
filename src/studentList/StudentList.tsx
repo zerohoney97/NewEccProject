@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
-import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg";
 import {
   StudentListContainer,
+  MoreButton
 } from "./studentListStyleComponent";
 import Table from "./StudentTable";
 import NavBar from "../util/NavBar";
@@ -15,6 +13,8 @@ const StudentList = () => {
         <h1 style={{ textAlign: "initial" }}>학생리스트</h1>
         <Table />
       </StudentListContainer>
+      <MoreButton>더보기</MoreButton>
+
     </>
   );
 };

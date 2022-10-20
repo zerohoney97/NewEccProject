@@ -1,40 +1,39 @@
 import React from "react";
 import styled from "styled-components";
+import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
 const Table = () => {
   const StudentTable = styled.table`
     width: 100%;
+    height: 500px;
     margin: auto;
   `;
 
   const TableBody = styled.div`
-    background: #e5e5e5;
+    background: white;
     display: flex;
     justify-content: space-evenly;
     width: 100%;
     height: 3rem;
     align-items: center;
-    & span {
+    margin-top: 10px;
+    & div {
+      width: 16%;
       margin: auto;
     }
 
     &:nth-child(1) {
-      background: white;
-      & span {
+      background: #fafafa;
+      & .goto-info {
+        display: none;
+      }
+      & div {
         position: relative;
         left: -1%;
       }
     }
   `;
 
-  const columns = [
-    "이름",
-    "반",
-    "담당교사",
-    "평가날짜",
-    "부모님 전화번호",
-    "기타사항",
-  ];
   const data = [
     {
       name: "이름",
@@ -64,18 +63,15 @@ const Table = () => {
 
   return (
     <StudentTable>
-      {/* <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-        {columns.map((column) => (
-          <th key={column}>{column}</th>
-        ))}
-      </div> */}
-      {data.map(({ name, attrClass, teacher, date, paPhone }, i) => (
+      {data.map(({ name, attrClass, teacher, date, paPhone, extra }, i) => (
         <TableBody>
-          <span>{name}</span>
-          <span>{attrClass}</span>
-          <span>{teacher}</span>
-          <span>{date}</span>
-          <span>{paPhone}</span>
+          <div>{name}</div>
+          <div>{attrClass}</div>
+          <div>{teacher}</div>
+          <div>{date}</div>
+          <div>{paPhone}</div>
+          <div>{extra}</div>
+          <GotoInfo className="goto-info" />
         </TableBody>
       ))}
     </StudentTable>
