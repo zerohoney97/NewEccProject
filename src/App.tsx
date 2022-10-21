@@ -9,6 +9,7 @@ import FindUserEmail from "./Authentication/FindUserEmail";
 import FindUserPass from "./Authentication/FindUserPass";
 import StudentList from "./studentList/StudentList";
 import StudentInfo from "./studentList/StudentInfo";
+import PreTest from "./Evaluation/PreTest";
 import "./App.css";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/findPass" element={<FindUserPass></FindUserPass>} />
         <Route path="/studentList" element={<StudentList></StudentList>} />
         <Route path="/studentInfo" element={<StudentInfo></StudentInfo>}/>
+        <Route path="/preTest" element={<PreTest></PreTest>}/>
       </Routes>
     </div>
   );

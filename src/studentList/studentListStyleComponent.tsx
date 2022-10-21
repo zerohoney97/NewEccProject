@@ -44,6 +44,8 @@ const DivideLine = styled.div`
   border-bottom: 1px solid #e5e5e5;
 `;
 
+// 드롭다운
+
 const DropDownContents = styled.div<{ toggle: boolean }>`
   display: ${(props) => (props.toggle ? "blodk" : "none")};
   position: absolute;
@@ -60,19 +62,43 @@ const DropDown = styled.div`
   cursor: pointer;
 `;
 
+//ECC리스트
 const EvaluationList = styled.div`
   width: 80%;
   height: 100%;
   margin: auto;
-  background: #FFFFFF;
+  background: #ffffff;
 `;
+// 사전평가 버튼
+
+const PreEccEvaButton = styled.button`
+  width: 80%;
+  height: 3rem;
+  margin-top: 5px;
+  background: #ffffff;
+  border: 1px solid black;
+  cursor: pointer;
+`;
+// 사후평가 버튼
+const PostEccEvaButton = styled.button`
+  width: 80%;
+  height: 3rem;
+  margin-top: 5px;
+  background: #3763ff;
+  color: white;
+  border: white;
+  cursor: pointer;
+`;
+
 export {
   StudentInfoContainer,
   StudentProfile,
   DivideLine,
   DropDown,
   DropDownContents,
-  EvaluationList
+  EvaluationList,
+  PreEccEvaButton,
+  PostEccEvaButton
 };
 
 // StudentInfo
