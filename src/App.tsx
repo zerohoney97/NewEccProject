@@ -6,9 +6,12 @@ import SignIn from "./Authentication/SignIn";
 import AddProfile from "./Authentication/AddProfile";
 import CompleteSignUp from "./Authentication/CompleteSignUp";
 import FindUserEmail from "./Authentication/FindUserEmail";
-import { initializeApp } from "firebase/app";
 import FindUserPass from "./Authentication/FindUserPass";
+import StudentList from "./studentList/StudentList";
+import StudentInfo from "./studentList/StudentInfo";
+import PreTest from "./Evaluation/PreTest";
 import "./App.css";
+import PostTest from "./Evaluation/PostTest";
 
 function App() {
   return (
@@ -24,6 +27,11 @@ function App() {
         />
         <Route path="/findEmail" element={<FindUserEmail></FindUserEmail>} />
         <Route path="/findPass" element={<FindUserPass></FindUserPass>} />
+        <Route path="/studentList" element={<StudentList></StudentList>} />
+        <Route path="/studentInfo" element={<StudentInfo></StudentInfo>}/>
+        <Route path="/preTest" element={<PreTest></PreTest>}/>
+        <Route path="/postTest" element={<PostTest></PostTest>}/>
+
       </Routes>
     </div>
   );

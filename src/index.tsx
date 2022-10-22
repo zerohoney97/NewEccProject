@@ -8,6 +8,13 @@ import { Provider } from "react-redux";
 import { store } from "./redux/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #FAFAFA;
+  }
+`;
 let persistor = persistStore(store);
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,7 +24,8 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <App />
+          <GlobalStyle/>
+            <App />
         </BrowserRouter>
       </PersistGate>
     </Provider>
