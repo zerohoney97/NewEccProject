@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
 const Table = () => {
@@ -79,7 +80,9 @@ const Table = () => {
           <div>{date}</div>
           <div>{paPhone}</div>
           <div>{extra}</div>
-          <GotoInfo className="goto-info" />
+          <Link to="/studentInfo">
+            <GotoInfo className="goto-info" />
+          </Link>
         </TableBody>
       ))}
     </StudentTable>

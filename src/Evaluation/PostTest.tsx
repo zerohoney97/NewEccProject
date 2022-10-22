@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import NavBar from "../util/NavBar";
 import {
-  PreTestContainer,
+  PostTestContainer,
   ButtonContainer,
   BackButton,
   NextButton,
 } from "./evaluationStyleComponent";
-import PreTestTable from "./PreTestTable";
+import PostTestTable from "./PostTestTable";
 
-const PreTest = () => {
+const PostTest = () => {
   return (
     <>
       <NavBar />
-      <PreTestContainer>
+      <PostTestContainer>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1>사전평가</h1>
+          <h1>사후평가</h1>
           <div style={{ alignSelf: "end" }}>
             <span style={{ color: "#999999" }}>반,이름:</span>
             <span style={{ fontWeight: "bold" }}> 3A김현아</span>
@@ -32,15 +32,26 @@ const PreTest = () => {
           }}
         >
           <span style={{ fontWeight: "bold" }}>문항</span>
-          <span style={{ fontWeight: "bold" }}>C</span>
+          <div
+            style={{
+              width: "32%",
+              display: "flex",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <span style={{ fontWeight: "bold" }}>1</span>
+            <span style={{ fontWeight: "bold" }}>2</span>
+            <span style={{ fontWeight: "bold" }}>3</span>
+            <span style={{ fontWeight: "bold" }}>C</span>
+          </div>
         </div>
-        <PreTestTable></PreTestTable>
+        <PostTestTable></PostTestTable>
         <ButtonContainer>
           <BackButton>이전으로</BackButton>
           <NextButton>평가완료</NextButton>
         </ButtonContainer>
-      </PreTestContainer>
+      </PostTestContainer>
     </>
   );
 };
-export default PreTest;
+export default PostTest;

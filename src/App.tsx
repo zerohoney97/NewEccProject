@@ -11,6 +11,7 @@ import StudentList from "./studentList/StudentList";
 import StudentInfo from "./studentList/StudentInfo";
 import PreTest from "./Evaluation/PreTest";
 import "./App.css";
+import PostTest from "./Evaluation/PostTest";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
         <Route path="/studentList" element={<StudentList></StudentList>} />
         <Route path="/studentInfo" element={<StudentInfo></StudentInfo>}/>
         <Route path="/preTest" element={<PreTest></PreTest>}/>
+        <Route path="/postTest" element={<PostTest></PostTest>}/>
+
       </Routes>
     </div>
   );

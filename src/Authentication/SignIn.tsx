@@ -17,7 +17,7 @@ const EccText = styled.h3`
   color: #3763ff;
   opacity: 0.4;
 `;
- const firebaseConfig = {
+const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
   authDomain: process.env.REACT_APP_AUTHDOMAIN,
   databaseURL: process.env.REACT_APP_DATABASEURL,
@@ -26,7 +26,6 @@ const EccText = styled.h3`
   messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
   appId: process.env.REACT_APP_APPID,
   measurementId: process.env.REACT_APP_MEASUREMENTID,
-  
 };
 const app = initializeApp(firebaseConfig);
 
@@ -38,6 +37,7 @@ const signIn = (auth: any, email: any, password: any) => {
   signInWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       console.log(userCredential);
+      window.location.href = "http://localhost:3000/studentList";
     })
     .catch((error) => {
       const errorCode = error.code;
