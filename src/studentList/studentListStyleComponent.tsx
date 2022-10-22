@@ -76,6 +76,7 @@ const PreEccEvaButton = styled.button`
   height: 3rem;
   margin-top: 5px;
   background: #ffffff;
+  border-radius: 10px;
   border: 1px solid black;
   cursor: pointer;
 `;
@@ -83,6 +84,7 @@ const PreEccEvaButton = styled.button`
 const PostEccEvaButton = styled.button`
   width: 80%;
   height: 3rem;
+  border-radius: 10px;
   margin-top: 5px;
   background: #3763ff;
   color: white;
@@ -98,7 +100,7 @@ export {
   DropDownContents,
   EvaluationList,
   PreEccEvaButton,
-  PostEccEvaButton
+  PostEccEvaButton,
 };
 
 // StudentInfo
