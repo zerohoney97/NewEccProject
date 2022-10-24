@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import { Link, Route, Routes } from "react-router-dom";
 import SignUp from "./Authentication/SignUp";
@@ -14,6 +14,7 @@ import "./App.css";
 import PostTest from "./Evaluation/PostTest";
 
 function App() {
+
   return (
     <div className="App">
       <Routes>
@@ -28,10 +29,9 @@ function App() {
         <Route path="/findEmail" element={<FindUserEmail></FindUserEmail>} />
         <Route path="/findPass" element={<FindUserPass></FindUserPass>} />
         <Route path="/studentList" element={<StudentList></StudentList>} />
-        <Route path="/studentInfo" element={<StudentInfo></StudentInfo>}/>
-        <Route path="/preTest" element={<PreTest></PreTest>}/>
-        <Route path="/postTest" element={<PostTest></PostTest>}/>
-
+        <Route path="/studentInfo" element={<StudentInfo></StudentInfo>} />
+        <Route path="/preTest" element={<PreTest></PreTest>} />
+        <Route path="/postTest" element={<PostTest></PostTest>} />
       </Routes>
     </div>
   );

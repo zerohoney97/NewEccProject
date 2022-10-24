@@ -33,7 +33,7 @@ const persistStudentReducer = persistReducer(
 
 export const store = configureStore({
   reducer: {
-    teacherUid: persistTeacherReducer,
+    teacherInfo: persistTeacherReducer,
     studentInformation: persistStudentReducer,
   },
   middleware: (getDefaultMiddleware) =>

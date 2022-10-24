@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
+import { studentList } from "../util/Type";
 
-const Table = () => {
+const Table= (props:studentList) => {
   type studentInfo = {
     name: string;
     attrClass: string;

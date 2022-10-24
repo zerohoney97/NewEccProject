@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg";
 
@@ -34,7 +35,9 @@ const NavBar = () => {
 
   return (
     <NavBar>
-      <EccLogo width={100} style={{ position: "relative", left: "-5%" }} />
+      <Link to='/studentList' style={{ position: "relative", left: "-5%" }}>
+        <EccLogo width={100}  />
+      </Link>
       <span style={{ width: "40%", display: "flex" }}>
         <SearchBar
           placeholder="검색할 학생의 이름을 입력하세요"

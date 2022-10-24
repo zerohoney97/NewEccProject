@@ -9,6 +9,8 @@ import { store } from "./redux/index";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { createGlobalStyle } from "styled-components";
+import ValidateSignIn from "./util/ValidateSignIn";
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -25,6 +27,7 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <GlobalStyle/>
+          <ValidateSignIn/>
             <App />
         </BrowserRouter>
       </PersistGate>
