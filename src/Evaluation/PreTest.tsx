@@ -24,21 +24,11 @@ const PreTest = () => {
             <span style={{ fontWeight: "bold" }}> 책마루</span>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: 20,
-          }}
-        >
-          <span style={{ fontWeight: "bold" }}>문항</span>
-          <span style={{ fontWeight: "bold" }}>C</span>
-        </div>
-        <PreTestTable></PreTestTable>
-        <ButtonContainer>
-          <BackButton>이전으로</BackButton>
-          <NextButton>평가완료</NextButton>
-        </ButtonContainer>
+          <PreTestTable></PreTestTable>
+          <ButtonContainer>
+            <BackButton>이전으로</BackButton>
+            <NextButton>평가완료</NextButton>
+          </ButtonContainer>
       </PreTestContainer>
     </>
   );

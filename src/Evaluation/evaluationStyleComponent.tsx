@@ -4,14 +4,16 @@ import styled from "styled-components";
 
 // 사전평가를 감싸는 컨테이너
 const PreTestContainer = styled.div`
-  width: 80%;
+  width: 1200px;
   height: 500px;
   background: #fafafa;
   margin: auto;
+  margin-top: 113px;
+
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  margin-top: 10px;
+  margin-top: 40px;
   justify-content: space-between;
   height: 50px;
   width: 100%;
@@ -45,6 +47,8 @@ const PostTestContainer = styled.div`
   height: 500px;
   background: #fafafa;
   margin: auto;
+  margin-top: 113px;
+
 `;
 
 export { PostTestContainer };

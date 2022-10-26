@@ -12,13 +12,14 @@ import StudentInfo from "./studentList/StudentInfo";
 import PreTest from "./Evaluation/PreTest";
 import "./App.css";
 import PostTest from "./Evaluation/PostTest";
+import NavBar from "./util/NavBar";
 
 function App() {
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<></>} />
+        <Route path="/*" element={<NavBar></NavBar>} />
         <Route path="/signIn" element={<SignIn></SignIn>} />
         <Route path="/signUp" element={<SignUp></SignUp>} />
         <Route path="/addProfile" element={<AddProfile></AddProfile>} />

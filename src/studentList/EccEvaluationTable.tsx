@@ -10,11 +10,6 @@ const EccEvaluationTable = (props: any) => {
   };
   const [data, setData] = useState<studentEccInfo[]>([
     {
-      bigCategory: "카테고리",
-      smallCategory: "영역",
-      evaluationDate: "평가날짜",
-    },
-    {
       bigCategory: "보조공학",
       smallCategory: "책마루",
       evaluationDate: "2022-10-20",
@@ -45,7 +40,7 @@ const EccEvaluationTable = (props: any) => {
       margin: auto;
     }
 
-    &:nth-child(1) {
+    /* &:nth-child(1) {
       background: #fafafa;
       & .goto-info {
         display: none;
@@ -54,18 +49,26 @@ const EccEvaluationTable = (props: any) => {
         position: relative;
         left: -1%;
       }
-    }
+    } */
   `;
-
+  const DivideLine = styled.div`
+    border-bottom: 1px solid #e5e5e5;
+    margin: auto;
+    width: 80%;
+  `;
   return (
     <StudentTable>
       {data.map(({ bigCategory, smallCategory, evaluationDate }, i) => (
-        <TableBody>
-          <div>{bigCategory}</div>
-          <div>{smallCategory}</div>
-          <div>{evaluationDate}</div>
-        </TableBody>
+        <>
+          <TableBody>
+            <div>{bigCategory}</div>
+            <div>{smallCategory}</div>
+            <div>{evaluationDate}</div>
+          </TableBody>
+          <DivideLine />
+        </>
       ))}
+
       {props.children}
     </StudentTable>
   );

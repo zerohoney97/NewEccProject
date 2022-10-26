@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StudentListContainer = styled.div`
   background: #fafafa;
   margin: auto;
-  width: 70%;
+  width: 1200px;
 `;
 
 // 학생 더보기 버튼
@@ -26,22 +26,33 @@ export { StudentListContainer, MoreButton };
 // 학생정보페이지를 감싸는 컨테이너
 const StudentInfoContainer = styled.div`
   margin: auto;
-  width: 60%;
+  width: 1200px;
   height: 500px;
 `;
 
 // 학생 프로필
 const StudentProfile = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
+  width: 176px;
+  height: 176px;
+  border-radius: 100px;
   margin: auto;
-  margin-top: 10%;
+  margin-top: 150px;
   background: #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const DivideLine = styled.div`
+  width: 714px;
+  margin: auto;
   border-bottom: 1px solid #e5e5e5;
+`;
+// eccList중간 컨테이너
+const MiddleContainer = styled.div`
+  margin: auto;
+  width: 714px;
+  height: 100%;
 `;
 
 // 드롭다운
@@ -64,9 +75,11 @@ const DropDown = styled.div`
 
 //ECC리스트
 const EvaluationList = styled.div`
-  width: 80%;
+  width: 714px;
   height: 100%;
   margin: auto;
+  padding-top:30px;
+  margin-top: 20px;
   background: #ffffff;
 `;
 // 사전평가 버튼
@@ -101,6 +114,7 @@ export {
   EvaluationList,
   PreEccEvaButton,
   PostEccEvaButton,
+  MiddleContainer,
 };
 
 // StudentInfo

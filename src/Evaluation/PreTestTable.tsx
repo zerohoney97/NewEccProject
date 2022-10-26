@@ -20,13 +20,15 @@ const PreTestTable = () => {
     height: 500px;
     background: #ffffff;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 40px;
+    border: 1px solid #e5e5e5;
   `;
 
   const TableBody = styled.div`
     display: flex;
-    padding-left: 5px;
-    padding-right: 10px;
     justify-content: space-between;
     height: 3rem;
     align-items: center;
@@ -37,16 +39,24 @@ const PreTestTable = () => {
       .checkBox {
         visibility: hidden;
       }
-    }
+    /* } */
 
-    /* & {
+    & {
       border-bottom: 1px solid #e5e5e5;
-    } */ 
+    }
   `;
-
 
   return (
     <Table>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <span style={{ fontWeight: "bold" }}>문항</span>
+        <span style={{ fontWeight: "bold", marginRight: "1rem" }}>C</span>
+      </div>
       {data.map(({ content }, i) => (
         <TableBody>
           <div>{content}</div>

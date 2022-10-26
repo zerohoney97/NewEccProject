@@ -6,18 +6,23 @@ import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg"
 
 const NavBar = () => {
   const NavBar = styled.div`
-    height: 60px;
-    border-bottom: 1px solid #3763ff;
+    margin: auto;
+    width: 1200px;
+    height: 110px;
     align-items: center;
-    justify-content: space-evenly;
     display: flex;
+  `;
+
+  const NavBarDivideLine = styled.div`
+    width: 100%;
+    border-bottom: 1px solid #3763ff;
   `;
 
   // 검색창
   const SearchBar = styled.input`
-    width: 100%;
-    height: 2rem;
-    border-radius: 10px;
+    width: 700px;
+    height: 54px;
+    border-radius: 30px;
     background: #f5f5f5;
     border: silver;
 
@@ -27,30 +32,41 @@ const NavBar = () => {
   `;
   // 네비게이션 끝에있는 프로필 사진
   const NavProfile = styled.div`
-    width: 3rem;
-    height: 3rem;
+    margin: auto;
+    width: 46px;
+    height: 46px;
     border-radius: 30px;
     background: #d9d9d9;
   `;
 
   return (
-    <NavBar>
-      <Link to='/studentList' style={{ position: "relative", left: "-5%" }}>
-        <EccLogo width={100}  />
-      </Link>
-      <span style={{ width: "40%", display: "flex" }}>
-        <SearchBar
-          placeholder="검색할 학생의 이름을 입력하세요"
-          style={{ paddingLeft: 30 }}
-        />
-        <Magnify style={{ alignSelf: "center", cursor: "pointer" }} />
-      </span>
-      <span style={{ display: "flex" }}>
-        <h3 style={{ color: "#00CF15", marginLeft: 30 }}>홍길동</h3>
-        <h3>선생님! 환영합니다!</h3>
-      </span>
-      <NavProfile />
-    </NavBar>
+    <>
+      <NavBar>
+        <Link to="/studentList">
+          <EccLogo style={{ width: 76, height: 30.74 }} />
+        </Link>
+        <span style={{ display: "flex", marginLeft: 60 }}>
+          <Magnify
+            style={{
+              alignSelf: "center",
+              cursor: "pointer",
+              position: "relative",
+              right: -43,
+            }}
+          />
+          <SearchBar
+            placeholder="검색할 학생의 이름을 입력하세요"
+            style={{ paddingLeft: 40 }}
+          />
+        </span>
+        <span style={{ marginLeft: 60 }}>
+          <span style={{ color: "#00CF15", fontSize: 18 }}>홍길동</span>
+          <span style={{ fontSize: 18 }}>선생님! 환영합니다!</span>
+        </span>
+        <NavProfile />
+      </NavBar>
+      <NavBarDivideLine />
+    </>
   );
 };
 

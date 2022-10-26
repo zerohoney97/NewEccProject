@@ -4,6 +4,6 @@ export interface studentList {
     gender:string,
     name: string,
     recent: string,
-    uid: string,
-    _id: string
+    uid?: string,
+    _id?: string
   }

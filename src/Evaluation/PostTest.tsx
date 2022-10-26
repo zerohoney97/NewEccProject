@@ -24,27 +24,7 @@ const PostTest = () => {
             <span style={{ fontWeight: "bold" }}> 책마루</span>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: 20,
-          }}
-        >
-          <span style={{ fontWeight: "bold" }}>문항</span>
-          <div
-            style={{
-              width: "32%",
-              display: "flex",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <span style={{ fontWeight: "bold" }}>1</span>
-            <span style={{ fontWeight: "bold" }}>2</span>
-            <span style={{ fontWeight: "bold" }}>3</span>
-            <span style={{ fontWeight: "bold" }}>C</span>
-          </div>
-        </div>
+       
         <PostTestTable></PostTestTable>
         <ButtonContainer>
           <BackButton>이전으로</BackButton>
