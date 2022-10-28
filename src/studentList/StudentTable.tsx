@@ -2,25 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
+import { useSelector, useDispatch } from "react-redux";
 import { studentList } from "../util/Type";
+import { setStudentInformation } from "../redux/slice/studentReducer";
+import axios from "axios";
 
-const Table= ({studentList}:{studentList:studentList[]}) => {
+const Table = ({ studentList }: { studentList: studentList[] }) => {
+  let dispatch = useDispatch();
 
-
-  const setStudentInfo=()=>{
-
-  }
- 
   const StudentTable = styled.table`
-    width: 100%;
+    width: 1200px;
     height: 500px;
     margin: auto;
+    margin-top: 15px;
   `;
 
   const TableBody = styled.div`
     background: white;
     display: flex;
-    justify-content: space-evenly;
     width: 100%;
     height: 83px;
     align-items: center;
@@ -30,7 +29,7 @@ const Table= ({studentList}:{studentList:studentList[]}) => {
       margin: auto;
     }
 
-    &:nth-child(1) {
+    /* &:nth-child(1) {
       background: #fafafa;
       & .goto-info {
         visibility: hidden;
@@ -39,8 +38,25 @@ const Table= ({studentList}:{studentList:studentList[]}) => {
         position: relative;
         left: -1%;
       }
-    }
+    } */
   `;
+  const setClickedStudent = (
+    name: string,
+    attrClass: string,
+    birth: string,
+    recent: string,
+    gender: string
+  ) => {
+    dispatch(
+      setStudentInformation({
+        name: name,
+        attrClass: attrClass,
+        birth: birth,
+        recent: recent,
+        gender: gender,
+      })
+    );
+  };
 
   return (
     <StudentTable>
@@ -51,7 +67,12 @@ const Table= ({studentList}:{studentList:studentList[]}) => {
           <div>{birth}</div>
           <div>{recent}</div>
           <div>{gender}</div>
-          <Link to="/studentInfo" onClick={()=>{alert('클릭')}}>
+          <Link
+            to="/studentInfo"
+            onClick={() => {
+              setClickedStudent(name, attrClass, birth, recent, gender);
+            }}
+          >
             <GotoInfo className="goto-info" />
           </Link>
         </TableBody>

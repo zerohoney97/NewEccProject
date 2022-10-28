@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../util/NavBar";
 import { Link } from "react-router-dom";
 import {
@@ -19,7 +20,9 @@ import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 
 const StudentInfo = () => {
   const [toggle, setToggle] = useState(false);
-
+  const studentInfo = useSelector((state: any) => {
+    return state.studentInformation;
+  });
   return (
     <>
       <NavBar />
@@ -27,8 +30,8 @@ const StudentInfo = () => {
         <StudentProfile>
           <Camera />
         </StudentProfile>
-        <h1 style={{ display: "inline-block" }}>김민아</h1>
-        <span>3학년A반</span>
+        <h1 style={{ display: "inline-block" }}>{studentInfo.name}</h1>
+        <span>{studentInfo.attrClass} 반</span>
         <DivideLine />
         <MiddleContainer>
           <div

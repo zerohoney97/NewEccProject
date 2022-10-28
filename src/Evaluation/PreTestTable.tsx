@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Checkbox from "@mui/material/Checkbox";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
 const PreTestTable = () => {
@@ -60,7 +59,7 @@ const PreTestTable = () => {
       {data.map(({ content }, i) => (
         <TableBody>
           <div>{content}</div>
-          <Checkbox className="checkBox" size="medium" />
+          <input type={'checkbox'} style={{'zoom':'2.0'}} className="checkBox"  />
         </TableBody>
       ))}
     </Table>

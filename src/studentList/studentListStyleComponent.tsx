@@ -17,8 +17,18 @@ const MoreButton = styled.button`
   border: white;
   cursor: pointer;
 `;
-
-export { StudentListContainer, MoreButton };
+// 학생 테이블 헤드
+const StudentTableHead = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+  justify-content: space-around;
+  & span{
+    margin-left: 20px;
+    width: 16%;
+  }
+`;
+export { StudentListContainer, MoreButton,StudentTableHead };
 
 // StudentList
 
@@ -78,7 +88,7 @@ const EvaluationList = styled.div`
   width: 714px;
   height: 100%;
   margin: auto;
-  padding-top:30px;
+  padding-top: 30px;
   margin-top: 20px;
   background: #ffffff;
 `;
