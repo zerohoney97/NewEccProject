@@ -2,17 +2,42 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
-const PreTestTable = () => {
+const PreTestTable = ({
+  tableData,
+  preTestResult,
+  setPreTestResult,
+}: {
+  tableData: any;
+  preTestResult: any;
+  setPreTestResult: any;
+}) => {
   type preTestType = {
     content: string;
   };
-  const [data, setData] = useState<preTestType[]>([
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-  ]);
+
+  // 체크박스 컴포넌트
+  const Input = ({ content }: { content: string }) => {
+    const [bChecked, setBChecked] = useState<boolean>(false);
+    const setResult = (content: string) => {
+      setBChecked(!bChecked);
+      setPreTestResult((state: any) => {
+        return state.filter((a: string) => {
+          return a !== content;
+        });
+      });
+    };
+    return (
+      <input
+        type={"checkbox"}
+        style={{ zoom: "2.0" }}
+        checked={bChecked}
+        onChange={() => {
+          setResult(content);
+        }}
+        className="checkBox"
+      />
+    );
+  };
 
   const Table = styled.table`
     width: 100%;
@@ -56,10 +81,10 @@ const PreTestTable = () => {
         <span style={{ fontWeight: "bold" }}>문항</span>
         <span style={{ fontWeight: "bold", marginRight: "1rem" }}>C</span>
       </div>
-      {data.map(({ content }, i) => (
-        <TableBody>
+      {tableData.map(({ content }: { content: any }, i: number) => (
+        <TableBody key={i}>
           <div>{content}</div>
-          <input type={'checkbox'} style={{'zoom':'2.0'}} className="checkBox"  />
+          <Input key={i} content={content} />
         </TableBody>
       ))}
     </Table>

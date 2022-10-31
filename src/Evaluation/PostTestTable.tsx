@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const PostTestTable = () => {
+const PostTestTable = ({ tableData }: { tableData: any }) => {
   type postTestType = {
     content: string;
   };
-  const [data, setData] = useState<postTestType[]>([
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-    { content: "각 카테고리에 있는 항목" },
-  ]);
 
   const Table = styled.table`
     width: 100%;
@@ -67,8 +60,8 @@ const PostTestTable = () => {
           <span style={{ fontWeight: "bold" }}>C</span>
         </div>
       </div>
-      {data.map(({ content }, i) => (
-        <TableBody>
+      {tableData.map(({ content }: { content: any }, i: number) => (
+        <TableBody key={i}>
           <div>{content}</div>
           <div
             style={{

@@ -11,21 +11,46 @@ import {
 } from "./evaluationStyleComponent";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
 import PreTestTable from "./PreTestTable";
+import axios from "axios";
 
 const PreTest = () => {
+  // 대영역
   const [bigToggle, setBigToggle] = useState<boolean>(false);
+  const [bigCategoryName, setBigCategoryName] = useState<string>("대항목");
+  // 소영역
   const [smallToggle, setSmallToggle] = useState<boolean>(false);
-  const selectedBigCategory = useRef<any>();
   const [smallCategoryNum, setSmallCategoryNum] = useState<number>(0);
+  const [smallCategoryName, setSmallCategoryName] = useState<any>("소항목");
+  const [tableData,setTableData]=useState<any>(null);
+  const selectedBigCategory = useRef<any>();
+  // 평가결과
+  const [preTestResult, setPreTestResult] = useState<string[]>([]);
 
-  const setBigCategoryName = (
+  useEffect(() => {
+    if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
+      axios
+        .get("/getEccList", {
+          params: { data: bigCategoryName + "/" + smallCategoryName },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setTableData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [smallCategoryName]);
+  const setBigCategoryNameOnDropMenu = (
     categoryName: string,
     smallCategoryNum: number
   ) => {
+    setBigCategoryName(categoryName);
     selectedBigCategory.current.innerHTML = categoryName;
     setSmallCategoryNum(smallCategoryNum);
   };
 
+  // 소영역 클릭시 smallToggle을 true로 바꿈과 동시에 대영역에 맞게 tsx값 변경
   const SmallCategory = useCallback(
     ({ smallCategory }: { smallCategory: number }) => {
       console.log(smallToggle);
@@ -37,9 +62,24 @@ const PreTest = () => {
                 setSmallToggle(!smallToggle);
               }}
             >
-              <span>소항목</span>
+              <span>{smallCategoryName}</span>
               <DropDownSVG />
-              <DropDownContentsSmallCategory toggle={smallToggle}>
+              <DropDownContentsSmallCategory
+                toggle={smallToggle}
+                onClick={(e) => {
+                  if (
+                    ((e.target as HTMLLIElement).textContent
+                      ?.length as number) >= 15
+                  ) {
+                    setSmallCategoryName((state: string) => {
+                      return "소항목";
+                    });
+                  }else {
+                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
+
+                  }
+                }}
+              >
                 <p>책마루</p>
                 <p>OCR</p>
                 <p>데이지플레이어</p>
@@ -63,9 +103,24 @@ const PreTest = () => {
                 setSmallToggle(!smallToggle);
               }}
             >
-              <span>소항목</span>
+              <span>{smallCategoryName}</span>
               <DropDownSVG />
-              <DropDownContentsSmallCategory toggle={smallToggle}>
+              <DropDownContentsSmallCategory
+                toggle={smallToggle}
+                onClick={(e) => {
+                  if (
+                    ((e.target as HTMLLIElement).textContent
+                      ?.length as number) >= 15
+                  ) {
+                    setSmallCategoryName((state: string) => {
+                      return "소항목";
+                    });
+                  }else {
+                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
+
+                  }
+                }}
+              >
                 <p>보행체크리스트</p>
               </DropDownContentsSmallCategory>
             </DropDown>
@@ -93,9 +148,24 @@ const PreTest = () => {
                 setSmallToggle(!smallToggle);
               }}
             >
-              <span>소항목</span>
+              <span>{smallCategoryName}</span>
               <DropDownSVG />
-              <DropDownContentsSmallCategory toggle={smallToggle}>
+              <DropDownContentsSmallCategory
+                toggle={smallToggle}
+                onClick={(e) => {
+                  if (
+                    ((e.target as HTMLLIElement).textContent
+                      ?.length as number) >= 15
+                  ) {
+                    setSmallCategoryName((state: string) => {
+                      return "소항목";
+                    });
+                  }else {
+                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
+
+                  }
+                }}
+              >
                 <p>개인위생관리</p>
                 <p>건강과안전</p>
                 <p>시간관리</p>
@@ -117,9 +187,24 @@ const PreTest = () => {
                 setSmallToggle(!smallToggle);
               }}
             >
-              <span>소항목</span>
+              <span>{smallCategoryName}</span>
               <DropDownSVG />
-              <DropDownContentsSmallCategory toggle={smallToggle}>
+              <DropDownContentsSmallCategory
+                toggle={smallToggle}
+                onClick={(e) => {
+                  if (
+                    ((e.target as HTMLLIElement).textContent
+                      ?.length as number) >= 15
+                  ) {
+                    setSmallCategoryName((state: string) => {
+                      return "소항목";
+                    });
+                  }else {
+                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
+
+                  }
+                }}
+              >
                 <p>기호점자</p>
                 <p>수학점자</p>
                 <p>영어점자</p>
@@ -132,16 +217,13 @@ const PreTest = () => {
           break;
       }
       return (
-        <DropDown
-          onClick={() => {
-            setSmallToggle(!smallToggle);
-          }}
-        >
+        //대영역이 빈상태에서 클릭시 아무 기능 없음
+        <DropDown>
           <span>소항목</span>
         </DropDown>
       );
     },
-    [smallCategoryNum]
+    [smallToggle]
   );
 
   return (
@@ -169,6 +251,7 @@ const PreTest = () => {
           <DropDown
             onClick={() => {
               setBigToggle(!bigToggle);
+              setSmallCategoryName("소항목");
             }}
           >
             <span ref={selectedBigCategory}>대항목</span>
@@ -176,7 +259,7 @@ const PreTest = () => {
             <DropDownContentsBigCategory toggle={bigToggle}>
               <p
                 onClick={() => {
-                  setBigCategoryName("보조공학", 1);
+                  setBigCategoryNameOnDropMenu("보조공학", 1);
                 }}
               >
                 보조공학
@@ -184,28 +267,28 @@ const PreTest = () => {
 
               <p
                 onClick={() => {
-                  setBigCategoryName("보행", 2);
+                  setBigCategoryNameOnDropMenu("보행", 2);
                 }}
               >
                 보행
               </p>
               <p
                 onClick={() => {
-                  setBigCategoryName("사회적기술", 3);
+                  setBigCategoryNameOnDropMenu("사회적기술", 3);
                 }}
               >
                 사회적기술
               </p>
               <p
                 onClick={() => {
-                  setBigCategoryName("일상생활기술", 4);
+                  setBigCategoryNameOnDropMenu("일상생활기술", 4);
                 }}
               >
                 일상생활기술
               </p>
               <p
                 onClick={() => {
-                  setBigCategoryName("점자", 5);
+                  setBigCategoryNameOnDropMenu("점자", 5);
                 }}
               >
                 점자
@@ -214,10 +297,13 @@ const PreTest = () => {
           </DropDown>
           <SmallCategory smallCategory={smallCategoryNum} />
         </div>
-        <PreTestTable></PreTestTable>
+        {tableData !== null && <PreTestTable tableData={tableData} preTestResult={preTestResult} setPreTestResult={setPreTestResult}></PreTestTable>} 
+
         <ButtonContainer>
           <BackButton>이전으로</BackButton>
-          <NextButton>평가완료</NextButton>
+          <NextButton onClick={()=>{
+            console.log(preTestResult);
+          }}>평가완료</NextButton>
         </ButtonContainer>
       </PreTestContainer>
     </>
