@@ -15,3 +15,9 @@ export interface clickedStudentInfo {
   recent: string;
   gender: string;
 }
+
+export interface postTestResultType{
+  content:string;
+  score:string
+
+}

@@ -53,7 +53,6 @@ const PreTest = () => {
   // 소영역 클릭시 smallToggle을 true로 바꿈과 동시에 대영역에 맞게 tsx값 변경
   const SmallCategory = useCallback(
     ({ smallCategory }: { smallCategory: number }) => {
-      console.log(smallToggle);
       switch (smallCategory) {
         case 1:
           return (

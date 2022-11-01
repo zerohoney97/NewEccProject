@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
+import { postTestResultType } from "../util/Type";
 
-const PostTestTable = ({ tableData }: { tableData: any }) => {
+const resultArray: postTestResultType[] = [{ content: "", score: "" }];
+let filterdArray: postTestResultType[] = [{ content: "", score: "" }];
+
+const PostTestTable = ({
+  tableData,
+  postTestResult,
+  setPostTestResult,
+}: {
+  tableData: any;
+  postTestResult: postTestResultType[];
+  setPostTestResult: any;
+}) => {
   type postTestType = {
     content: string;
   };
@@ -36,6 +49,73 @@ const PostTestTable = ({ tableData }: { tableData: any }) => {
       border-bottom: 1px solid #e5e5e5;
     }
   `;
+  // 라디오 버튼
+  const Radio = ({ value, content }: { value: string; content: string }) => {
+    return (
+      <label>
+        <input
+          style={{ zoom: "2.0" }}
+          type="radio"
+          value={value}
+          onChange={(e) => {
+            setResult(e.target.checked, content, value);
+          }}
+          checked={duplication(content) ? true : false}
+        />
+      </label>
+    );
+  };
+  // 라디오그룹
+  const RadioGroup = ({ children }: { children: any }) => {
+    return (
+      <div
+        style={{
+          width: "142px",
+          display: "flex",
+          justifyContent: "space-evenly",
+        }}
+      >
+        {children}
+      </div>
+    );
+  };
+
+  // 사후평가데이터를 저장하는 함수
+  const setResult = (
+    checked: boolean,
+    checkedContent: string,
+    score: string
+  ) => {
+    if (checked) {
+      filterdArray = resultArray.concat({
+        content: checkedContent,
+        score: score,
+      });
+      setPostTestResult((state: postTestResultType[]) => {
+        state.concat(filterdArray as any);
+      });
+    } else {
+      filterdArray = resultArray.filter(({ content }) => {
+        return content !== checkedContent;
+      });
+      setPostTestResult((state: postTestResultType[]) => {
+        return filterdArray;
+      });
+    }
+  };
+
+  // 사후평가에 저장돼있는 객체(중복여부)의 value에 따라 true/false를 반환하는 함수
+  const duplication = useCallback(
+    (content: string) => {
+      let temp = filterdArray.find((a) => {
+        return a.content === content;
+      });
+      if (temp === undefined) {
+        return false;
+      } else return true;
+    },
+    [filterdArray]
+  );
 
   return (
     <Table>
@@ -63,34 +143,12 @@ const PostTestTable = ({ tableData }: { tableData: any }) => {
       {tableData.map(({ content }: { content: any }, i: number) => (
         <TableBody key={i}>
           <div>{content}</div>
-          <div
-            style={{
-              width: "142px",
-              display: "flex",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <input
-              type={"checkbox"}
-              style={{ zoom: "2.0" }}
-              className="checkBox"
-            />
-            <input
-              type={"checkbox"}
-              style={{ zoom: "2.0" }}
-              className="checkBox"
-            />
-            <input
-              type={"checkbox"}
-              style={{ zoom: "2.0" }}
-              className="checkBox"
-            />
-            <input
-              type={"checkbox"}
-              style={{ zoom: "2.0" }}
-              className="checkBox"
-            />
-          </div>
+          <RadioGroup>
+            <Radio value="1" content={content} />
+            <Radio value="2" content={content} />
+            <Radio value="3" content={content} />
+            <Radio value="C" content={content} />
+          </RadioGroup>
         </TableBody>
       ))}
     </Table>

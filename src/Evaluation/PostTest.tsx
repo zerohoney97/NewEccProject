@@ -10,7 +10,7 @@ import {
   DropDownContentsSmallCategory,
 } from "./evaluationStyleComponent";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
-
+import { postTestResultType } from "../util/Type";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
 
@@ -25,6 +25,8 @@ const PostTest = () => {
 
   const [tableData,setTableData]=useState<any>(null);
   const selectedBigCategory = useRef<any>();
+  // 평가결과
+  const [postTestResult, setPostTestResult] = useState<postTestResultType[]>([{content:'asd',score:'dd'}]);
 
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
@@ -266,10 +268,12 @@ const PostTest = () => {
           </DropDown>
           <SmallCategory smallCategory={smallCategoryNum} />
         </div>
-       {tableData !== null && <PostTestTable tableData={tableData}></PostTestTable>} 
+       {tableData !== null && <PostTestTable tableData={tableData} postTestResult={postTestResult} setPostTestResult={setPostTestResult}></PostTestTable>} 
         <ButtonContainer>
           <BackButton>이전으로</BackButton>
-          <NextButton>평가완료</NextButton>
+          <NextButton onClick={()=>{
+            console.log(postTestResult);
+          }}>평가완료</NextButton>
         </ButtonContainer>
       </PostTestContainer>
     </>

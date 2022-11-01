@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
@@ -11,29 +12,33 @@ const PreTestTable = ({
   preTestResult: any;
   setPreTestResult: any;
 }) => {
-  type preTestType = {
-    content: string;
-  };
-
   // 체크박스 컴포넌트
   const Input = ({ content }: { content: string }) => {
-    const [bChecked, setBChecked] = useState<boolean>(false);
-    const setResult = (content: string) => {
-      setBChecked(!bChecked);
-      setPreTestResult((state: any) => {
-        return state.filter((a: string) => {
+    const setResult = (checked: boolean, content: string) => {
+      if (checked) {
+        setPreTestResult(
+          preTestResult.concat(content)
+        );
+      } else{
+        setPreTestResult(
+        preTestResult.filter((a: string) => {
           return a !== content;
-        });
-      });
+        })
+      );
+      }
+
+     
+
+      
     };
     return (
       <input
         type={"checkbox"}
         style={{ zoom: "2.0" }}
-        checked={bChecked}
-        onChange={() => {
-          setResult(content);
+        onChange={(e) => {
+          setResult(e.target.checked, content);
         }}
+        checked={preTestResult.includes(content) ? true : false}
         className="checkBox"
       />
     );
@@ -82,7 +87,7 @@ const PreTestTable = ({
         <span style={{ fontWeight: "bold", marginRight: "1rem" }}>C</span>
       </div>
       {tableData.map(({ content }: { content: any }, i: number) => (
-        <TableBody key={i}>
+        <TableBody >
           <div>{content}</div>
           <Input key={i} content={content} />
         </TableBody>
