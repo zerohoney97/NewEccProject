@@ -1,10 +1,12 @@
+import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 import styled from "styled-components";
 import { postTestResultType } from "../util/Type";
-
-const resultArray: postTestResultType[] = [{ content: "", score: "" }];
-let filterdArray: postTestResultType[] = [{ content: "", score: "" }];
+// 결과임시저장
+let resultArray: postTestResultType[] = Array();
+// filter함수를 위한 임시 똑같은 임시 변수
+let newArray: any;
 
 const PostTestTable = ({
   tableData,
@@ -15,10 +17,6 @@ const PostTestTable = ({
   postTestResult: postTestResultType[];
   setPostTestResult: any;
 }) => {
-  type postTestType = {
-    content: string;
-  };
-
   const Table = styled.table`
     width: 100%;
     height: 500px;
@@ -49,24 +47,51 @@ const PostTestTable = ({
       border-bottom: 1px solid #e5e5e5;
     }
   `;
+
+  useEffect(() => {
+    setPostTestResult(resultArray);
+  }, [resultArray]);
+  const setResult = (content: string, score: string) => {
+    if (resultArray.length === 0) {
+      resultArray.push({ content: content, score: score });
+    } else {
+      if (
+        resultArray.find((a) => {
+          return a.content === content;
+        })
+      ) {
+        newArray = resultArray.map((a) => {
+          return a.content === content ? { ...a, score: score } : a;
+        });
+        resultArray = [...newArray];
+      } else {
+        resultArray.push({ content: content, score: score });
+      }
+    }
+    console.log(resultArray);
+  };
   // 라디오 버튼
-  const Radio = ({ value, content }: { value: string; content: string }) => {
+  const RadioButton = ({ value, onChange }: { value: any; onChange: any }) => {
     return (
       <label>
         <input
-          style={{ zoom: "2.0" }}
           type="radio"
-          value={value}
-          onChange={(e) => {
-            setResult(e.target.checked, content, value);
-          }}
-          checked={duplication(content) ? true : false}
+          checked={value}
+          onChange={onChange}
+          style={{ zoom: "2.0" }}
         />
       </label>
     );
   };
   // 라디오그룹
-  const RadioGroup = ({ children }: { children: any }) => {
+  const RadioGroup = ({ content, i }: { content: any; i: number }) => {
+    const [chekedData, setCheckedData] = React.useState("");
+
+    const handleChange = (value: any, score: string) => {
+      setResult(content, score);
+      setCheckedData(value);
+    };
+
     return (
       <div
         style={{
@@ -75,47 +100,33 @@ const PostTestTable = ({
           justifyContent: "space-evenly",
         }}
       >
-        {children}
+        <RadioButton
+          value={chekedData === `1`}
+          onChange={() => {
+            handleChange(`1`, "1");
+          }}
+        />
+        <RadioButton
+          value={chekedData === `2`}
+          onChange={() => {
+            handleChange(`2`, "2");
+          }}
+        />
+        <RadioButton
+          value={chekedData === `3`}
+          onChange={() => {
+            handleChange(`3`, "3");
+          }}
+        />
+        <RadioButton
+          value={chekedData === `C`}
+          onChange={() => {
+            handleChange(`C`, "C");
+          }}
+        />
       </div>
     );
   };
-
-  // 사후평가데이터를 저장하는 함수
-  const setResult = (
-    checked: boolean,
-    checkedContent: string,
-    score: string
-  ) => {
-    if (checked) {
-      filterdArray = resultArray.concat({
-        content: checkedContent,
-        score: score,
-      });
-      setPostTestResult((state: postTestResultType[]) => {
-        state.concat(filterdArray as any);
-      });
-    } else {
-      filterdArray = resultArray.filter(({ content }) => {
-        return content !== checkedContent;
-      });
-      setPostTestResult((state: postTestResultType[]) => {
-        return filterdArray;
-      });
-    }
-  };
-
-  // 사후평가에 저장돼있는 객체(중복여부)의 value에 따라 true/false를 반환하는 함수
-  const duplication = useCallback(
-    (content: string) => {
-      let temp = filterdArray.find((a) => {
-        return a.content === content;
-      });
-      if (temp === undefined) {
-        return false;
-      } else return true;
-    },
-    [filterdArray]
-  );
 
   return (
     <Table>
@@ -143,12 +154,7 @@ const PostTestTable = ({
       {tableData.map(({ content }: { content: any }, i: number) => (
         <TableBody key={i}>
           <div>{content}</div>
-          <RadioGroup>
-            <Radio value="1" content={content} />
-            <Radio value="2" content={content} />
-            <Radio value="3" content={content} />
-            <Radio value="C" content={content} />
-          </RadioGroup>
+          <RadioGroup content={content} i={i}></RadioGroup>
         </TableBody>
       ))}
     </Table>

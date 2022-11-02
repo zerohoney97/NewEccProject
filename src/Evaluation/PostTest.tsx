@@ -26,7 +26,7 @@ const PostTest = () => {
   const [tableData,setTableData]=useState<any>(null);
   const selectedBigCategory = useRef<any>();
   // 평가결과
-  const [postTestResult, setPostTestResult] = useState<postTestResultType[]>([{content:'asd',score:'dd'}]);
+  const [postTestResult, setPostTestResult] = useState<postTestResultType[]>([]);
 
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
