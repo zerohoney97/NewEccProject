@@ -11,10 +11,14 @@ import {
 } from "./evaluationStyleComponent";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
 import { postTestResultType } from "../util/Type";
+import { useDispatch, useSelector } from "react-redux";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
 
 const PostTest = () => {
+  const selectedStudentInformaion = useSelector((state: any) => {
+    return state.studentInformation;
+  });
   // 대영역
   const [bigToggle, setBigToggle] = useState<boolean>(false);
   const [bigCategoryName, setBigCategoryName] = useState<string>("대항목");
@@ -23,10 +27,12 @@ const PostTest = () => {
   const [smallCategoryNum, setSmallCategoryNum] = useState<number>(0);
   const [smallCategoryName, setSmallCategoryName] = useState<any>("소항목");
 
-  const [tableData,setTableData]=useState<any>(null);
+  const [tableData, setTableData] = useState<any>(null);
   const selectedBigCategory = useRef<any>();
   // 평가결과
-  const [postTestResult, setPostTestResult] = useState<postTestResultType[]>([]);
+  const [postTestResult, setPostTestResult] = useState<postTestResultType[]>(
+    []
+  );
 
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
@@ -268,12 +274,49 @@ const PostTest = () => {
           </DropDown>
           <SmallCategory smallCategory={smallCategoryNum} />
         </div>
-       {tableData !== null && <PostTestTable tableData={tableData} postTestResult={postTestResult} setPostTestResult={setPostTestResult}></PostTestTable>} 
+        {tableData !== null && (
+          <PostTestTable
+            tableData={tableData}
+            postTestResult={postTestResult}
+            setPostTestResult={setPostTestResult}
+          ></PostTestTable>
+        )}
         <ButtonContainer>
-          <BackButton>이전으로</BackButton>
-          <NextButton onClick={()=>{
-            console.log(postTestResult);
-          }}>평가완료</NextButton>
+          <BackButton
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            이전으로
+          </BackButton>
+          <NextButton
+            onClick={() => {
+              let time = new Date();
+              let month = time.getMonth() + 1;
+              let currentTime =
+                time.getFullYear() +
+                "/" +
+                month +
+                "/" +
+                time.getDate() +
+                "/" +
+                time.getHours();
+              axios
+                .post("/putPostEccData", {
+                  result: postTestResult,
+                  uid: selectedStudentInformaion._id,
+                  date: currentTime,
+                  bigCategory: bigCategoryName,
+                  smallCategory: smallCategoryName,
+                })
+                .then((res) => {
+                  window.location.href = "http://localhost:3000/studentList";
+                });
+              console.log(postTestResult);
+            }}
+          >
+            평가완료
+          </NextButton>
         </ButtonContainer>
       </PostTestContainer>
     </>

@@ -8,18 +8,6 @@ const EccEvaluationTable = (props: any) => {
     smallCategory: string;
     evaluationDate: string;
   };
-  const [data, setData] = useState<studentEccInfo[]>([
-    {
-      bigCategory: "보조공학",
-      smallCategory: "책마루",
-      evaluationDate: "2022-10-20",
-    },
-    {
-      bigCategory: "점자",
-      smallCategory: "기초점자",
-      evaluationDate: "2022-03-02",
-    },
-  ]);
 
   const StudentTable = styled.table`
     width: 100%;
@@ -56,19 +44,31 @@ const EccEvaluationTable = (props: any) => {
     margin: auto;
     width: 80%;
   `;
+
   return (
     <StudentTable>
-      {data.map(({ bigCategory, smallCategory, evaluationDate }, i) => (
-        <>
-          <TableBody>
-            <div>{bigCategory}</div>
-            <div>{smallCategory}</div>
-            <div>{evaluationDate}</div>
+      {props.trigger ==='pre'?props.studentPreEvaluationData.map((a: any, i: number) => {
+        return( <>
+          <TableBody key={i}>
+            <div>{a.bigCategory}</div>
+            <div>{a.smallCategory}</div>
+            <div>{a.date}</div>
           </TableBody>
           <DivideLine />
-        </>
-      ))}
-
+        </>)
+       
+      }) : props.studentPostEvaluationData.map((a: any, i: number) => {
+        return( <>
+          <TableBody key={i}>
+            <div>{a.bigCategory}</div>
+            <div>{a.smallCategory}</div>
+            <div>{a.date}</div>
+          </TableBody>
+          <DivideLine />
+        </>)
+       
+      })}
+      
       {props.children}
     </StudentTable>
   );

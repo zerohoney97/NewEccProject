@@ -4,8 +4,7 @@ export interface studentList {
   gender: string;
   name: string;
   recent: string;
-  uid?: string;
-  _id?: string;
+  _id: string;
 }
 
 export interface clickedStudentInfo {

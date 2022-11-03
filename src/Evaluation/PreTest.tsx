@@ -10,10 +10,15 @@ import {
   DropDownContentsSmallCategory,
 } from "./evaluationStyleComponent";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
+import { useDispatch, useSelector } from "react-redux";
 import PreTestTable from "./PreTestTable";
 import axios from "axios";
 
 const PreTest = () => {
+  const selectedStudentInformaion = useSelector((state: any) => {
+    return state.studentInformation;
+  });
+
   // 대영역
   const [bigToggle, setBigToggle] = useState<boolean>(false);
   const [bigCategoryName, setBigCategoryName] = useState<string>("대항목");
@@ -21,7 +26,7 @@ const PreTest = () => {
   const [smallToggle, setSmallToggle] = useState<boolean>(false);
   const [smallCategoryNum, setSmallCategoryNum] = useState<number>(0);
   const [smallCategoryName, setSmallCategoryName] = useState<any>("소항목");
-  const [tableData,setTableData]=useState<any>(null);
+  const [tableData, setTableData] = useState<any>(null);
   const selectedBigCategory = useRef<any>();
   // 평가결과
   const [preTestResult, setPreTestResult] = useState<string[]>([]);
@@ -73,9 +78,10 @@ const PreTest = () => {
                     setSmallCategoryName((state: string) => {
                       return "소항목";
                     });
-                  }else {
-                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
-
+                  } else {
+                    setSmallCategoryName(
+                      (e.target as HTMLLIElement).textContent
+                    );
                   }
                 }}
               >
@@ -114,9 +120,10 @@ const PreTest = () => {
                     setSmallCategoryName((state: string) => {
                       return "소항목";
                     });
-                  }else {
-                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
-
+                  } else {
+                    setSmallCategoryName(
+                      (e.target as HTMLLIElement).textContent
+                    );
                   }
                 }}
               >
@@ -159,9 +166,10 @@ const PreTest = () => {
                     setSmallCategoryName((state: string) => {
                       return "소항목";
                     });
-                  }else {
-                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
-
+                  } else {
+                    setSmallCategoryName(
+                      (e.target as HTMLLIElement).textContent
+                    );
                   }
                 }}
               >
@@ -198,9 +206,10 @@ const PreTest = () => {
                     setSmallCategoryName((state: string) => {
                       return "소항목";
                     });
-                  }else {
-                  setSmallCategoryName((e.target as HTMLLIElement).textContent);
-
+                  } else {
+                    setSmallCategoryName(
+                      (e.target as HTMLLIElement).textContent
+                    );
                   }
                 }}
               >
@@ -296,13 +305,52 @@ const PreTest = () => {
           </DropDown>
           <SmallCategory smallCategory={smallCategoryNum} />
         </div>
-        {tableData !== null && <PreTestTable tableData={tableData} preTestResult={preTestResult} setPreTestResult={setPreTestResult}></PreTestTable>} 
+        {tableData !== null && (
+          <PreTestTable
+            tableData={tableData}
+            preTestResult={preTestResult}
+            setPreTestResult={setPreTestResult}
+          ></PreTestTable>
+        )}
 
         <ButtonContainer>
-          <BackButton>이전으로</BackButton>
-          <NextButton onClick={()=>{
-            console.log(preTestResult);
-          }}>평가완료</NextButton>
+          <BackButton
+            onClick={() => {
+              window.history.back();
+            }}
+          >
+            이전으로
+          </BackButton>
+          <NextButton
+            onClick={() => {
+              let time = new Date();
+              let month = time.getMonth() + 1;
+              let currentTime =
+                time.getFullYear() +
+                "/" +
+                month +
+                "/" +
+                time.getDate() +
+                "/" +
+                time.getHours();
+              axios
+                .post("/putPreEccData", {
+                  result: preTestResult,
+                  uid: selectedStudentInformaion._id,
+                  date: currentTime,
+                  bigCategory: bigCategoryName,
+                  smallCategory: smallCategoryName,
+                })
+                .then((res) => {
+                  window.location.href = "http://localhost:3000/studentList";
+                });
+              window.location.href = "http://localhost:3000/studentList";
+
+              console.log(preTestResult);
+            }}
+          >
+            평가완료
+          </NextButton>
         </ButtonContainer>
       </PreTestContainer>
     </>

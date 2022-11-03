@@ -45,7 +45,8 @@ const Table = ({ studentList }: { studentList: studentList[] }) => {
     attrClass: string,
     birth: string,
     recent: string,
-    gender: string
+    gender: string,
+    _id:string
   ) => {
     dispatch(
       setStudentInformation({
@@ -54,13 +55,14 @@ const Table = ({ studentList }: { studentList: studentList[] }) => {
         birth: birth,
         recent: recent,
         gender: gender,
+        uid:_id
       })
     );
   };
 
   return (
     <StudentTable>
-      {studentList.map(({ name, attrClass, birth, recent, gender }, i) => (
+      {studentList.map(({ name, attrClass, birth, recent, gender,_id }, i) => (
         <TableBody>
           <div>{name}</div>
           <div>{attrClass}</div>
@@ -70,7 +72,7 @@ const Table = ({ studentList }: { studentList: studentList[] }) => {
           <Link
             to="/studentInfo"
             onClick={() => {
-              setClickedStudent(name, attrClass, birth, recent, gender);
+              setClickedStudent(name, attrClass, birth, recent, gender,_id);
             }}
           >
             <GotoInfo className="goto-info" />

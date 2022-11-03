@@ -51,6 +51,7 @@ const PostTestTable = ({
   useEffect(() => {
     setPostTestResult(resultArray);
   }, [resultArray]);
+
   const setResult = (content: string, score: string) => {
     if (resultArray.length === 0) {
       resultArray.push({ content: content, score: score });
@@ -68,7 +69,6 @@ const PostTestTable = ({
         resultArray.push({ content: content, score: score });
       }
     }
-    console.log(resultArray);
   };
   // 라디오 버튼
   const RadioButton = ({ value, onChange }: { value: any; onChange: any }) => {
