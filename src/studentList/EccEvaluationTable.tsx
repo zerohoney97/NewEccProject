@@ -13,6 +13,12 @@ const EccEvaluationTable = (props: any) => {
     width: 100%;
     height: 500px;
     margin: auto;
+    transition: 0.25s;
+    cursor: pointer;
+    & :hover {
+      background: #e5e5e5;
+      transition: 0.25s;
+    }
   `;
 
   const TableBody = styled.div`
@@ -47,28 +53,32 @@ const EccEvaluationTable = (props: any) => {
 
   return (
     <StudentTable>
-      {props.trigger ==='pre'?props.studentPreEvaluationData.map((a: any, i: number) => {
-        return( <>
-          <TableBody key={i}>
-            <div>{a.bigCategory}</div>
-            <div>{a.smallCategory}</div>
-            <div>{a.date}</div>
-          </TableBody>
-          <DivideLine />
-        </>)
-       
-      }) : props.studentPostEvaluationData.map((a: any, i: number) => {
-        return( <>
-          <TableBody key={i}>
-            <div>{a.bigCategory}</div>
-            <div>{a.smallCategory}</div>
-            <div>{a.date}</div>
-          </TableBody>
-          <DivideLine />
-        </>)
-       
-      })}
-      
+      {props.trigger === "사전평가"
+        ? props.studentPreEvaluationData.map((a: any, i: number) => {
+            return (
+              <>
+                <TableBody key={i}>
+                  <div>{a.bigCategory}</div>
+                  <div>{a.smallCategory}</div>
+                  <div>{a.date}</div>
+                </TableBody>
+                <DivideLine />
+              </>
+            );
+          })
+        : props.studentPostEvaluationData.map((a: any, i: number) => {
+            return (
+              <>
+                <TableBody key={i}>
+                  <div>{a.bigCategory}</div>
+                  <div>{a.smallCategory}</div>
+                  <div>{a.date}</div>
+                </TableBody>
+                <DivideLine />
+              </>
+            );
+          })}
+
       {props.children}
     </StudentTable>
   );

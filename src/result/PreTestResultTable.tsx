@@ -3,38 +3,19 @@ import { useCallback } from "react";
 import styled from "styled-components";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
-const PreTestTable = ({
-  tableData,
-  preTestResult,
-  setPreTestResult,
+const PreTestResultTable = ({
+  tableData
 }: {
   tableData: any;
-  preTestResult: any;
-  setPreTestResult: any;
 }) => {
   // 체크박스 컴포넌트
   const Input = ({ content }: { content: string }) => {
-    const setResult = (checked: boolean, content: string) => {
-      if (checked) {
-        setPreTestResult(
-          preTestResult.concat(content)
-        );
-      } else{
-        setPreTestResult(
-        preTestResult.filter((a: string) => {
-          return a !== content;
-        })
-      );
-      }
-    };
+
     return (
       <input
         type={"checkbox"}
         style={{ zoom: "2.0" }}
-        onChange={(e) => {
-          setResult(e.target.checked, content);
-        }}
-        checked={preTestResult.includes(content) ? true : false}
+       
         className="checkBox"
       />
     );
@@ -92,4 +73,4 @@ const PreTestTable = ({
   );
 };
 
-export default PreTestTable;
+export default PreTestResultTable;

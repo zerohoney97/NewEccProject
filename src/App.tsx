@@ -10,6 +10,7 @@ import FindUserPass from "./Authentication/FindUserPass";
 import StudentList from "./studentList/StudentList";
 import StudentInfo from "./studentList/StudentInfo";
 import PreTest from "./Evaluation/PreTest";
+import PreTestResult from "./result/PreTestResult";
 import "./App.css";
 import PostTest from "./Evaluation/PostTest";
 import NavBar from "./util/NavBar";
@@ -33,6 +34,8 @@ function App() {
         <Route path="/studentInfo" element={<StudentInfo></StudentInfo>} />
         <Route path="/preTest" element={<PreTest></PreTest>} />
         <Route path="/postTest" element={<PostTest></PostTest>} />
+        <Route path="/preTestResult" element={<PreTestResult></PreTestResult>} />
+
       </Routes>
     </div>
   );

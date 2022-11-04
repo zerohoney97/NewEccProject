@@ -10,6 +10,7 @@ import axios from "axios";
 const Table = ({ studentList }: { studentList: studentList[] }) => {
   let dispatch = useDispatch();
 
+  
   const StudentTable = styled.table`
     width: 1200px;
     height: 500px;

@@ -23,15 +23,14 @@ const StudentInfo = () => {
   const [toggle, setToggle] = useState(false);
   // 학생의 사전평가 기록
   const [studentPreEvaluationData, setStudentPreEvaluationData] = useState("");
-//학생의 사후평가 기록
+  //학생의 사후평가 기록
   const [studentPostEvaluationData, setStudentPostEvaluationData] =
     useState("");
-    // 사전/사후평가를 바꾸는 트리거
-    const [trigger,setTrigger]=useState<string>('pre');
+  // 사전/사후평가를 바꾸는 트리거
+  const [trigger, setTrigger] = useState<string>("사전평가");
   const studentInfo = useSelector((state: any) => {
     return state.studentInformation;
   });
-
   useEffect(() => {
     axios
       .get("/getStudentPreEvaluationData", {
@@ -76,14 +75,23 @@ const StudentInfo = () => {
                 setToggle(!toggle);
               }}
             >
-              <span onClick={()=>{
-                setTrigger('pre');
-              }}>사전평가</span>
+              {trigger}
               <DropDownSVG />
               <DropDownContents toggle={toggle}>
-                <p onClick={()=>{
-                setTrigger('post');
-              }}>사후평가</p>
+                <p
+                  onClick={() => {
+                    setTrigger("사전평가");
+                  }}
+                >
+                  사전평가
+                </p>
+                <p
+                  onClick={() => {
+                    setTrigger("사후평가");
+                  }}
+                >
+                  사후평가
+                </p>
               </DropDownContents>
             </DropDown>
           </div>
