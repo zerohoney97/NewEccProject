@@ -1,16 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg";
 
-const NavBar = () => {
+const NavBar = ({isMobile}:{isMobile:any}) => {
+ 
+
   const NavBar = styled.div`
     margin: auto;
     width: 1200px;
     height: 110px;
     align-items: center;
     display: flex;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      height: 50%;
+      align-items: center;
+      display: flex;
+      justify-content: space-evenly;
+    }
   `;
 
   const NavBarDivideLine = styled.div`
@@ -25,7 +35,13 @@ const NavBar = () => {
     border-radius: 30px;
     background: #f5f5f5;
     border: silver;
-
+    @media screen and (max-width: 768px) {
+      width: 60%;
+      height: 100%;
+      border-radius: 30px;
+      background: #f5f5f5;
+      border: silver;
+    }
     &::placeholder {
       color: #999999;
     }
@@ -41,31 +57,48 @@ const NavBar = () => {
 
   return (
     <>
-      <NavBar>
-        <Link to="/studentList">
-          <EccLogo style={{ width: 76, height: 30.74 }} />
-        </Link>
-        <span style={{ display: "flex", marginLeft: 60 }}>
-          <Magnify
-            style={{
-              alignSelf: "center",
-              cursor: "pointer",
-              position: "relative",
-              right: -43,
-            }}
-          />
-          <SearchBar
-            placeholder="검색할 학생의 이름을 입력하세요"
-            style={{ paddingLeft: 40 }}
-          />
-        </span>
-        <span style={{ marginLeft: 60 }}>
-          <span style={{ color: "#00CF15", fontSize: 18 }}>홍길동</span>
-          <span style={{ fontSize: 18 }}>선생님! 환영합니다!</span>
-        </span>
-        <NavProfile />
-      </NavBar>
-      <NavBarDivideLine />
+      {isMobile ? (
+        <>
+          <NavBar>
+            <Link to="/studentList">
+              <EccLogo style={{ width: 76, height: 30.74 }} />
+            </Link>
+              <SearchBar
+                placeholder="검색할 학생의 이름을 입력하세요"
+                style={{ paddingLeft: 10 }}
+              />
+          </NavBar>
+          <NavBarDivideLine />
+        </>
+      ) : (
+        <>
+          <NavBar>
+            <Link to="/studentList">
+              <EccLogo style={{ width: 76, height: 30.74 }} />
+            </Link>
+            <span style={{ display: "flex", marginLeft: 60 }}>
+              <Magnify
+                style={{
+                  alignSelf: "center",
+                  cursor: "pointer",
+                  position: "relative",
+                  right: -43,
+                }}
+              />
+              <SearchBar
+                placeholder="검색할 학생의 이름을 입력하세요"
+                style={{ paddingLeft: 40 }}
+              />
+            </span>
+            <span style={{ marginLeft: 60 }}>
+              <span style={{ color: "#00CF15", fontSize: 18 }}>홍길동</span>
+              <span style={{ fontSize: 18 }}>선생님! 환영합니다!</span>
+            </span>
+            <NavProfile />
+          </NavBar>
+          <NavBarDivideLine />
+        </>
+      )}
     </>
   );
 };

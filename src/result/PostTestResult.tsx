@@ -7,11 +7,11 @@ import {
 } from "../Evaluation/evaluationStyleComponent";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
 import { useDispatch, useSelector } from "react-redux";
-import PreTestResultTable from "./PreTestResultTable";
+import PostTestResultTable from "./PostTestResultTable";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 
-const PreTestResult = ({isMobile}:{isMobile:any}) => {
+const PostTestResult = ({isMobile}:{isMobile:any}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
@@ -23,10 +23,11 @@ const PreTestResult = ({isMobile}:{isMobile:any}) => {
   useEffect(() => {
   // 학생의 사전평가 정보를 불러옴
     axios
-      .get("/getStudentPreEvaluationData", {
+      .get("/getStudentPostEvaluationData", {
         params: { studentData: selectedStudentInformaion },
       })
       .then((res) => {
+        console.log(res.data);
         filterdResult(res.data);
       });
   }, []);
@@ -49,7 +50,7 @@ const PreTestResult = ({isMobile}:{isMobile:any}) => {
       
       <PreTestContainer>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1>사전평가</h1>
+          <h1>사후평가</h1>
           <div style={{ alignSelf: "end" }}>
             <span style={{ color: "#999999" }}>반,이름:</span>
             <span style={{ fontWeight: "bold" }}> 3A김현아</span>
@@ -67,7 +68,7 @@ const PreTestResult = ({isMobile}:{isMobile:any}) => {
           }}
         ></div>
         {tableData !== null && (
-          <PreTestResultTable tableData={tableData}></PreTestResultTable>
+          <PostTestResultTable tableData={tableData}></PostTestResultTable>
         )}
 
         <ButtonContainer>
@@ -83,4 +84,4 @@ const PreTestResult = ({isMobile}:{isMobile:any}) => {
     </>
   );
 };
-export default PreTestResult;
+export default PostTestResult;

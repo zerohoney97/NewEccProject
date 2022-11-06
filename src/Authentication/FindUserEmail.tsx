@@ -16,7 +16,7 @@ const EccText = styled.h3`
   opacity: 0.4;
 `;
 
-const FindUserEmail = () => {
+const FindUserEmail = ({isMobile}:{isMobile:any}) => {
   const check = useRef<HTMLInputElement>(null);
   const [isChecked, setIschecked] = useState<boolean>(false);
 

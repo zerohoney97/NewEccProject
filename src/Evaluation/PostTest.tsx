@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
 
-const PostTest = () => {
+const PostTest = ({isMobile}:{isMobile:any}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
@@ -205,7 +205,7 @@ const PostTest = () => {
   );
   return (
     <>
-      <NavBar />
+      
       <PostTestContainer>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h1>사후평가</h1>

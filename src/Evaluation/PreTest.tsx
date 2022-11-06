@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PreTestTable from "./PreTestTable";
 import axios from "axios";
 
-const PreTest = () => {
+const PreTest = ({isMobile}:{isMobile:any}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
@@ -236,7 +236,7 @@ const PreTest = () => {
 
   return (
     <>
-      <NavBar />
+      
       <PreTestContainer>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h1>사전평가</h1>

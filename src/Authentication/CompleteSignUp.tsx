@@ -8,7 +8,7 @@ import {
   LoginButton,
 } from "./AuthenticationStyleComponent";
 
-const CompleteSignUp = () => {
+const CompleteSignUp = ({isMobile}:{isMobile:any}) => {
   const [userName, setUserName] = useState<string>("홍길동");
 
   const EccText = styled.h3`

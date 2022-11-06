@@ -25,7 +25,6 @@ const ValidateSignIn = () => {
             uid: uid,
             name: result.data.name,
           };
-          console.log(result);
           dispatch(setTeacherUidAndName(information));
         });
       // 로그인 여부를 판단하고 uid를 redux-persist에 저장

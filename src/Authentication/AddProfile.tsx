@@ -4,7 +4,7 @@ import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import { ReactComponent as EmptyProfile } from "../Resource/svg/emptyProfile.svg";
 import GlobalFont from "../Resource/font/fonts";
 import { AddProfileContainer,SkipButton } from "./AuthenticationStyleComponent";
-const AddProfile = () => {
+const AddProfile = ({isMobile}:{isMobile:any}) => {
    const EccText = styled.h3`
     font-family: "roboto";
     color: #3763ff;

@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import styled from "styled-components";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 
-const PreTestResultTable = ({ tableData }: { tableData: any }) => {
+const PostTestResultTable = ({ tableData }: { tableData: any }) => {
   // 체크박스 컴포넌트
   const Input = ({ content }: { content: string }) => {
     return (
@@ -54,14 +54,14 @@ const PreTestResultTable = ({ tableData }: { tableData: any }) => {
         <span style={{ fontWeight: "bold" }}>문항</span>
       </div>
       {Array.isArray(result) &&
-        result.map((a:string, i: number) => (
+        result.map((a:{content:string,score:string}, i: number) => (
           <TableBody key={i}>
-            <div>{a}</div>
-            <h2 style={{fontWeight:'bold'}}>C</h2>
+            <div>{a.content}</div>
+            <h2 style={{fontWeight:'bold'}}>{a.score}</h2>
           </TableBody>
         ))}
     </Table>
   );
 };
 
-export default PreTestResultTable;
+export default PostTestResultTable;
