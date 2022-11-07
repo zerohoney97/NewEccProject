@@ -11,7 +11,7 @@ import PreTestResultTable from "./PreTestResultTable";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 
-const PreTestResult = ({isMobile}:{isMobile:any}) => {
+const PreTestResult = ({isMobile}:{isMobile:boolean}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });

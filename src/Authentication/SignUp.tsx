@@ -24,7 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-const SignUp = ({isMobile}:{isMobile:any}) => {
+const SignUp = ({isMobile}:{isMobile:boolean}) => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
 

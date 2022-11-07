@@ -19,7 +19,7 @@ import { ReactComponent as Camera } from "../Resource/svg/camera.svg";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import axios from "axios";
 
-const StudentInfo = ({isMobile}:{isMobile:any}) => {
+const StudentInfo = ({isMobile}:{isMobile:boolean}) => {
   const [toggle, setToggle] = useState(false);
   // 학생의 사전평가 기록
   const [studentPreEvaluationData, setStudentPreEvaluationData] = useState("");

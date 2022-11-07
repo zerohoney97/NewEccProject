@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
 
-const PostTest = ({isMobile}:{isMobile:any}) => {
+const PostTest = ({isMobile}:{isMobile:boolean}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });

@@ -11,7 +11,7 @@ import PostTestResultTable from "./PostTestResultTable";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 
-const PostTestResult = ({isMobile}:{isMobile:any}) => {
+const PostTestResult = ({isMobile}:{isMobile:boolean}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });

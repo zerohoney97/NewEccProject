@@ -16,7 +16,7 @@ const EccText = styled.h3`
   opacity: 0.4;
 `;
 
-const FindUserPass = ({isMobile}:{isMobile:any}) => {
+const FindUserPass = ({isMobile}:{isMobile:boolean}) => {
   const check = useRef<HTMLInputElement>(null);
   const [isChecked, setIschecked] = useState<boolean>(false);
 

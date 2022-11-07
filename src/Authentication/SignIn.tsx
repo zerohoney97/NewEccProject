@@ -46,7 +46,7 @@ const signIn = (auth: any, email: any, password: any) => {
     });
 };
 
-const SignIn = ({isMobile}:{isMobile:any}) => {
+const SignIn = ({isMobile}:{isMobile:boolean}) => {
   const check = useRef<HTMLInputElement>(null);
   const [isChecked, setIschecked] = useState<boolean>(false);
   const email = useRef<HTMLInputElement>(null);

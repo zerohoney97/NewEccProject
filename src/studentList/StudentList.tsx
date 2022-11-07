@@ -6,7 +6,7 @@ import NavBar from "../util/NavBar";
 import axios from "axios";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import { useSelector } from "react-redux";
-const StudentList = ({isMobile}:{isMobile:any}) => {
+const StudentList = ({isMobile}:{isMobile:boolean}) => {
   const [studentList, setStudentList] = useState<studentList[]>([]);
   const teacherInfo = useSelector((state: any) => {
     return state.teacherInfo;
@@ -21,7 +21,6 @@ const StudentList = ({isMobile}:{isMobile:any}) => {
         setStudentList(temp);
       });
   }, []);
-
   return (
     <>
       

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PreTestTable from "./PreTestTable";
 import axios from "axios";
 
-const PreTest = ({isMobile}:{isMobile:any}) => {
+const PreTest = ({isMobile}:{isMobile:boolean}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
