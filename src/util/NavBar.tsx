@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
+import {
+  NavBarContainer,
+  NavBarDivideLine,
+  NavProfile,
+  DropDownContents,
+  SearchBar,
+  SearchedStudentList,
+} from "./utilStyledComponent";
 import { Link } from "react-router-dom";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg";
@@ -8,65 +16,48 @@ import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg"
 const NavBar = ({
   isMobile,
   studentList,
+  setStudentList,
+  setTempStudentList,
+  tempStudentList
 }: {
   isMobile: boolean;
-  studentList: any;
+  studentList: string[];
+  setStudentList: any;
+  setTempStudentList:any;
+  tempStudentList:string[];
+
 }) => {
-  let toggle = false;
-  const [inputData, setInputData] = useState<string>();
-  const NavBar = styled.div`
-    margin: auto;
-    width: 1200px;
-    height: 110px;
-    align-items: center;
-    display: flex;
-    @media screen and (max-width: 768px) {
-      width: 100%;
-      height: 50%;
-      align-items: center;
-      display: flex;
-      justify-content: space-evenly;
-    }
-  `;
+  // 검색된 학생을 담는 임시 리스트
+  const [inputData, setInputData] = useState("");
+  const dropDownContents = useRef<any>();
+  const [toggle, setToggle] = useState<boolean>(false);
+  //처음 마운트 될 때 임시 리스트에 저장하면 되므로 useEffect사용, 처음부터 정의를 하면 리랜더링마다 임시리스트가 초기화됨
+ 
 
-  const NavBarDivideLine = styled.div`
-    width: 100%;
-    border-bottom: 1px solid #3763ff;
-  `;
-
-  // 검색창
-  const SearchBar = styled.input`
-    width: 700px;
-    height: 54px;
-    border-radius: 30px;
-    background: #f5f5f5;
-    border: silver;
-    position: relative;
-    @media screen and (max-width: 768px) {
-      width: 60%;
-      height: 100%;
-      border-radius: 30px;
-      background: #f5f5f5;
-      border: silver;
+  const handleChange = (e: any) => {
+    setInputData(e.target.value);
+    setToggle(true);
+    if (Array.isArray(tempStudentList)) {
+      studentList.forEach((a) => {
+        if (a === e.target.value) {
+          setTempStudentList(a);
+          setToggle(true);
+        }
+      });
     }
-    &::placeholder {
-      color: #999999;
+  };
+  const ValidateArray = () => {
+    if (Array.isArray(tempStudentList)) {
+      return true;
+    } else {
+      return false;
     }
-  `;
-  // 네비게이션 끝에있는 프로필 사진
-  const NavProfile = styled.div`
-    margin: auto;
-    width: 46px;
-    height: 46px;
-    border-radius: 30px;
-    background: #d9d9d9;
-  `;
-
+  };
   return (
     <>
       {isMobile ? (
         <>
-          <NavBar>
+          <NavBarContainer>
             <Link to="/studentList">
               <EccLogo style={{ width: 76, height: 30.74 }} />
             </Link>
@@ -74,12 +65,12 @@ const NavBar = ({
               placeholder="검색할 학생의 이름을 입력하세요"
               style={{ paddingLeft: 10 }}
             ></SearchBar>
-          </NavBar>
+          </NavBarContainer>
           <NavBarDivideLine />
         </>
       ) : (
         <>
-          <NavBar>
+          <NavBarContainer>
             <Link to="/studentList">
               <EccLogo style={{ width: 76, height: 30.74 }} />
             </Link>
@@ -96,12 +87,17 @@ const NavBar = ({
                 <SearchBar
                   placeholder="검색할 학생의 이름을 입력하세요"
                   style={{ paddingLeft: 40 }}
-                  onClick={(e) => {
-                    toggle = true;
-                  }}
+                  value={inputData}
+                  onChange={handleChange}
                 />
-                <DropDownContents toggle={toggle}>
-                  <p>학생</p>
+                <DropDownContents ref={dropDownContents} toggle={toggle}>
+                  {ValidateArray() ? (
+                    tempStudentList.map((a: any, i: number) => {
+                      return <SearchedStudentList>{a}</SearchedStudentList>;
+                    })
+                  ) : (
+                    <SearchedStudentList>{tempStudentList}</SearchedStudentList>
+                  )}
                 </DropDownContents>
               </div>
             </span>
@@ -110,34 +106,12 @@ const NavBar = ({
               <span style={{ fontSize: 18 }}>선생님! 환영합니다!</span>
             </span>
             <NavProfile />
-          </NavBar>
+          </NavBarContainer>
           <NavBarDivideLine />
         </>
       )}
     </>
   );
 };
-const DropDownContents = ({
-  toggle,
-  children,
-}: {
-  toggle: boolean;
-  children: any;
-}) => {
-  const Content = styled.div<{ toggle: boolean }>`
-    display: ${(props) => (props.toggle ? "blodk" : "none")};
-    position: absolute;
-    background: #f5f5f5;
-    min-width: 10%;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    left: 5%;
-    border-radius: 10px;
-    z-index: 1;
-  `;
-  return (
-    <>
-      <Content toggle={toggle}> {children}</Content>
-    </>
-  );
-};
+
 export default NavBar;
