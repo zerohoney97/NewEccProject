@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -12,47 +13,55 @@ import {
 import { Link } from "react-router-dom";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg";
+import { useCallback } from "react";
+import { setStudentInformation } from "../redux/slice/studentReducer";
+import { studentList } from "../util/Type";
 
 const NavBar = ({
   isMobile,
   studentList,
-  setStudentList,
-  setTempStudentList,
-  tempStudentList
 }: {
   isMobile: boolean;
-  studentList: string[];
-  setStudentList: any;
-  setTempStudentList:any;
-  tempStudentList:string[];
-
+  studentList: studentList[];
 }) => {
+  let dispatch = useDispatch();
+  let newAttrClass: string;
+  let newBirth: string;
+  let newRecent: string;
+  let newGender: string;
+  let new_id: string;
+
   // 검색된 학생을 담는 임시 리스트
   const [inputData, setInputData] = useState("");
   const dropDownContents = useRef<any>();
   const [toggle, setToggle] = useState<boolean>(false);
-  //처음 마운트 될 때 임시 리스트에 저장하면 되므로 useEffect사용, 처음부터 정의를 하면 리랜더링마다 임시리스트가 초기화됨
- 
+  const setClickedStudent = (
+    name: string,
+    attrClass: string,
+    birth: string,
+    recent: string,
+    gender: string,
+    _id: string
+  ) => {
+    dispatch(
+      setStudentInformation({
+        name: name,
+        attrClass: attrClass,
+        birth: birth,
+        recent: recent,
+        gender: gender,
+        uid: _id,
+      })
+    );
+  };
+  const handleChange = useCallback(
+    (e: any) => {
+      setInputData(e.target.value);
+      setToggle(true);
+    },
+    [inputData]
+  );
 
-  const handleChange = (e: any) => {
-    setInputData(e.target.value);
-    setToggle(true);
-    if (Array.isArray(tempStudentList)) {
-      studentList.forEach((a) => {
-        if (a === e.target.value) {
-          setTempStudentList(a);
-          setToggle(true);
-        }
-      });
-    }
-  };
-  const ValidateArray = () => {
-    if (Array.isArray(tempStudentList)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
   return (
     <>
       {isMobile ? (
@@ -91,13 +100,36 @@ const NavBar = ({
                   onChange={handleChange}
                 />
                 <DropDownContents ref={dropDownContents} toggle={toggle}>
-                  {ValidateArray() ? (
-                    tempStudentList.map((a: any, i: number) => {
-                      return <SearchedStudentList>{a}</SearchedStudentList>;
+                  {/* 생검색 함수, 원래는 inputData를 비교해서 얻은 결과를 새로운 state에 넣어 view에 반환하려 했지만 
+                  제대로 화면에 나타나지 않아 이렇게 함 */}
+                  {studentList
+                    .filter((a) => {
+                      return a.name.includes(inputData);
                     })
-                  ) : (
-                    <SearchedStudentList>{tempStudentList}</SearchedStudentList>
-                  )}
+                    .map(
+                      ({ name, attrClass, birth, recent, gender, _id }, i) => {
+                        return (
+                          <Link
+                            to={`/studentInfo/${_id}`}
+                            style={{ textDecoration: "none", color: "black" }}
+                            onClick={() => {
+                              setClickedStudent(
+                                name,
+                                attrClass,
+                                birth,
+                                recent,
+                                gender,
+                                _id
+                              );
+                              setToggle(false);
+                              setInputData("");
+                            }}
+                          >
+                            <SearchedStudentList>{name}</SearchedStudentList>
+                          </Link>
+                        );
+                      }
+                    )}
                 </DropDownContents>
               </div>
             </span>

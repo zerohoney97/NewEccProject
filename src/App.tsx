@@ -17,18 +17,14 @@ import "./App.css";
 import PostTest from "./Evaluation/PostTest";
 import NavBar from "./util/NavBar";
 import axios from "axios";
-function App() {
-  const [studentList, setStudentList] = useState<string[]>([]);
-  const [tempStudentList, setTempStudentList] = useState<string[]>([]);
+import { studentList } from "./util/Type";
 
+function App() {
+  const [studentList, setStudentList] = useState<studentList[]>([]);
   useEffect(() => {
     axios.get("/getStudent").then((res) => {
       let tempArray = res.data;
-      tempArray = res.data.map((a: any, i: number) => {
-        return a.name;
-      });
       setStudentList(tempArray);
-      setTempStudentList(tempArray);
     });
   }, []);
 
@@ -39,9 +35,6 @@ function App() {
     <div className="App">
       <NavBar
         studentList={studentList}
-        setStudentList={setStudentList}
-        tempStudentList={tempStudentList}
-        setTempStudentList={setTempStudentList}
         isMobile={isMobile}
       />
       <Routes>
@@ -68,7 +61,8 @@ function App() {
           element={<StudentList isMobile={isMobile}></StudentList>}
         />
         <Route
-          path="/studentInfo"
+        
+          path="/studentInfo/:uid"
           element={<StudentInfo isMobile={isMobile}></StudentInfo>}
         />
         <Route

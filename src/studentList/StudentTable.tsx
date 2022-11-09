@@ -10,7 +10,6 @@ import axios from "axios";
 const Table = ({ studentList }: { studentList: studentList[] }) => {
   let dispatch = useDispatch();
 
-  
   const StudentTable = styled.table`
     width: 1200px;
     height: 500px;
@@ -47,7 +46,7 @@ const Table = ({ studentList }: { studentList: studentList[] }) => {
     birth: string,
     recent: string,
     gender: string,
-    _id:string
+    _id: string
   ) => {
     dispatch(
       setStudentInformation({
@@ -56,14 +55,14 @@ const Table = ({ studentList }: { studentList: studentList[] }) => {
         birth: birth,
         recent: recent,
         gender: gender,
-        uid:_id
+        uid: _id,
       })
     );
   };
 
   return (
     <StudentTable>
-      {studentList.map(({ name, attrClass, birth, recent, gender,_id }, i) => (
+      {studentList.map(({ name, attrClass, birth, recent, gender, _id }, i) => (
         <TableBody>
           <div>{name}</div>
           <div>{attrClass}</div>
@@ -71,9 +70,9 @@ const Table = ({ studentList }: { studentList: studentList[] }) => {
           <div>{recent}</div>
           <div>{gender}</div>
           <Link
-            to="/studentInfo"
+            to={`/studentInfo/${_id}`}
             onClick={() => {
-              setClickedStudent(name, attrClass, birth, recent, gender,_id);
+              setClickedStudent(name, attrClass, birth, recent, gender, _id);
             }}
           >
             <GotoInfo className="goto-info" />

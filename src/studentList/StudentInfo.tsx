@@ -19,19 +19,21 @@ import { ReactComponent as Camera } from "../Resource/svg/camera.svg";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import axios from "axios";
 
-const StudentInfo = ({isMobile}:{isMobile:boolean}) => {
+const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   const [toggle, setToggle] = useState(false);
   // 학생의 사전평가 기록
   const [studentPreEvaluationData, setStudentPreEvaluationData] = useState("");
   //학생의 사후평가 기록
   const [studentPostEvaluationData, setStudentPostEvaluationData] =
     useState("");
+
   // 사전/사후평가를 바꾸는 트리거
   const [trigger, setTrigger] = useState<string>("사전평가");
   const studentInfo = useSelector((state: any) => {
     return state.studentInformation;
   });
   useEffect(() => {
+
     axios
       .get("/getStudentPreEvaluationData", {
         params: { studentData: studentInfo },
@@ -47,10 +49,10 @@ const StudentInfo = ({isMobile}:{isMobile:boolean}) => {
       .then((res) => {
         setStudentPostEvaluationData(res.data);
       });
-  }, []);
+      // 같은 페이지에서 uid값만 바뀌므로 studentInfo로 변화 감지하여 데이터를 새로 불러온다.
+  }, [studentInfo]);
   return (
     <>
-      
       <StudentInfoContainer>
         <StudentProfile>
           <Camera />
