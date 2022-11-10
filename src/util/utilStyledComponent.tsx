@@ -29,6 +29,17 @@ const DropDownContents = styled.div<{ toggle: boolean }>`
   left: 5%;
   border-radius: 10px;
   z-index: 1;
+  @media screen and (max-width: 768px) {
+    display: ${(props) => (props.toggle ? "block" : "none")};
+    position: absolute;
+    background: #f5f5f5;
+    min-width: 20%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    left: 35%;
+    top: 5%;
+    border-radius: 10px;
+    z-index: 1;
+  }
 `;
 // 검색창
 const SearchBar = styled.input`
@@ -40,7 +51,7 @@ const SearchBar = styled.input`
   position: relative;
   @media screen and (max-width: 768px) {
     width: 60%;
-    height: 100%;
+    height: 2rem;
     border-radius: 30px;
     background: #f5f5f5;
     border: silver;
@@ -62,17 +73,17 @@ const NavProfile = styled.div`
   background: #d9d9d9;
 `;
 // 검색되는 학생 리스트
-const SearchedStudentList=styled.p`
-    cursor: pointer;
-    &:hover{
-        background: #afaaaa;;
-    }
-`
+const SearchedStudentList = styled.p`
+  cursor: pointer;
+  &:hover {
+    background: #afaaaa;
+  }
+`;
 export {
   NavBarContainer,
   NavProfile,
   NavBarDivideLine,
   DropDownContents,
   SearchBar,
-  SearchedStudentList
+  SearchedStudentList,
 };

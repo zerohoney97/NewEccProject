@@ -10,6 +10,15 @@ const DropDownContentsBigCategory = styled.div<{ toggle: boolean }>`
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;
+  @media screen and (max-width: 768px){
+    display: ${(props) => (props.toggle ? "block" : "none")};
+  position: absolute;
+  background: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  }
 `;
 const DropDownContentsSmallCategory = styled.div<{ toggle: boolean }>`
   display: ${(props) => (props.toggle ? "block" : "none")};
@@ -19,6 +28,15 @@ const DropDownContentsSmallCategory = styled.div<{ toggle: boolean }>`
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;
+  @media screen and (max-width: 768px){
+    display: ${(props) => (props.toggle ? "block" : "none")};
+  position: absolute;
+  background: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  }
 `;
 const DropDown = styled.div`
   width: 10%;
@@ -26,6 +44,13 @@ const DropDown = styled.div`
   background: #e5e5e5;
   position: relative;
   cursor: pointer;
+  @media screen and (max-width: 768px){
+    width: 20%;
+  padding: 15px;
+  background: #e5e5e5;
+  position: relative;
+  cursor: pointer;
+  }
 `;
 
 export { DropDown, DropDownContentsBigCategory, DropDownContentsSmallCategory };
@@ -39,6 +64,12 @@ const PreTestContainer = styled.div`
   background: #fafafa;
   margin: auto;
   margin-top: 113px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    background: #fafafa;
+    margin: auto;
+    margin-top: 113px;
+  }
 `;
 const ButtonContainer = styled.div`
   display: flex;
@@ -71,11 +102,17 @@ export { PreTestContainer, ButtonContainer, BackButton, NextButton };
 // PostTest
 
 const PostTestContainer = styled.div`
-  width: 80%;
+    width: 1200px;
   height: 500px;
   background: #fafafa;
   margin: auto;
   margin-top: 113px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    background: #fafafa;
+    margin: auto;
+    margin-top: 113px;
+  }
 `;
 
 export { PostTestContainer };

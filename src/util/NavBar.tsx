@@ -73,7 +73,39 @@ const NavBar = ({
             <SearchBar
               placeholder="검색할 학생의 이름을 입력하세요"
               style={{ paddingLeft: 10 }}
-            ></SearchBar>
+              value={inputData}
+              onChange={handleChange}
+            />
+            <DropDownContents ref={dropDownContents} toggle={toggle}>
+              {/* 생검색 함수, 원래는 inputData를 비교해서 얻은 결과를 새로운 state에 넣어 view에 반환하려 했지만 
+            제대로 화면에 나타나지 않아 이렇게 함 */}
+              {studentList
+                .filter((a) => {
+                  return a.name.includes(inputData);
+                })
+                .map(({ name, attrClass, birth, recent, gender, _id }, i) => {
+                  return (
+                    <Link
+                      to={`/studentInfo/${_id}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                      onClick={() => {
+                        setClickedStudent(
+                          name,
+                          attrClass,
+                          birth,
+                          recent,
+                          gender,
+                          _id
+                        );
+                        setToggle(false);
+                        setInputData("");
+                      }}
+                    >
+                      <SearchedStudentList>{name}</SearchedStudentList>
+                    </Link>
+                  );
+                })}
+            </DropDownContents>
           </NavBarContainer>
           <NavBarDivideLine />
         </>

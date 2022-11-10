@@ -6,6 +6,11 @@ const StudentListContainer = styled.div`
   background: #fafafa;
   margin: auto;
   width: 1200px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    background: #fafafa;
+    margin: auto;
+  }
 `;
 
 // 학생 더보기 버튼
@@ -23,12 +28,24 @@ const StudentTableHead = styled.div`
   width: 100%;
   margin-top: 30px;
   justify-content: space-around;
-  & span{
+  & span {
     margin-left: 20px;
     width: 16%;
   }
+  @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    background: #fafafa;
+    margin: auto;
+    margin-top: 30px;
+    & span {
+      margin-left: 20px;
+      width: 30%;
+    }
+  }
 `;
-export { StudentListContainer, MoreButton,StudentTableHead };
+export { StudentListContainer, MoreButton, StudentTableHead };
 
 // StudentList
 
@@ -38,6 +55,10 @@ const StudentInfoContainer = styled.div`
   margin: auto;
   width: 1200px;
   height: 500px;
+  @media screen and (max-width: 768px) {
+    margin: auto;
+    width: 100%;
+  }
 `;
 
 // 학생 프로필
@@ -51,10 +72,21 @@ const StudentProfile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin: auto;
+    margin-top: 50px;
+    background: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const DivideLine = styled.div`
-  width: 714px;
+  width: 100%;
   margin: auto;
   border-bottom: 1px solid #e5e5e5;
 `;
@@ -63,6 +95,10 @@ const MiddleContainer = styled.div`
   margin: auto;
   width: 714px;
   height: 100%;
+  @media screen and (max-width: 768px) {
+    margin: auto;
+    width: 100%;
+  }
 `;
 
 // 드롭다운
@@ -91,6 +127,13 @@ const EvaluationList = styled.div`
   padding-top: 30px;
   margin-top: 20px;
   background: #ffffff;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: auto;
+    padding-top: 30px;
+    margin-top: 20px;
+    background: #ffffff;
+  }
 `;
 // 사전평가 버튼
 

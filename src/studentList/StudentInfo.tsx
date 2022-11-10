@@ -33,7 +33,6 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
     return state.studentInformation;
   });
   useEffect(() => {
-
     axios
       .get("/getStudentPreEvaluationData", {
         params: { studentData: studentInfo },
@@ -49,91 +48,176 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
       .then((res) => {
         setStudentPostEvaluationData(res.data);
       });
-      // 같은 페이지에서 uid값만 바뀌므로 studentInfo로 변화 감지하여 데이터를 새로 불러온다.
+    // 같은 페이지에서 uid값만 바뀌므로 studentInfo로 변화 감지하여 데이터를 새로 불러온다.
   }, [studentInfo]);
   return (
     <>
-      <StudentInfoContainer>
-        <StudentProfile>
-          <Camera />
-        </StudentProfile>
-        <h1 style={{ display: "inline-block" }}>{studentInfo.name}</h1>
-        <span>{studentInfo.attrClass} 반</span>
-        <DivideLine />
-        <MiddleContainer>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: 24,
-            }}
-          >
-            <div>
-              총 <span style={{ color: "blue" }}>0</span>건
-            </div>
-            <DropDown
-              onClick={() => {
-                setToggle(!toggle);
+      {isMobile ? (
+        <StudentInfoContainer>
+          <StudentProfile>
+            <Camera />
+          </StudentProfile>
+          <h1 style={{ display: "inline-block" }}>{studentInfo.name}</h1>
+          <span>{studentInfo.attrClass} 반</span>
+          <DivideLine />
+          <MiddleContainer>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: 24,
               }}
             >
-              {trigger}
-              <DropDownSVG />
-              <DropDownContents toggle={toggle}>
-                <p
-                  onClick={() => {
-                    setTrigger("사전평가");
-                  }}
-                >
-                  사전평가
-                </p>
-                <p
-                  onClick={() => {
-                    setTrigger("사후평가");
-                  }}
-                >
-                  사후평가
-                </p>
-              </DropDownContents>
-            </DropDown>
-          </div>
-          <EvaluationList>
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <span>
-                카테고리
-                <Sort />
-              </span>
-              <span>
-                영역
-                <Sort />
-              </span>
-              <span>
-                검사날짜
-                <Sort />
-              </span>
-            </div>
-            {studentPreEvaluationData !== "" &&
-            studentPostEvaluationData !== "" ? (
-              <EccEvaluationTable
-                studentInfo={studentInfo}
-                studentPreEvaluationData={studentPreEvaluationData}
-                studentPostEvaluationData={studentPostEvaluationData}
-                trigger={trigger}
-                setTrigger={setTrigger}
+              <div>
+                총 <span style={{ color: "blue" }}>0</span>건
+              </div>
+              <DropDown
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
               >
-                <Link to="/preTest">
-                  <PreEccEvaButton style={{ marginTop: 40 }}>
+                {trigger}
+                <DropDownSVG />
+                <DropDownContents toggle={toggle}>
+                  <p
+                    onClick={() => {
+                      setTrigger("사전평가");
+                    }}
+                  >
                     사전평가
-                  </PreEccEvaButton>
-                </Link>
-                <Link to="/postTest">
-                  <PostEccEvaButton>사후평가</PostEccEvaButton>
-                </Link>
-              </EccEvaluationTable>
-            ) : null}
-          </EvaluationList>
-        </MiddleContainer>
-      </StudentInfoContainer>
+                  </p>
+                  <p
+                    onClick={() => {
+                      setTrigger("사후평가");
+                    }}
+                  >
+                    사후평가
+                  </p>
+                </DropDownContents>
+              </DropDown>
+            </div>
+            <EvaluationList>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <span>
+                  카테고리
+                  <Sort />
+                </span>
+                <span>
+                  영역
+                  <Sort />
+                </span>
+                <span>
+                  검사날짜
+                  <Sort />
+                </span>
+              </div>
+              {studentPreEvaluationData !== "" &&
+              studentPostEvaluationData !== "" ? (
+                <EccEvaluationTable
+                isMobile={isMobile}
+                  studentInfo={studentInfo}
+                  studentPreEvaluationData={studentPreEvaluationData}
+                  studentPostEvaluationData={studentPostEvaluationData}
+                  trigger={trigger}
+                  setTrigger={setTrigger}
+                >
+                  <Link to="/preTest">
+                    <PreEccEvaButton style={{ marginTop: 40 }}>
+                      사전평가
+                    </PreEccEvaButton>
+                  </Link>
+                  <Link to="/postTest">
+                    <PostEccEvaButton>사후평가</PostEccEvaButton>
+                  </Link>
+                </EccEvaluationTable>
+              ) : null}
+            </EvaluationList>
+          </MiddleContainer>
+        </StudentInfoContainer>
+      ) : (
+        <StudentInfoContainer>
+          <StudentProfile>
+            <Camera />
+          </StudentProfile>
+          <h1 style={{ display: "inline-block" }}>{studentInfo.name}</h1>
+          <span>{studentInfo.attrClass} 반</span>
+          <DivideLine />
+          <MiddleContainer>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: 24,
+              }}
+            >
+              <div>
+                총 <span style={{ color: "blue" }}>0</span>건
+              </div>
+              <DropDown
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+              >
+                {trigger}
+                <DropDownSVG />
+                <DropDownContents toggle={toggle}>
+                  <p
+                    onClick={() => {
+                      setTrigger("사전평가");
+                    }}
+                  >
+                    사전평가
+                  </p>
+                  <p
+                    onClick={() => {
+                      setTrigger("사후평가");
+                    }}
+                  >
+                    사후평가
+                  </p>
+                </DropDownContents>
+              </DropDown>
+            </div>
+            <EvaluationList>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <span>
+                  카테고리
+                  <Sort />
+                </span>
+                <span>
+                  영역
+                  <Sort />
+                </span>
+                <span>
+                  검사날짜
+                  <Sort />
+                </span>
+              </div>
+              {studentPreEvaluationData !== "" &&
+              studentPostEvaluationData !== "" ? (
+                <EccEvaluationTable
+                  studentInfo={studentInfo}
+                  studentPreEvaluationData={studentPreEvaluationData}
+                  studentPostEvaluationData={studentPostEvaluationData}
+                  trigger={trigger}
+                  setTrigger={setTrigger}
+                >
+                  <Link to="/preTest">
+                    <PreEccEvaButton style={{ marginTop: 40 }}>
+                      사전평가
+                    </PreEccEvaButton>
+                  </Link>
+                  <Link to="/postTest">
+                    <PostEccEvaButton>사후평가</PostEccEvaButton>
+                  </Link>
+                </EccEvaluationTable>
+              ) : null}
+            </EvaluationList>
+          </MiddleContainer>
+        </StudentInfoContainer>
+      )}
     </>
   );
 };

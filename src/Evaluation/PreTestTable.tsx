@@ -7,24 +7,24 @@ const PreTestTable = ({
   tableData,
   preTestResult,
   setPreTestResult,
+  isMobile,
 }: {
   tableData: any;
   preTestResult: any;
   setPreTestResult: any;
+  isMobile: boolean;
 }) => {
   // 체크박스 컴포넌트
   const Input = ({ content }: { content: string }) => {
     const setResult = (checked: boolean, content: string) => {
       if (checked) {
+        setPreTestResult(preTestResult.concat(content));
+      } else {
         setPreTestResult(
-          preTestResult.concat(content)
+          preTestResult.filter((a: string) => {
+            return a !== content;
+          })
         );
-      } else{
-        setPreTestResult(
-        preTestResult.filter((a: string) => {
-          return a !== content;
-        })
-      );
       }
     };
     return (
@@ -50,6 +50,16 @@ const PreTestTable = ({
     padding-right: 50px;
     padding-top: 40px;
     border: 1px solid #e5e5e5;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      background: #ffffff;
+      margin: auto;
+      margin-top: 30px;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 40px;
+      border: 1px solid #e5e5e5;
+    }
   `;
 
   const TableBody = styled.div`
@@ -72,23 +82,45 @@ const PreTestTable = ({
   `;
 
   return (
-    <Table>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <span style={{ fontWeight: "bold" }}>문항</span>
-        <span style={{ fontWeight: "bold", marginRight: "1rem" }}>C</span>
-      </div>
-      {tableData.map(({ content }: { content: any }, i: number) => (
-        <TableBody >
-          <div>{content}</div>
-          <Input key={i} content={content} />
-        </TableBody>
-      ))}
-    </Table>
+    <>
+      {isMobile ? (
+        <Table>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <span style={{ fontWeight: "bold" }}>문항</span>
+            <span style={{ fontWeight: "bold", marginRight: "1rem" }}>C</span>
+          </div>
+          {tableData.map(({ content }: { content: any }, i: number) => (
+            <TableBody>
+              <div>{content}</div>
+              <Input key={i} content={content} />
+            </TableBody>
+          ))}
+        </Table>
+      ) : (
+        <Table>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <span style={{ fontWeight: "bold" }}>문항</span>
+            <span style={{ fontWeight: "bold", marginRight: "1rem" }}>C</span>
+          </div>
+          {tableData.map(({ content }: { content: any }, i: number) => (
+            <TableBody>
+              <div>{content}</div>
+              <Input key={i} content={content} />
+            </TableBody>
+          ))}
+        </Table>
+      )}
+    </>
   );
 };
 

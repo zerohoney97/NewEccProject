@@ -33,10 +33,7 @@ function App() {
   });
   return (
     <div className="App">
-      <NavBar
-        studentList={studentList}
-        isMobile={isMobile}
-      />
+      <NavBar studentList={studentList} isMobile={isMobile} />
       <Routes>
         <Route path="/signIn" element={<SignIn isMobile={isMobile}></SignIn>} />
         <Route path="/signUp" element={<SignUp isMobile={isMobile}></SignUp>} />
@@ -61,7 +58,6 @@ function App() {
           element={<StudentList isMobile={isMobile}></StudentList>}
         />
         <Route
-        
           path="/studentInfo/:uid"
           element={<StudentInfo isMobile={isMobile}></StudentInfo>}
         />

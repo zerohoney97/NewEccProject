@@ -11,6 +11,7 @@ import { persistStore } from "redux-persist";
 import { createGlobalStyle } from "styled-components";
 import ScrollToTop from "./util/ScrollRestoration";
 import ValidateSignIn from "./util/ValidateSignIn";
+import Fonts from "./Resource/font/fonts";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -29,6 +30,7 @@ root.render(
           <GlobalStyle />
           <ValidateSignIn />
           <ScrollToTop />
+          <Fonts/>
           <App />
         </BrowserRouter>
       </PersistGate>

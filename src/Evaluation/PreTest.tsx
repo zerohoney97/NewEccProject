@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PreTestTable from "./PreTestTable";
 import axios from "axios";
 
-const PreTest = ({isMobile}:{isMobile:boolean}) => {
+const PreTest = ({ isMobile }: { isMobile: boolean }) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
@@ -236,123 +236,241 @@ const PreTest = ({isMobile}:{isMobile:boolean}) => {
 
   return (
     <>
-      
-      <PreTestContainer>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1>사전평가</h1>
-          <div style={{ alignSelf: "end" }}>
-            <span style={{ color: "#999999" }}>반,이름:</span>
-            <span style={{ fontWeight: "bold" }}> 3A김현아</span>
-            <span style={{ color: "#999999" }}> 대문항:</span>
-            <span style={{ fontWeight: "bold" }}> 보조공학</span>
-            <span style={{ color: "#999999" }}> 소문항:</span>
-            <span style={{ fontWeight: "bold" }}> 책마루</span>
+      {isMobile ? (
+        <PreTestContainer>
+           <h1>사전평가</h1>
+            <div style={{ alignSelf: "end",margin:'auto'}}>
+              <span style={{ color: "#999999" }}>반,이름:</span>
+              <span style={{ fontWeight: "bold" }}> 3A김현아</span>
+              <span style={{ color: "#999999" }}> 대문항:</span>
+              <span style={{ fontWeight: "bold" }}> 보조공학</span>
+              <span style={{ color: "#999999" }}> 소문항:</span>
+              <span style={{ fontWeight: "bold" }}> 책마루</span>
           </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginTop: 20,
-          }}
-        >
-          <DropDown
-            onClick={() => {
-              setBigToggle(!bigToggle);
-              setSmallCategoryName("소항목");
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginTop: 20,
             }}
           >
-            <span ref={selectedBigCategory}>대항목</span>
-            <DropDownSVG />
-            <DropDownContentsBigCategory toggle={bigToggle}>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("보조공학", 1);
-                }}
-              >
-                보조공학
-              </p>
+            <DropDown
+              onClick={() => {
+                setBigToggle(!bigToggle);
+                setSmallCategoryName("소항목");
+              }}
+            >
+              <span ref={selectedBigCategory}>대항목</span>
+              <DropDownSVG />
+              <DropDownContentsBigCategory toggle={bigToggle}>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보조공학", 1);
+                  }}
+                >
+                  보조공학
+                </p>
 
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("보행", 2);
-                }}
-              >
-                보행
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("사회적기술", 3);
-                }}
-              >
-                사회적기술
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("일상생활기술", 4);
-                }}
-              >
-                일상생활기술
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("점자", 5);
-                }}
-              >
-                점자
-              </p>
-            </DropDownContentsBigCategory>
-          </DropDown>
-          <SmallCategory smallCategory={smallCategoryNum} />
-        </div>
-        {tableData !== null && (
-          <PreTestTable
-            tableData={tableData}
-            preTestResult={preTestResult}
-            setPreTestResult={setPreTestResult}
-          ></PreTestTable>
-        )}
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보행", 2);
+                  }}
+                >
+                  보행
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("사회적기술", 3);
+                  }}
+                >
+                  사회적기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("일상생활기술", 4);
+                  }}
+                >
+                  일상생활기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("점자", 5);
+                  }}
+                >
+                  점자
+                </p>
+              </DropDownContentsBigCategory>
+            </DropDown>
+            <SmallCategory smallCategory={smallCategoryNum} />
+          </div>
+          {tableData !== null && (
+            <PreTestTable
+              isMobile={isMobile}
+              tableData={tableData}
+              preTestResult={preTestResult}
+              setPreTestResult={setPreTestResult}
+            ></PreTestTable>
+          )}
 
-        <ButtonContainer>
-          <BackButton
-            onClick={() => {
-              window.history.back();
+          <ButtonContainer>
+            <BackButton
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              이전으로
+            </BackButton>
+            <NextButton
+              onClick={() => {
+                let time = new Date();
+                let month = time.getMonth() + 1;
+                let currentTime =
+                  time.getFullYear() +
+                  "/" +
+                  month +
+                  "/" +
+                  time.getDate() +
+                  "/" +
+                  time.getHours();
+                axios
+                  .post("/putPreEccData", {
+                    result: preTestResult,
+                    uid: selectedStudentInformaion._id,
+                    date: currentTime,
+                    bigCategory: bigCategoryName,
+                    smallCategory: smallCategoryName,
+                  })
+                  .then((res) => {
+                    window.location.href = "http://localhost:3000/studentList";
+                  });
+                window.location.href = "http://localhost:3000/studentList";
+
+                console.log(preTestResult);
+              }}
+            >
+              평가완료
+            </NextButton>
+          </ButtonContainer>
+        </PreTestContainer>
+      ) : (
+        <PreTestContainer>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h1>사전평가</h1>
+            <div style={{ alignSelf: "end" }}>
+              <span style={{ color: "#999999" }}>반,이름:</span>
+              <span style={{ fontWeight: "bold" }}> 3A김현아</span>
+              <span style={{ color: "#999999" }}> 대문항:</span>
+              <span style={{ fontWeight: "bold" }}> 보조공학</span>
+              <span style={{ color: "#999999" }}> 소문항:</span>
+              <span style={{ fontWeight: "bold" }}> 책마루</span>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginTop: 20,
             }}
           >
-            이전으로
-          </BackButton>
-          <NextButton
-            onClick={() => {
-              let time = new Date();
-              let month = time.getMonth() + 1;
-              let currentTime =
-                time.getFullYear() +
-                "/" +
-                month +
-                "/" +
-                time.getDate() +
-                "/" +
-                time.getHours();
-              axios
-                .post("/putPreEccData", {
-                  result: preTestResult,
-                  uid: selectedStudentInformaion._id,
-                  date: currentTime,
-                  bigCategory: bigCategoryName,
-                  smallCategory: smallCategoryName,
-                })
-                .then((res) => {
-                  window.location.href = "http://localhost:3000/studentList";
-                });
-              window.location.href = "http://localhost:3000/studentList";
+            <DropDown
+              onClick={() => {
+                setBigToggle(!bigToggle);
+                setSmallCategoryName("소항목");
+              }}
+            >
+              <span ref={selectedBigCategory}>대항목</span>
+              <DropDownSVG />
+              <DropDownContentsBigCategory toggle={bigToggle}>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보조공학", 1);
+                  }}
+                >
+                  보조공학
+                </p>
 
-              console.log(preTestResult);
-            }}
-          >
-            평가완료
-          </NextButton>
-        </ButtonContainer>
-      </PreTestContainer>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보행", 2);
+                  }}
+                >
+                  보행
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("사회적기술", 3);
+                  }}
+                >
+                  사회적기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("일상생활기술", 4);
+                  }}
+                >
+                  일상생활기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("점자", 5);
+                  }}
+                >
+                  점자
+                </p>
+              </DropDownContentsBigCategory>
+            </DropDown>
+            <SmallCategory smallCategory={smallCategoryNum} />
+          </div>
+          {tableData !== null && (
+            <PreTestTable
+              isMobile={isMobile}
+              tableData={tableData}
+              preTestResult={preTestResult}
+              setPreTestResult={setPreTestResult}
+            ></PreTestTable>
+          )}
+
+          <ButtonContainer>
+            <BackButton
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              이전으로
+            </BackButton>
+            <NextButton
+              onClick={() => {
+                let time = new Date();
+                let month = time.getMonth() + 1;
+                let currentTime =
+                  time.getFullYear() +
+                  "/" +
+                  month +
+                  "/" +
+                  time.getDate() +
+                  "/" +
+                  time.getHours();
+                axios
+                  .post("/putPreEccData", {
+                    result: preTestResult,
+                    uid: selectedStudentInformaion._id,
+                    date: currentTime,
+                    bigCategory: bigCategoryName,
+                    smallCategory: smallCategoryName,
+                  })
+                  .then((res) => {
+                    window.location.href = "http://localhost:3000/studentList";
+                  });
+                window.location.href = "http://localhost:3000/studentList";
+
+                console.log(preTestResult);
+              }}
+            >
+              평가완료
+            </NextButton>
+          </ButtonContainer>
+        </PreTestContainer>
+      )}
     </>
   );
 };

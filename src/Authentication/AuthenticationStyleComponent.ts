@@ -9,7 +9,15 @@ const SignInContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  width: 30%;
+  @media screen and (max-width: 768px) {
+    margin: auto;
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
 `;
 // ecc 문구
 
@@ -80,7 +88,15 @@ const SignUpContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  width: 30%;
+  @media screen and (max-width: 768px) {
+    margin: auto;
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 // 회원가입 정보를 기입하는 inputarea를 감싸는 컨테이너
@@ -122,11 +138,26 @@ const SignUpButton = styled.button`
   cursor: pointer;
 `;
 
+const ValidateEmail=styled.h4<{emailToggle:boolean}>`
+display: ${(props)=>{return props.emailToggle ? 'block' : 'none'}};
+`
+const ValidatePassword=styled.h4<{passwordToggle:boolean}>`
+display: ${(props)=>{return props.passwordToggle ? 'block' : 'none'}};
+
+`
+const DuplicatePassword=styled.h4<{duplicateToggle:boolean}>`
+display: ${(props)=>{return props.duplicateToggle ? 'block' : 'none'}};
+
+`
+
 export {
   SignUpContainer,
   SignUpInputAreaContainer,
   SignUpInputArea,
   SignUpButton,
+  ValidateEmail,
+  ValidatePassword,
+  DuplicatePassword
 };
 // SingUp
 
