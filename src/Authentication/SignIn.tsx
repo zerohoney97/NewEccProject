@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
 import GlobalFont from "../Resource/font/fonts";
@@ -9,6 +10,7 @@ import {
   AutoLogin,
   AutoLoginCotainer,
   LoginButton,
+  GotoSignUpButton,
 } from "./AuthenticationStyleComponent";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -46,7 +48,7 @@ const signIn = (auth: any, email: any, password: any) => {
     });
 };
 
-const SignIn = ({isMobile}:{isMobile:boolean}) => {
+const SignIn = ({ isMobile }: { isMobile: boolean }) => {
   const check = useRef<HTMLInputElement>(null);
   const [isChecked, setIschecked] = useState<boolean>(false);
   const email = useRef<HTMLInputElement>(null);
@@ -92,6 +94,7 @@ const SignIn = ({isMobile}:{isMobile:boolean}) => {
       >
         로그인
       </LoginButton>
+     <Link to={'/signUp'} style={{marginTop:20}}><GotoSignUpButton >회원가입</GotoSignUpButton></Link> 
     </SignInContainer>
   );
 };

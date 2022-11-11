@@ -75,7 +75,7 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
     border: "#e5e5e5",
     background: "#999999",
     color: "white",
-    cursor:'pointer'
+    cursor: "pointer",
   } as React.CSSProperties;
 
   const EccText = styled.h3`
@@ -113,8 +113,6 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
                 setEmailToggle(true);
                 setEmailAccess(false);
                 setEmailDuplicateAccess(false);
-
-
               } else {
                 setEmailToggle(false);
                 setEmailAccess(true);
@@ -123,14 +121,12 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
           />
           <button
             style={btnStyle}
-
             onClick={() => {
               if (teacherNames.includes(email.current.value)) {
                 alert("중복된 이메일입니다.");
                 setEmailDuplicateAccess(false);
-
               } else {
-                alert('사용 가능한 이메일 입니다!');
+                alert("사용 가능한 이메일 입니다!");
                 setEmailDuplicateAccess(true);
               }
             }}
@@ -149,7 +145,6 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
             if (e.target.value.match(passwordRegEx) === null) {
               setPassWordToggle(true);
               setPasswordAccess(false);
-
             } else {
               setPassWordToggle(false);
               setPasswordAccess(true);
@@ -167,7 +162,6 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
             if (e.target.value !== password.current?.value) {
               setDuplicateToggle(true);
               setpasswordDuplicateAccess(false);
-
             } else {
               setDuplicateToggle(false);
               setpasswordDuplicateAccess(true);
@@ -181,29 +175,38 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
       <SignUpButton
         onClick={() => {
           if (
-            userName.current.value !== '' &&
-            email.current.value !== '' &&
-            birth.current.value!==''&&
-            password.current.value !== '' &&
+            userName.current.value !== "" &&
+            email.current.value !== "" &&
+            birth.current.value !== "" &&
+            password.current.value !== "" &&
             emailAccess &&
             passwordAccess &&
             emailDuplicateAccess &&
             passwordDuplicateAccess
           ) {
-            console.log('뚫림!');
-            // createUserWithEmailAndPassword(
-            //   auth,
-            //   email.current.value,
-            //   password.current.value
-            // )
-            //   .then((userCredential) => {
-            //     window.location.href='/studentList';
-            //     const user = userCredential.user;
-            //   })
-            //   .catch((error) => {
-            //     const errorCode = error.code;
-            //     const errorMessage = error.message;
-            //   });
+            
+            createUserWithEmailAndPassword(
+              auth,
+              email.current.value,
+              password.current.value
+            )
+              .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+                window.location.href = "/studentList";
+                axios.post("/doingSignUp", {
+                  name: userName.current.value,
+                  birth: birth.current.value,
+                  email: email.current.value,
+                  password: password.current.value,
+                  uid:user.uid
+                });
+                
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+              });
           } else {
             if (!emailAccess) {
               alert("이메일 형식을 맞춰주세요");

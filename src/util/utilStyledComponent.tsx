@@ -3,10 +3,11 @@ import styled from "styled-components";
 // NavBar
 const NavBarContainer = styled.div`
   margin: auto;
-  width: 1200px;
+  width: 1300px;
   height: 110px;
   align-items: center;
   display: flex;
+  justify-content: space-evenly;
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 50%;
@@ -79,6 +80,16 @@ const SearchedStudentList = styled.p`
     background: #afaaaa;
   }
 `;
+// 로그아웃
+const LogOut = styled.button`
+  width: 4rem;
+  height: 2rem;
+  background: #3763ff;
+  border-radius: 10px;
+  color: white;
+  border: white;
+  cursor: pointer;
+`;
 export {
   NavBarContainer,
   NavProfile,
@@ -86,4 +97,5 @@ export {
   DropDownContents,
   SearchBar,
   SearchedStudentList,
+  LogOut
 };

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useMediaQuery } from "react-responsive";
 import {
   NavBarContainer,
@@ -9,6 +10,7 @@ import {
   DropDownContents,
   SearchBar,
   SearchedStudentList,
+  LogOut,
 } from "./utilStyledComponent";
 import { Link } from "react-router-dom";
 import { ReactComponent as EccLogo } from "../Resource/svg/EccLogo.svg";
@@ -16,6 +18,7 @@ import { ReactComponent as Magnify } from "../Resource/svg/ magnifyingGlass.svg"
 import { useCallback } from "react";
 import { setStudentInformation } from "../redux/slice/studentReducer";
 import { studentList } from "../util/Type";
+const auth = getAuth();
 
 const NavBar = ({
   isMobile,
@@ -106,6 +109,7 @@ const NavBar = ({
                   );
                 })}
             </DropDownContents>
+            <h2>로그아웃</h2>
           </NavBarContainer>
           <NavBarDivideLine />
         </>
@@ -170,6 +174,19 @@ const NavBar = ({
               <span style={{ fontSize: 18 }}>선생님! 환영합니다!</span>
             </span>
             <NavProfile />
+            <LogOut
+              onClick={() => {
+                signOut(auth)
+                  .then(() => {
+                    window.location.href = "/signIn";
+                  })
+                  .catch((error) => {
+                    // An error happened.
+                  });
+              }}
+            >
+              로그아웃
+            </LogOut>
           </NavBarContainer>
           <NavBarDivideLine />
         </>

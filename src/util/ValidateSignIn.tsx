@@ -1,17 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { useNavigate } from "react-router-dom";
 import { firebaseConfig } from "../Authentication/SignIn";
 import { setTeacherUidAndName } from "../redux/slice/userReducer";
 
 import axios from "axios";
+import { useParams } from "react-router";
 
 const auth = getAuth();
 
 const ValidateSignIn = () => {
+  // 로그인이 안됐을 경우 강제이동 시키는 hook
+  const navigate = useNavigate();
+
   const app = initializeApp(firebaseConfig);
   let dispatch = useDispatch();
-
+  let link = document.location.href;
+  console.log(link.split("/")[3]);
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -25,17 +31,27 @@ const ValidateSignIn = () => {
             uid: uid,
             name: result.data.name,
           };
-         dispatch(setTeacherUidAndName(information));
+          dispatch(setTeacherUidAndName(information));
+          if (
+            link.split("/")[3] === "signUp" ||
+            link.split("/")[3] === "signIn"
+          ) {
+            alert("이미 로그인 되어 있습니다!");
+            navigate("/studentList");
+          }
         });
       // 로그인 여부를 판단하고 uid를 redux-persist에 저장
       // ...
     } else {
       // User is signed out
       // ...
-      alert("먼저 로그인해 주세요");
+      if (link.split("/")[3] !== "signUp" &&  link.split("/")[3] !== "signIn") {
+        alert("먼저 로그인해 주세요");
+        navigate("/signIn");
+      }
     }
   });
-  return(<></>)
+  return <></>;
 };
 
 export default ValidateSignIn;

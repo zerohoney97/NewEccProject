@@ -66,6 +66,18 @@ const LoginButton = styled.button`
   margin: auto;
   cursor: pointer;
 `;
+
+const GotoSignUpButton = styled.button`
+  width: 80%;
+  height: 40px;
+  background: #3763ff;
+  border: white;
+  border-radius: 5px;
+  color: white;
+  font-size: x-large;
+  margin: auto;
+  cursor: pointer;
+`;
 export {
   SignInContainer,
   EccText,
@@ -74,6 +86,7 @@ export {
   AutoLoginCotainer,
   AutoLogin,
   LoginButton,
+  GotoSignUpButton
 };
 
 // SingIn
