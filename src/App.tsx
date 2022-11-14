@@ -17,13 +17,19 @@ import "./App.css";
 import PostTest from "./Evaluation/PostTest";
 import NavBar from "./util/NavBar";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { studentList } from "./util/Type";
 
 function App() {
   const [studentList, setStudentList] = useState<studentList[]>([]);
+  const teacherUid = useSelector((state: any) => {
+    return state.teacherInfo.uid;
+  });
   useEffect(() => {
     axios.get("/getStudent").then((res) => {
-      let tempArray = res.data;
+      let tempArray = res.data.filter((a:any) => {
+        return a.uid === teacherUid;
+      });
       setStudentList(tempArray);
     });
   }, []);

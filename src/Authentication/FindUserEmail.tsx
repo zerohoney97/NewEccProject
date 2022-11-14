@@ -9,16 +9,20 @@ import {
   AutoLogin,
   AutoLoginCotainer,
   LoginButton,
+  FindedTeacherEmail,
 } from "./AuthenticationStyleComponent";
+import axios from "axios";
 const EccText = styled.h3`
   font-family: "roboto";
   color: #3763ff;
   opacity: 0.4;
 `;
 
-const FindUserEmail = ({isMobile}:{isMobile:boolean}) => {
-  const check = useRef<HTMLInputElement>(null);
-  const [isChecked, setIschecked] = useState<boolean>(false);
+const FindUserEmail = ({ isMobile }: { isMobile: boolean }) => {
+  const [teacherEmail, setTeacherEmail] = useState<string>();
+  const [toggle, setToggle] = useState<boolean>(false);
+  const name = useRef<any>(null);
+  const birth = useRef<any>(null);
 
   // useEffect(() => {
   //   alert(`${isChecked === true ? "자동로그인 적용" : "자동로그인 해제"}`);
@@ -31,10 +35,32 @@ const FindUserEmail = ({isMobile}:{isMobile:boolean}) => {
       <EccText>EXPANDED CORE CURRICULUM</EccText>
       <h1>이메일 찾기</h1>
       <SignInInputAreaContainer>
-        <SignInInputArea placeholder="이름" />
-        <SignInInputArea placeholder="생년월일" />
+        <SignInInputArea ref={name} placeholder="이름" />
+        <SignInInputArea ref={birth} placeholder="생년월일" />
       </SignInInputAreaContainer>
-      <LoginButton style={{'marginTop':30}}>이메일 찾기</LoginButton>
+      <LoginButton
+        style={{ marginTop: 30 }}
+        onClick={() => {
+          axios
+            .get("/getTeacherEmail", {
+              params: {
+                name: name.current.value,
+                birth: birth.current.value,
+              },
+            })
+            .then((res) => {
+              setToggle(true);
+              setTeacherEmail(res.data);
+            });
+        }}
+      >
+        이메일 찾기
+      </LoginButton>
+      <FindedTeacherEmail toggle={toggle}>
+        <h2>선생님의 이메일은</h2>
+        <div style={{ color: "#3763ff" }}>{teacherEmail}</div>
+        <span>입니다!</span>
+      </FindedTeacherEmail>
     </SignInContainer>
   );
 };

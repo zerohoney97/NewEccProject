@@ -38,6 +38,14 @@ const NavBar = ({
   const [inputData, setInputData] = useState("");
   const dropDownContents = useRef<any>();
   const [toggle, setToggle] = useState<boolean>(false);
+  const [isLogined, setIsLogined] = useState<boolean>(false);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogined(true);
+      }
+    });
+  });
   const setClickedStudent = (
     name: string,
     attrClass: string,
@@ -109,7 +117,20 @@ const NavBar = ({
                   );
                 })}
             </DropDownContents>
-            <h2>로그아웃</h2>
+            <LogOut
+              onClick={() => {
+                signOut(auth)
+                  .then(() => {
+                    window.location.href = "/signIn";
+                  })
+                  .catch((error) => {
+                    // An error happened.
+                  });
+              }}
+              style={{ display: `${isLogined ? "block" : "none"}` }}
+            >
+              로그아웃
+            </LogOut>
           </NavBarContainer>
           <NavBarDivideLine />
         </>
@@ -184,6 +205,7 @@ const NavBar = ({
                     // An error happened.
                   });
               }}
+              style={{ display: `${isLogined ? "block" : "none"}` }}
             >
               로그아웃
             </LogOut>

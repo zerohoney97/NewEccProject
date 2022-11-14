@@ -11,6 +11,13 @@ import { useParams } from "react-router";
 const auth = getAuth();
 
 const ValidateSignIn = () => {
+  //로그인이 필요없는 특정 주소
+  const exceptionURL = {
+    signUp: "signUp",
+    signIn: "signIn",
+    findEmail: "findEmail",
+    findPass: "findPass",
+  };
   // 로그인이 안됐을 경우 강제이동 시키는 hook
   const navigate = useNavigate();
 
@@ -33,8 +40,10 @@ const ValidateSignIn = () => {
           };
           dispatch(setTeacherUidAndName(information));
           if (
-            link.split("/")[3] === "signUp" ||
-            link.split("/")[3] === "signIn"
+            link.split("/")[3] === exceptionURL.signUp ||
+            link.split("/")[3] === exceptionURL.signIn ||
+            link.split("/")[3] === exceptionURL.findEmail ||
+            link.split("/")[3] === exceptionURL.findPass
           ) {
             alert("이미 로그인 되어 있습니다!");
             navigate("/studentList");
@@ -45,7 +54,12 @@ const ValidateSignIn = () => {
     } else {
       // User is signed out
       // ...
-      if (link.split("/")[3] !== "signUp" &&  link.split("/")[3] !== "signIn") {
+      if (
+        link.split("/")[3] !== exceptionURL.signUp &&
+        link.split("/")[3] !== exceptionURL.signIn &&
+        link.split("/")[3] !== exceptionURL.findEmail &&
+        link.split("/")[3] !== exceptionURL.findPass
+      ) {
         alert("먼저 로그인해 주세요");
         navigate("/signIn");
       }

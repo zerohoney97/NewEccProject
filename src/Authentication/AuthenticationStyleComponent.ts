@@ -86,7 +86,7 @@ export {
   AutoLoginCotainer,
   AutoLogin,
   LoginButton,
-  GotoSignUpButton
+  GotoSignUpButton,
 };
 
 // SingIn
@@ -151,17 +151,21 @@ const SignUpButton = styled.button`
   cursor: pointer;
 `;
 
-const ValidateEmail=styled.h4<{emailToggle:boolean}>`
-display: ${(props)=>{return props.emailToggle ? 'block' : 'none'}};
-`
-const ValidatePassword=styled.h4<{passwordToggle:boolean}>`
-display: ${(props)=>{return props.passwordToggle ? 'block' : 'none'}};
-
-`
-const DuplicatePassword=styled.h4<{duplicateToggle:boolean}>`
-display: ${(props)=>{return props.duplicateToggle ? 'block' : 'none'}};
-
-`
+const ValidateEmail = styled.h4<{ emailToggle: boolean }>`
+  display: ${(props) => {
+    return props.emailToggle ? "block" : "none";
+  }};
+`;
+const ValidatePassword = styled.h4<{ passwordToggle: boolean }>`
+  display: ${(props) => {
+    return props.passwordToggle ? "block" : "none";
+  }};
+`;
+const DuplicatePassword = styled.h4<{ duplicateToggle: boolean }>`
+  display: ${(props) => {
+    return props.duplicateToggle ? "block" : "none";
+  }};
+`;
 
 export {
   SignUpContainer,
@@ -170,7 +174,7 @@ export {
   SignUpButton,
   ValidateEmail,
   ValidatePassword,
-  DuplicatePassword
+  DuplicatePassword,
 };
 // SingUp
 
@@ -216,3 +220,12 @@ const CompleteSignUpContainer = styled.div`
 `;
 
 export { CompleteSignUpContainer };
+
+// findEmail
+const FindedTeacherEmail = styled.div<{ toggle: boolean }>`
+  display: ${(props) => {
+    return props.toggle ? "block" : "none";
+  }};
+`;
+
+export { FindedTeacherEmail };
