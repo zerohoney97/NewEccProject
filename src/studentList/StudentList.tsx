@@ -3,7 +3,9 @@ import {
   StudentListContainer,
   MoreButton,
   StudentTableHead,
+  AddStudentBtn,
 } from "./studentListStyleComponent";
+import { Link } from "react-router-dom";
 import { studentList } from "../util/Type";
 import Table from "./StudentTable";
 import NavBar from "../util/NavBar";
@@ -15,6 +17,7 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
   const teacherInfo = useSelector((state: any) => {
     return state.teacherInfo;
   });
+  
   useEffect(() => {
     axios
       .get("/getStudentInformationByTeacher", {
@@ -51,22 +54,28 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               </span>
               <div style={{ width: 30 }}></div>
             </StudentTableHead>
-            {studentList !== null && <Table isMobile={isMobile} studentList={studentList} />}
+            {studentList !== null && (
+              <Table isMobile={isMobile} studentList={studentList} />
+            )}
           </StudentListContainer>
           <MoreButton>더보기</MoreButton>
         </div>
       ) : (
         <div>
           <StudentListContainer>
-            <h1
-              style={{
-                textAlign: "initial",
-                marginBottom: -10,
-                marginTop: 113,
-              }}
-            >
-              학생리스트
-            </h1>
+            <div style={{ display: "flex" ,justifyContent:'space-between',alignItems:'end'}}>
+              <h1
+                style={{
+                  textAlign: "initial",
+                  marginBottom: -10,
+                  marginTop: 113,
+                }}
+              >
+                학생리스트
+              </h1>
+             <Link to={`/addStudent/${teacherInfo.uid}`}><AddStudentBtn>학생추가</AddStudentBtn></Link> 
+            </div>
+
             <StudentTableHead>
               <span>
                 이름
@@ -83,7 +92,9 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               <span>성별</span>
               <div style={{ width: 30 }}></div>
             </StudentTableHead>
-            {studentList !== null && <Table isMobile={isMobile} studentList={studentList} />}
+            {studentList !== null && (
+              <Table isMobile={isMobile} studentList={studentList} />
+            )}
           </StudentListContainer>
           <MoreButton>더보기</MoreButton>
         </div>

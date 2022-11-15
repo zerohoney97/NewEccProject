@@ -151,6 +151,11 @@ const SignUpButton = styled.button`
   cursor: pointer;
 `;
 
+const ValidateBirth = styled.h4<{ birthToggle: boolean }>`
+  display: ${(props) => {
+    return props.birthToggle ? "block" : "none";
+  }};
+`;
 const ValidateEmail = styled.h4<{ emailToggle: boolean }>`
   display: ${(props) => {
     return props.emailToggle ? "block" : "none";
@@ -175,6 +180,7 @@ export {
   ValidateEmail,
   ValidatePassword,
   DuplicatePassword,
+  ValidateBirth
 };
 // SingUp
 

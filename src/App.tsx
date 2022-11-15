@@ -16,6 +16,7 @@ import PostTestResult from "./result/PostTestResult";
 import "./App.css";
 import PostTest from "./Evaluation/PostTest";
 import NavBar from "./util/NavBar";
+import AddStudent from "./studentList/AddStudent";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { studentList } from "./util/Type";
@@ -27,7 +28,7 @@ function App() {
   });
   useEffect(() => {
     axios.get("/getStudent").then((res) => {
-      let tempArray = res.data.filter((a:any) => {
+      let tempArray = res.data.filter((a: any) => {
         return a.uid === teacherUid;
       });
       setStudentList(tempArray);
@@ -40,6 +41,7 @@ function App() {
   return (
     <div className="App">
       <NavBar studentList={studentList} isMobile={isMobile} />
+
       <Routes>
         <Route path="/signIn" element={<SignIn isMobile={isMobile}></SignIn>} />
         <Route path="/signUp" element={<SignUp isMobile={isMobile}></SignUp>} />
@@ -62,6 +64,10 @@ function App() {
         <Route
           path="/studentList"
           element={<StudentList isMobile={isMobile}></StudentList>}
+        />
+        <Route
+          path="/addStudent/:uid"
+          element={<AddStudent isMobile={isMobile}></AddStudent>}
         />
         <Route
           path="/studentInfo/:uid"

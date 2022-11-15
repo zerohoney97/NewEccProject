@@ -10,6 +10,7 @@ import {
   ValidateEmail,
   ValidatePassword,
   DuplicatePassword,
+  ValidateBirth,
 } from "./AuthenticationStyleComponent";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -34,14 +35,26 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
   const passwordRegEx =
     /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
+  // 이메일형식 확인(경고문구)
   const [emailToggle, setEmailToggle] = useState<boolean>(false);
+  // 비밀번호 형식 확인(경고문구)
   const [passWordToggle, setPassWordToggle] = useState<boolean>(false);
+  // 생일 형식확인(경고문구)
+  const [birthToggle, setBirthToggle] = useState<boolean>(false);
+  // 생일형식 확인
+  const [birthAccess, setBirthAccess] = useState<boolean>(false);
+
+  // 비밀번호 중복 확인(경고문구)
   const [duplicateToggle, setDuplicateToggle] = useState<boolean>(false);
   const [teacherNames, setTeacherNames] = useState<string[]>([]);
+  // 이메일형식 확인
   const [emailAccess, setEmailAccess] = useState<boolean>(false);
+  // 이메일 중복 확인
   const [emailDuplicateAccess, setEmailDuplicateAccess] =
     useState<boolean>(false);
+  // 비밀번호 형식 확인
   const [passwordAccess, setPasswordAccess] = useState<boolean>(false);
+  // 비밀번호 중복 확인
   const [passwordDuplicateAccess, setpasswordDuplicateAccess] =
     useState<boolean>(false);
 
@@ -94,7 +107,18 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
         <SignUpInputArea
           ref={birth}
           placeholder="생년원일 6자리를 입력해주세요 ex)001122"
+          onChange={(e) => {
+            if (e.target.value.length > 6) {
+              setBirthToggle(true);
+              setBirthAccess(false);
+            } else {
+              setBirthToggle(false);
+              setBirthAccess(true);
+            }
+          }}
         />
+        <ValidateBirth birthToggle={birthToggle}>
+        </ValidateBirth>
         <div
           style={{
             display: "flex",
@@ -182,9 +206,9 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
             emailAccess &&
             passwordAccess &&
             emailDuplicateAccess &&
-            passwordDuplicateAccess
+            passwordDuplicateAccess &&
+            birthAccess
           ) {
-            
             createUserWithEmailAndPassword(
               auth,
               email.current.value,
@@ -199,9 +223,8 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
                   birth: birth.current.value,
                   email: email.current.value,
                   password: password.current.value,
-                  uid:user.uid
+                  uid: user.uid,
                 });
-                
               })
               .catch((error) => {
                 const errorCode = error.code;
@@ -210,6 +233,8 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
           } else {
             if (!emailAccess) {
               alert("이메일 형식을 맞춰주세요");
+            } else if (!birthAccess) {
+              alert("생년월일 형식을 맞춰주세요!");
             } else if (!passwordAccess) {
               alert("비밀번호가 형식을 맞춰주세요");
             } else if (!emailDuplicateAccess) {

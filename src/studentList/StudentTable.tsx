@@ -14,8 +14,12 @@ const Table = ({
   studentList: studentList[];
   isMobile: boolean;
 }) => {
+  const [pageNumber,setPagenumber]=useState<number>(1);
   let dispatch = useDispatch();
 
+  const handleChange=()=>{
+    setPagenumber(1);
+  }
   const StudentTable = styled.table`
     width: 1200px;
     height: 500px;

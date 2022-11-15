@@ -7,6 +7,7 @@ import { setTeacherUidAndName } from "../redux/slice/userReducer";
 
 import axios from "axios";
 import { useParams } from "react-router";
+import { useEffect } from "react";
 
 const auth = getAuth();
 
@@ -24,47 +25,49 @@ const ValidateSignIn = () => {
   const app = initializeApp(firebaseConfig);
   let dispatch = useDispatch();
   let link = document.location.href;
-  console.log(link.split("/")[3]);
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
 
-      let uid = user.uid;
-      axios
-        .get("/getTeacherInformation", { params: { uid: uid } })
-        .then((result) => {
-          const information = {
-            uid: uid,
-            name: result.data.name,
-          };
-          dispatch(setTeacherUidAndName(information));
-          if (
-            link.split("/")[3] === exceptionURL.signUp ||
-            link.split("/")[3] === exceptionURL.signIn ||
-            link.split("/")[3] === exceptionURL.findEmail ||
-            link.split("/")[3] === exceptionURL.findPass
-          ) {
-            alert("이미 로그인 되어 있습니다!");
-            navigate("/studentList");
-          }
-        });
-      // 로그인 여부를 판단하고 uid를 redux-persist에 저장
-      // ...
-    } else {
-      // User is signed out
-      // ...
-      if (
-        link.split("/")[3] !== exceptionURL.signUp &&
-        link.split("/")[3] !== exceptionURL.signIn &&
-        link.split("/")[3] !== exceptionURL.findEmail &&
-        link.split("/")[3] !== exceptionURL.findPass
-      ) {
-        alert("먼저 로그인해 주세요");
-        navigate("/signIn");
+        let uid = user.uid;
+        axios
+          .get("/getTeacherInformation", { params: { uid: uid } })
+          .then((result) => {
+            const information = {
+              uid: uid,
+              name: result.data.name,
+            };
+            dispatch(setTeacherUidAndName(information));
+            if (
+              link.split("/")[3] === exceptionURL.signUp ||
+              link.split("/")[3] === exceptionURL.signIn ||
+              link.split("/")[3] === exceptionURL.findEmail ||
+              link.split("/")[3] === exceptionURL.findPass
+            ) {
+              alert("이미 로그인 되어 있습니다!");
+              navigate("/studentList");
+            }
+          });
+        // 로그인 여부를 판단하고 uid를 redux-persist에 저장
+        // ...
+      } else {
+        // User is signed out
+        // ...
+        if (
+          link.split("/")[3] !== exceptionURL.signUp &&
+          link.split("/")[3] !== exceptionURL.signIn &&
+          link.split("/")[3] !== exceptionURL.findEmail &&
+          link.split("/")[3] !== exceptionURL.findPass
+        ) {
+          alert("먼저 로그인해 주세요");
+          navigate("/signIn");
+        }
       }
-    }
-  });
+    });
+  }, []);
+
   return <></>;
 };
 

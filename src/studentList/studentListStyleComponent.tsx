@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 // StudentList
 
 // studentList를 감싸는 컨테이너
@@ -10,6 +10,23 @@ const StudentListContainer = styled.div`
     width: 100%;
     background: #fafafa;
     margin: auto;
+  }
+`;
+
+// 학생등록 버튼
+const AddStudentBtn = styled.button`
+  width: 200px;
+  height: 50px;
+  background: #e5e5e5;
+  color: #999999;
+  border: white;
+  cursor: pointer;
+  transition: all 0.5s;
+  border-radius: 10px;
+  &:hover {
+    transition: all 0.5s;
+    color: white;
+    background: #3763ff;
   }
 `;
 
@@ -45,7 +62,16 @@ const StudentTableHead = styled.div`
     }
   }
 `;
-export { StudentListContainer, MoreButton, StudentTableHead };
+
+const changeColor = keyframes`
+  0%{
+opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
+export { StudentListContainer, MoreButton, StudentTableHead, AddStudentBtn };
 
 // StudentList
 
@@ -171,3 +197,82 @@ export {
 };
 
 // StudentInfo
+
+// AddStudnet
+// 로그인 페이지 전체 컴포넌트를 감싸는 컨테이너
+const AddStudentContainer = styled.div`
+  margin: auto;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  @media screen and (max-width: 768px) {
+    margin: auto;
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+`;
+// ecc 문구
+
+const EccText = styled.h3`
+  font-family: "roboto";
+`;
+
+// 로그인 정보를 기입하는 inputarea를 감싸는 컨테이너
+const AddStudentInputAreaContainer = styled.div`
+  margin-top: 50px;
+`;
+// inputarea스타일링
+const AddStudentInputArea = styled.input`
+  width: 80%;
+  margin: 10px;
+  padding: 10px;
+  border: #e5e5e5 solid 1px;
+  font-size: 15px;
+`;
+
+// 자동 로그인 컨테이너
+const AutoLoginCotainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 2rem;
+  position: relative;
+  padding: 30px;
+`;
+// 자동로그인
+const AutoLogin = styled.input`
+  height: 27.5px;
+  width: 27.5px;
+  cursor: pointer;
+`;
+
+// 로그인 버튼
+
+const AddStudentButton = styled.button`
+  width: 80%;
+  height: 40px;
+  background: #3763ff;
+  border: white;
+  border-radius: 5px;
+  color: white;
+  font-size: x-large;
+  margin: auto;
+  cursor: pointer;
+`;
+
+const ValidateBirth = styled.h4<{ birthToggle: boolean }>`
+  display: ${(props) => {
+    return props.birthToggle ? "block" : "none";
+  }};
+`;
+export {
+  AddStudentContainer,
+  AddStudentInputAreaContainer,
+  AddStudentInputArea,
+  AddStudentButton,
+  ValidateBirth
+};
