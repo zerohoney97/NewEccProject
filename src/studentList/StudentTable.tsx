@@ -1,4 +1,10 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
@@ -14,12 +20,7 @@ const Table = ({
   studentList: studentList[];
   isMobile: boolean;
 }) => {
-  const [pageNumber,setPagenumber]=useState<number>(1);
   let dispatch = useDispatch();
-
-  const handleChange=()=>{
-    setPagenumber(1);
-  }
   const StudentTable = styled.table`
     width: 1200px;
     height: 500px;
@@ -121,7 +122,24 @@ const Table = ({
       ) : (
         <StudentTable>
           {studentList.map(
-            ({ name, attrClass, birth, recent, gender, _id }, i) => (
+            (
+              {
+                name,
+                attrClass,
+                birth,
+                recent,
+                gender,
+                _id,
+              }: {
+                name: string;
+                attrClass: string;
+                birth: string;
+                recent: string;
+                gender: string;
+                _id: string;
+              },
+              i: number
+            ) => (
               <TableBody>
                 <div>{name}</div>
                 <div>{attrClass}</div>
@@ -146,6 +164,7 @@ const Table = ({
               </TableBody>
             )
           )}
+      
         </StudentTable>
       )}
     </>

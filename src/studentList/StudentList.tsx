@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import {
   StudentListContainer,
   MoreButton,
@@ -14,10 +14,23 @@ import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import { useSelector } from "react-redux";
 const StudentList = ({ isMobile }: { isMobile: boolean }) => {
   const [studentList, setStudentList] = useState<studentList[]>([]);
+  const target = useRef<any>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const options = useMemo(() => {
+    return {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+  }, []);
+  const callBackFunction = (entries: any) => {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+  };
   const teacherInfo = useSelector((state: any) => {
     return state.teacherInfo;
   });
-  
+
   useEffect(() => {
     axios
       .get("/getStudentInformationByTeacher", {
@@ -27,7 +40,15 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
         const temp = studentList.concat(result.data);
         setStudentList(temp);
       });
-  }, []);
+
+    const observer = new IntersectionObserver(callBackFunction, options);
+    const currentTarget = target.current;
+    if (currentTarget) observer.observe(currentTarget);
+
+    return () => {
+      if (currentTarget) observer.unobserve(currentTarget);
+    };
+  }, [target, options]);
   return (
     <>
       {isMobile ? (
@@ -63,7 +84,13 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
       ) : (
         <div>
           <StudentListContainer>
-            <div style={{ display: "flex" ,justifyContent:'space-between',alignItems:'end'}}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "end",
+              }}
+            >
               <h1
                 style={{
                   textAlign: "initial",
@@ -73,7 +100,9 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               >
                 학생리스트
               </h1>
-             <Link to={`/addStudent/${teacherInfo.uid}`}><AddStudentBtn>학생추가</AddStudentBtn></Link> 
+              <Link to={`/addStudent/${teacherInfo.uid}`}>
+                <AddStudentBtn>학생추가</AddStudentBtn>
+              </Link>
             </div>
 
             <StudentTableHead>
@@ -96,6 +125,8 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               <Table isMobile={isMobile} studentList={studentList} />
             )}
           </StudentListContainer>
+          <div ref={target}>내가 보이는가</div>
+
           <MoreButton>더보기</MoreButton>
         </div>
       )}
