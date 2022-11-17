@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
   StudentListContainer,
   MoreButton,
@@ -13,20 +13,38 @@ import axios from "axios";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import { useSelector } from "react-redux";
 const StudentList = ({ isMobile }: { isMobile: boolean }) => {
+  const [page, setPage] = useState<number>(1);
   const [studentList, setStudentList] = useState<studentList[]>([]);
-  const target = useRef<any>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [target, setTarget] = useState<any>(null);
   const options = useMemo(() => {
     return {
       root: null,
       rootMargin: "0px",
-      threshold: 0.5,
+      threshold: 1,
     };
   }, []);
-  const callBackFunction = (entries: any) => {
+  const callBackFunction = async (entries: any, observer: any) => {
     const [entry] = entries;
-    setIsVisible(entry.isIntersecting);
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      // 관찰됐을 때 연속 실행을 막기 위해 동기 promise를 사용
+      await promiseTimeOut().then(() => {
+        setPage(page + 1);
+        observer.observe(entry.target);
+      });
+    }
   };
+
+  const promiseTimeOut = () => {
+    return new Promise<void>((resolve, reject) => {
+      return setTimeout(resolve, 2000);
+    });
+  };
+  const handleChange = (element: studentList[]) => {
+    setStudentList([...element]);
+  };
+
   const teacherInfo = useSelector((state: any) => {
     return state.teacherInfo;
   });
@@ -37,18 +55,26 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
         params: { data: teacherInfo.uid },
       })
       .then((result) => {
-        const temp = studentList.concat(result.data);
-        setStudentList(temp);
+        let temp: any[] = [];
+        for (var i = 0; i < page * 5; i++) {
+          // 강제로 5의 배수로 데이터를 넣다 보니까 빈 데이터는 undefined을 반환, 결국 map함수에서 undefined를 참조하므로
+          // name,attrClass같은 비구조화 할당 인스턴스를 못 찾으므로 에러가 발생, if문으로 undefined일 경우 무시
+          if (result.data[i] === undefined) {
+            return;
+          } else {
+            temp.push(result.data[i]);
+            handleChange(temp);
+          }
+        }
       });
 
     const observer = new IntersectionObserver(callBackFunction, options);
-    const currentTarget = target.current;
-    if (currentTarget) observer.observe(currentTarget);
 
-    return () => {
-      if (currentTarget) observer.unobserve(currentTarget);
-    };
-  }, [target, options]);
+    if (target) observer.observe(target);
+
+    return () => observer && observer.disconnect();
+  }, [target, options, page]);
+
   return (
     <>
       {isMobile ? (
@@ -76,10 +102,15 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               <div style={{ width: 30 }}></div>
             </StudentTableHead>
             {studentList !== null && (
-              <Table isMobile={isMobile} studentList={studentList} />
+              <Table
+                isMobile={isMobile}
+                studentList={studentList}
+                page={page}
+              />
             )}
           </StudentListContainer>
-          <MoreButton>더보기</MoreButton>
+          {isLoading && <div>Loading...</div>}
+          {!isLoading && <div ref={setTarget}></div>}
         </div>
       ) : (
         <div>
@@ -122,12 +153,14 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               <div style={{ width: 30 }}></div>
             </StudentTableHead>
             {studentList !== null && (
-              <Table isMobile={isMobile} studentList={studentList} />
+              <Table
+                isMobile={isMobile}
+                studentList={studentList}
+                page={page}
+              />
             )}
           </StudentListContainer>
-          <div ref={target}>내가 보이는가</div>
-
-          <MoreButton>더보기</MoreButton>
+          <div ref={setTarget}></div>
         </div>
       )}
     </>

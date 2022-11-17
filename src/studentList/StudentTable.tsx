@@ -16,9 +16,11 @@ import axios from "axios";
 const Table = ({
   studentList,
   isMobile,
+  page,
 }: {
   studentList: studentList[];
   isMobile: boolean;
+  page: number;
 }) => {
   let dispatch = useDispatch();
   const StudentTable = styled.table`
@@ -88,6 +90,7 @@ const Table = ({
       })
     );
   };
+
 
   return (
     <>
@@ -164,7 +167,6 @@ const Table = ({
               </TableBody>
             )
           )}
-      
         </StudentTable>
       )}
     </>
