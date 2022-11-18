@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router";
+
 import NavBar from "../util/NavBar";
 import {
   PostTestContainer,
@@ -15,10 +17,12 @@ import { useDispatch, useSelector } from "react-redux";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
 
-const PostTest = ({isMobile}:{isMobile:boolean}) => {
+const PostTest = ({ isMobile }: { isMobile: boolean }) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
+const navigate=useNavigate();
+
   // 대영역
   const [bigToggle, setBigToggle] = useState<boolean>(false);
   const [bigCategoryName, setBigCategoryName] = useState<string>("대항목");
@@ -71,7 +75,6 @@ const PostTest = ({isMobile}:{isMobile:boolean}) => {
 
   const SmallCategory = useCallback(
     ({ smallCategory }: { smallCategory: number }) => {
-      console.log(smallToggle);
       switch (smallCategory) {
         case 1:
           return (
@@ -205,232 +208,248 @@ const PostTest = ({isMobile}:{isMobile:boolean}) => {
   );
   return (
     <>
-      {isMobile?<PostTestContainer> <h1>사후평가</h1>
-         
-          <div style={{ alignSelf: "end" ,margin:'auto' }}>
-            <span style={{ color: "#999999" }}>반,이름:</span>
-            <span style={{ fontWeight: "bold" }}> 3A김현아</span>
-            <span style={{ color: "#999999" }}> 대문항:</span>
-            <span style={{ fontWeight: "bold" }}> 보조공학</span>
-            <span style={{ color: "#999999" }}> 소문항:</span>
-            <span style={{ fontWeight: "bold" }}> 책마루</span>
-        </div>{" "}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginTop: 20,
-          }}
-        >
-          <DropDown
-            onClick={() => {
-              setBigToggle(!bigToggle);
-              setSmallCategoryName("소항목");
-            }}
-          >
-            <span ref={selectedBigCategory}>대항목</span>
-            <DropDownSVG />
-            <DropDownContentsBigCategory toggle={bigToggle}>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("보조공학", 1);
-                }}
-              >
-                보조공학
-              </p>
-
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("보행", 2);
-                }}
-              >
-                보행
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("사회적기술", 3);
-                }}
-              >
-                사회적기술
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("일상생활기술", 4);
-                }}
-              >
-                일상생활기술
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("점자", 5);
-                }}
-              >
-                점자
-              </p>
-            </DropDownContentsBigCategory>
-          </DropDown>
-          <SmallCategory smallCategory={smallCategoryNum} />
-        </div>
-        {tableData !== null && (
-          <PostTestTable
-          isMobile={isMobile}
-            tableData={tableData}
-            postTestResult={postTestResult}
-            setPostTestResult={setPostTestResult}
-          ></PostTestTable>
-        )}
-        <ButtonContainer>
-          <BackButton
-            onClick={() => {
-              window.history.back();
-            }}
-          >
-            이전으로
-          </BackButton>
-          <NextButton
-            onClick={() => {
-              let time = new Date();
-              let month = time.getMonth() + 1;
-              let currentTime =
-                time.getFullYear() +
-                "/" +
-                month +
-                "/" +
-                time.getDate() +
-                "/" +
-                time.getHours();
-              axios
-                .post("/putPostEccData", {
-                  result: postTestResult,
-                  uid: selectedStudentInformaion._id,
-                  date: currentTime,
-                  bigCategory: bigCategoryName,
-                  smallCategory: smallCategoryName,
-                })
-                .then((res) => {
-                  window.location.href = "http://localhost:3000/studentList";
-                });
-              console.log(postTestResult);
-            }}
-          >
-            평가완료
-          </NextButton>
-        </ButtonContainer>
-      </PostTestContainer>:<PostTestContainer>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+      {isMobile ? (
+        <PostTestContainer>
+          {" "}
           <h1>사후평가</h1>
-          <div style={{ alignSelf: "end" }}>
+          <div style={{ alignSelf: "end", margin: "auto" }}>
             <span style={{ color: "#999999" }}>반,이름:</span>
-            <span style={{ fontWeight: "bold" }}> 3A김현아</span>
+            <span style={{ fontWeight: "bold" }}>
+              {" "}
+              {selectedStudentInformaion.attrClass},
+              {selectedStudentInformaion.name}
+            </span>
             <span style={{ color: "#999999" }}> 대문항:</span>
-            <span style={{ fontWeight: "bold" }}> 보조공학</span>
+            <span style={{ fontWeight: "bold" }}> {bigCategoryName}</span>
             <span style={{ color: "#999999" }}> 소문항:</span>
-            <span style={{ fontWeight: "bold" }}> 책마루</span>
+            <span style={{ fontWeight: "bold" }}> {smallCategoryName}</span>
           </div>
-        </div>{" "}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginTop: 20,
-          }}
-        >
-          <DropDown
-            onClick={() => {
-              setBigToggle(!bigToggle);
-              setSmallCategoryName("소항목");
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginTop: 20,
             }}
           >
-            <span ref={selectedBigCategory}>대항목</span>
-            <DropDownSVG />
-            <DropDownContentsBigCategory toggle={bigToggle}>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("보조공학", 1);
-                }}
-              >
-                보조공학
-              </p>
+            <DropDown
+              onClick={() => {
+                setBigToggle(!bigToggle);
+                setSmallCategoryName("소항목");
+              }}
+            >
+              <span ref={selectedBigCategory}>대항목</span>
+              <DropDownSVG />
+              <DropDownContentsBigCategory toggle={bigToggle}>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보조공학", 1);
+                  }}
+                >
+                  보조공학
+                </p>
 
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("보행", 2);
-                }}
-              >
-                보행
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("사회적기술", 3);
-                }}
-              >
-                사회적기술
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("일상생활기술", 4);
-                }}
-              >
-                일상생활기술
-              </p>
-              <p
-                onClick={() => {
-                  setBigCategoryNameOnDropMenu("점자", 5);
-                }}
-              >
-                점자
-              </p>
-            </DropDownContentsBigCategory>
-          </DropDown>
-          <SmallCategory smallCategory={smallCategoryNum} />
-        </div>
-        {tableData !== null && (
-          <PostTestTable
-          isMobile={isMobile}
-            tableData={tableData}
-            postTestResult={postTestResult}
-            setPostTestResult={setPostTestResult}
-          ></PostTestTable>
-        )}
-        <ButtonContainer>
-          <BackButton
-            onClick={() => {
-              window.history.back();
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보행", 2);
+                  }}
+                >
+                  보행
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("사회적기술", 3);
+                  }}
+                >
+                  사회적기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("일상생활기술", 4);
+                  }}
+                >
+                  일상생활기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("점자", 5);
+                  }}
+                >
+                  점자
+                </p>
+              </DropDownContentsBigCategory>
+            </DropDown>
+            <SmallCategory smallCategory={smallCategoryNum} />
+          </div>
+          {tableData !== null && (
+            <PostTestTable
+              isMobile={isMobile}
+              tableData={tableData}
+              postTestResult={postTestResult}
+              setPostTestResult={setPostTestResult}
+            ></PostTestTable>
+          )}
+          <ButtonContainer>
+            <BackButton
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              이전으로
+            </BackButton>
+            <NextButton
+              onClick={() => {
+                let time = new Date();
+                let month = time.getMonth() + 1;
+                let currentTime =
+                  time.getFullYear() +
+                  "/" +
+                  month +
+                  "/" +
+                  time.getDate() +
+                  "/" +
+                  time.getHours();
+                axios
+                  .post("/putPostEccData", {
+                    result: postTestResult,
+                    studentUid: selectedStudentInformaion.studentUid,
+                    date: currentTime,
+                    bigCategory: bigCategoryName,
+                    smallCategory: smallCategoryName,
+                  })
+                  .then((res) => {
+                    navigate('/studentList');
+                  });
+                  navigate('/studentList');
+
+                console.log(postTestResult);
+              }}
+            >
+              평가완료
+            </NextButton>
+          </ButtonContainer>
+        </PostTestContainer>
+      ) : (
+        <PostTestContainer>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h1>사후평가</h1>
+            <div style={{ alignSelf: "end" }}>
+              <span style={{ color: "#999999" }}>반,이름:</span>
+              <span style={{ fontWeight: "bold" }}>
+                {" "}
+                {selectedStudentInformaion.attrClass},
+                {selectedStudentInformaion.name}
+              </span>
+              <span style={{ color: "#999999" }}> 대문항:</span>
+              <span style={{ fontWeight: "bold" }}> {bigCategoryName}</span>
+              <span style={{ color: "#999999" }}> 소문항:</span>
+              <span style={{ fontWeight: "bold" }}> {smallCategoryName}</span>
+            </div>
+          </div>{" "}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginTop: 20,
             }}
           >
-            이전으로
-          </BackButton>
-          <NextButton
-            onClick={() => {
-              let time = new Date();
-              let month = time.getMonth() + 1;
-              let currentTime =
-                time.getFullYear() +
-                "/" +
-                month +
-                "/" +
-                time.getDate() +
-                "/" +
-                time.getHours();
-              axios
-                .post("/putPostEccData", {
-                  result: postTestResult,
-                  uid: selectedStudentInformaion._id,
-                  date: currentTime,
-                  bigCategory: bigCategoryName,
-                  smallCategory: smallCategoryName,
-                })
-                .then((res) => {
-                  window.location.href = "http://localhost:3000/studentList";
-                });
-              console.log(postTestResult);
-            }}
-          >
-            평가완료
-          </NextButton>
-        </ButtonContainer>
-      </PostTestContainer>}
-      
+            <DropDown
+              onClick={() => {
+                setBigToggle(!bigToggle);
+                setSmallCategoryName("소항목");
+              }}
+            >
+              <span ref={selectedBigCategory}>대항목</span>
+              <DropDownSVG />
+              <DropDownContentsBigCategory toggle={bigToggle}>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보조공학", 1);
+                  }}
+                >
+                  보조공학
+                </p>
+
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("보행", 2);
+                  }}
+                >
+                  보행
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("사회적기술", 3);
+                  }}
+                >
+                  사회적기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("일상생활기술", 4);
+                  }}
+                >
+                  일상생활기술
+                </p>
+                <p
+                  onClick={() => {
+                    setBigCategoryNameOnDropMenu("점자", 5);
+                  }}
+                >
+                  점자
+                </p>
+              </DropDownContentsBigCategory>
+            </DropDown>
+            <SmallCategory smallCategory={smallCategoryNum} />
+          </div>
+          {tableData !== null && (
+            <PostTestTable
+              isMobile={isMobile}
+              tableData={tableData}
+              postTestResult={postTestResult}
+              setPostTestResult={setPostTestResult}
+            ></PostTestTable>
+          )}
+          <ButtonContainer>
+            <BackButton
+              onClick={() => {
+                window.history.back();
+              }}
+            >
+              이전으로
+            </BackButton>
+            <NextButton
+              onClick={() => {
+                let time = new Date();
+                let month = time.getMonth() + 1;
+                let currentTime =
+                  time.getFullYear() +
+                  "/" +
+                  month +
+                  "/" +
+                  time.getDate() +
+                  "/" +
+                  time.getHours();
+                axios
+                  .post("/putPostEccData", {
+                    result: postTestResult,
+                    studentUid: selectedStudentInformaion.studentUid,
+                    date: currentTime,
+                    bigCategory: bigCategoryName,
+                    smallCategory: smallCategoryName,
+                  })
+                  .then((res) => {
+                    navigate('/studentList');
+                    
+                  });
+                  navigate('/studentList');
+
+              }}
+            >
+              평가완료
+            </NextButton>
+          </ButtonContainer>
+        </PostTestContainer>
+      )}
     </>
   );
 };

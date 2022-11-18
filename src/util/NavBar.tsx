@@ -39,6 +39,9 @@ const NavBar = ({
   const dropDownContents = useRef<any>();
   const [toggle, setToggle] = useState<boolean>(false);
   const [isLogined, setIsLogined] = useState<boolean>(false);
+  const teacherInfo = useSelector((state: any) => {
+    return state.teacherInfo;
+  });
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -191,7 +194,9 @@ const NavBar = ({
               </div>
             </span>
             <span style={{ marginLeft: 60 }}>
-              <span style={{ color: "#00CF15", fontSize: 18 }}>홍길동</span>
+              <span style={{ color: "#00CF15", fontSize: 18 }}>
+                {teacherInfo.name}
+              </span>
               <span style={{ fontSize: 18 }}>선생님! 환영합니다!</span>
             </span>
             <NavProfile />

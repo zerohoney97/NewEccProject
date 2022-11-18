@@ -35,7 +35,7 @@ const PreTestResult = ({isMobile}:{isMobile:boolean}) => {
   const filterdResult = async (data: any) => {
     data.forEach((a: any) => {
       if (
-        a.uid === selectedStudentInformaion.uid &&
+        a.studentUid === selectedStudentInformaion.studentUid &&
         a.bigCategory === bigCategory &&
         a.smallCategory === smallCategory &&
         a.date === date
@@ -50,13 +50,13 @@ const PreTestResult = ({isMobile}:{isMobile:boolean}) => {
       <PreTestContainer>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h1>사전평가</h1>
-          <div style={{ alignSelf: "end" }}>
-            <span style={{ color: "#999999" }}>반,이름:</span>
-            <span style={{ fontWeight: "bold" }}> 3A김현아</span>
-            <span style={{ color: "#999999" }}> 대문항:</span>
-            <span style={{ fontWeight: "bold" }}> 보조공학</span>
-            <span style={{ color: "#999999" }}> 소문항:</span>
-            <span style={{ fontWeight: "bold" }}> 책마루</span>
+          <div style={{ alignSelf: "end"}}>
+              <span style={{ color: "#999999" }}>반,이름:</span>
+              <span style={{ fontWeight: "bold" }}> {selectedStudentInformaion.attrClass},{selectedStudentInformaion.name}</span>
+              <span style={{ color: "#999999" }}> 대문항:</span>
+              <span style={{ fontWeight: "bold" }}> {bigCategory}</span>
+              <span style={{ color: "#999999" }}> 소문항:</span>
+              <span style={{ fontWeight: "bold" }}> {smallCategory}</span>
           </div>
         </div>
         <div

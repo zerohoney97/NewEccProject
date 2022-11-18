@@ -36,7 +36,7 @@ const PostTestResult = ({isMobile}:{isMobile:boolean}) => {
   const filterdResult = async (data: any) => {
     data.forEach((a: any) => {
       if (
-        a.uid === selectedStudentInformaion.uid &&
+        a.studentUid === selectedStudentInformaion.studentUid &&
         a.bigCategory === bigCategory &&
         a.smallCategory === smallCategory &&
         a.date === date

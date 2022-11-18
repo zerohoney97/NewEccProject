@@ -86,7 +86,7 @@ const Table = ({
         birth: birth,
         recent: recent,
         gender: gender,
-        uid: _id,
+        studentUid: _id,
       })
     );
   };

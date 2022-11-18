@@ -38,6 +38,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
         params: { studentData: studentInfo },
       })
       .then((res) => {
+        console.log(res.data);
         setStudentPreEvaluationData(res.data);
       });
 
@@ -46,6 +47,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
         params: { studentData: studentInfo },
       })
       .then((res) => {
+        console.log(res.data);
         setStudentPostEvaluationData(res.data);
       });
     // 같은 페이지에서 uid값만 바뀌므로 studentInfo로 변화 감지하여 데이터를 새로 불러온다.
