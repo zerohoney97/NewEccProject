@@ -11,7 +11,6 @@ import { ReactComponent as GotoInfo } from "../Resource/svg/rightArrow.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { studentList } from "../util/Type";
 import { setStudentInformation } from "../redux/slice/studentReducer";
-import axios from "axios";
 
 const Table = ({
   studentList,

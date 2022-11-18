@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PostTestResultTable from "./PostTestResultTable";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import { serverUrl } from "../util/globalVariants";
 
 const PostTestResult = ({isMobile}:{isMobile:boolean}) => {
   const selectedStudentInformaion = useSelector((state: any) => {
@@ -23,7 +24,7 @@ const PostTestResult = ({isMobile}:{isMobile:boolean}) => {
   useEffect(() => {
   // 학생의 사전평가 정보를 불러옴
     axios
-      .get("/getStudentPostEvaluationData", {
+      .get(`${serverUrl}/getStudentPostEvaluationData`, {
         params: { studentData: selectedStudentInformaion },
       })
       .then((res) => {

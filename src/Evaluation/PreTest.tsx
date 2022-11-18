@@ -14,6 +14,7 @@ import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
 import { useDispatch, useSelector } from "react-redux";
 import PreTestTable from "./PreTestTable";
 import axios from "axios";
+import { serverUrl } from "../util/globalVariants";
 
 const PreTest = ({ isMobile }: { isMobile: boolean }) => {
   const selectedStudentInformaion = useSelector((state: any) => {
@@ -35,7 +36,7 @@ const navigate=useNavigate();
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
       axios
-        .get("/getEccList", {
+        .get(`${serverUrl}/getEccList`, {
           params: { data: bigCategoryName + "/" + smallCategoryName },
         })
         .then((res) => {
@@ -334,7 +335,7 @@ const navigate=useNavigate();
                   "/" +
                   time.getHours();
                 axios
-                  .post("/putPreEccData", {
+                  .post(`${serverUrl}/putPreEccData`, {
                     result: preTestResult,
                     studentUid: selectedStudentInformaion.studentUid,
                     date: currentTime,
@@ -453,7 +454,7 @@ const navigate=useNavigate();
                   "/" +
                   time.getHours();
                 axios
-                  .post("/putPreEccData", {
+                  .post(`${serverUrl}/putPreEccData`, {
                     result: preTestResult,
                     studentUid: selectedStudentInformaion.studentUid,
                     date: currentTime,

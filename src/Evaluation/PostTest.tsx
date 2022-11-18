@@ -16,6 +16,7 @@ import { postTestResultType } from "../util/Type";
 import { useDispatch, useSelector } from "react-redux";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
+import { serverUrl } from "../util/globalVariants";
 
 const PostTest = ({ isMobile }: { isMobile: boolean }) => {
   const selectedStudentInformaion = useSelector((state: any) => {
@@ -41,7 +42,7 @@ const navigate=useNavigate();
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
       axios
-        .get("/getEccList", {
+        .get(`${serverUrl}/getEccList`, {
           params: { data: bigCategoryName + "/" + smallCategoryName },
         })
         .then((res) => {
@@ -309,7 +310,7 @@ const navigate=useNavigate();
                   "/" +
                   time.getHours();
                 axios
-                  .post("/putPostEccData", {
+                  .post(`${serverUrl}/putPostEccData`, {
                     result: postTestResult,
                     studentUid: selectedStudentInformaion.studentUid,
                     date: currentTime,
@@ -430,7 +431,7 @@ const navigate=useNavigate();
                   "/" +
                   time.getHours();
                 axios
-                  .post("/putPostEccData", {
+                  .post(`${serverUrl}/putPostEccData`, {
                     result: postTestResult,
                     studentUid: selectedStudentInformaion.studentUid,
                     date: currentTime,

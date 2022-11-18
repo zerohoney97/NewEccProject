@@ -17,6 +17,7 @@ import {
 } from "./AuthenticationStyleComponent";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import { serverUrl } from "../util/globalVariants";
 const EccText = styled.h3`
   font-family: "roboto";
   color: #3763ff;
@@ -51,7 +52,7 @@ const SignIn = ({ isMobile }: { isMobile: boolean }) => {
     signInWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
         axios
-          .get("/getTeacherInformation", {
+          .get(`${serverUrl}/getTeacherInformation`, {
             params: { uid: userCredential.user.uid },
           })
           .then((result: any) => {

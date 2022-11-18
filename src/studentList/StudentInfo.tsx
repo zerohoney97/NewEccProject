@@ -18,6 +18,7 @@ import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
 import { ReactComponent as Camera } from "../Resource/svg/camera.svg";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import axios from "axios";
+import { serverUrl } from "../util/globalVariants";
 
 const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   const [toggle, setToggle] = useState(false);
@@ -34,7 +35,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   });
   useEffect(() => {
     axios
-      .get("/getStudentPreEvaluationData", {
+      .get(`${serverUrl}/getStudentPreEvaluationData`, {
         params: { studentData: studentInfo },
       })
       .then((res) => {
@@ -43,7 +44,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
       });
 
     axios
-      .get("/getStudentPostEvaluationData", {
+      .get(`${serverUrl}/getStudentPostEvaluationData`, {
         params: { studentData: studentInfo },
       })
       .then((res) => {

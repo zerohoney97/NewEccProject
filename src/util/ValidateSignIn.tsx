@@ -8,6 +8,7 @@ import { setTeacherUidAndName } from "../redux/slice/userReducer";
 import axios from "axios";
 import { useParams } from "react-router";
 import { useEffect } from "react";
+import { serverUrl } from "./globalVariants";
 
 const auth = getAuth();
 
@@ -33,7 +34,7 @@ const ValidateSignIn = () => {
 
         let uid = user.uid;
         axios
-          .get("/getTeacherInformation", { params: { uid: uid } })
+          .get(`${serverUrl}/getTeacherInformation`, { params: { uid: uid } })
           .then((result) => {
             const information = {
               uid: uid,

@@ -12,6 +12,7 @@ import {
   FindedTeacherEmail,
 } from "./AuthenticationStyleComponent";
 import axios from "axios";
+import { serverUrl } from "../util/globalVariants";
 const EccText = styled.h3`
   font-family: "roboto";
   color: #3763ff;
@@ -42,7 +43,7 @@ const FindUserEmail = ({ isMobile }: { isMobile: boolean }) => {
         style={{ marginTop: 30 }}
         onClick={() => {
           axios
-            .get("/getTeacherEmail", {
+            .get(`${serverUrl}/getTeacherEmail`, {
               params: {
                 name: name.current.value,
                 birth: birth.current.value,

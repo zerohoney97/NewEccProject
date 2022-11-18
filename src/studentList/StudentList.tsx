@@ -12,6 +12,7 @@ import NavBar from "../util/NavBar";
 import axios from "axios";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import { useSelector } from "react-redux";
+import { serverUrl } from "../util/globalVariants";
 const StudentList = ({ isMobile }: { isMobile: boolean }) => {
   const [page, setPage] = useState<number>(1);
   const [studentList, setStudentList] = useState<studentList[]>([]);
@@ -53,7 +54,7 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
 
   useEffect(() => {
     axios
-      .get("/getStudentInformationByTeacher", {
+      .get(`${serverUrl}/getStudentInformationByTeacher`, {
         params: { data: teacherInfo.uid },
       })
       .then((result) => {
