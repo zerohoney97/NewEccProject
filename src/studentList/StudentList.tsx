@@ -27,12 +27,14 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
   const callBackFunction = async (entries: any, observer: any) => {
     const [entry] = entries;
     if (entry.isIntersecting) {
+      console.log('as')
       observer.unobserve(entry.target);
       // 관찰됐을 때 연속 실행을 막기 위해 동기 promise를 사용
       await promiseTimeOut().then(() => {
         setPage(page + 1);
-        observer.observe(entry.target);
       });
+      observer.observe(entry.target);
+
     }
   };
 
