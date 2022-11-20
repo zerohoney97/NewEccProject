@@ -135,14 +135,38 @@ const DropDownContents = styled.div<{ toggle: boolean }>`
   background: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 12px 16px;
+  padding: 10px;
+
   z-index: 1;
+  @media screen and (max-width: 768px) {
+    display: ${(props) => (props.toggle ? "blodk" : "none")};
+    position: absolute;
+    background: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1;
+    min-width: 100%;
+    right: 1%;
+  }
 `;
 const DropDown = styled.div`
   padding: 15px;
   background: #e5e5e5;
   position: relative;
   cursor: pointer;
+`;
+
+// 드롭다운 항목
+const Content = styled.p`
+  padding: 5px;
+  transition: all 0.5s;
+  &:hover {
+    transition: all 0.5s;
+
+    background: #d9d9d9;
+    color: white;
+  }
+ 
 `;
 
 //ECC리스트
@@ -190,6 +214,7 @@ export {
   DivideLine,
   DropDown,
   DropDownContents,
+  Content,
   EvaluationList,
   PreEccEvaButton,
   PostEccEvaButton,
@@ -274,5 +299,5 @@ export {
   AddStudentInputAreaContainer,
   AddStudentInputArea,
   AddStudentButton,
-  ValidateBirth
+  ValidateBirth,
 };

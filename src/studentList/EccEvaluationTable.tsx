@@ -85,7 +85,7 @@ const EccEvaluationTable = (props: any) => {
                 return (
                   <>
                     <Link
-                      to={`/preTestResult/${props.studentInfo.uid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
+                      to={`/preTestResult/${props.studentInfo.studentUid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
                       style={{ textDecoration: "none" }}
                     >
                       <TableBody key={i}>
@@ -102,7 +102,7 @@ const EccEvaluationTable = (props: any) => {
                 return (
                   <>
                     <Link
-                      to={`/postTestResult/${props.studentInfo.uid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
+                      to={`/postTestResult/${props.studentInfo.studentUid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
                       style={{ textDecoration: "none" }}
                     >
                       <TableBody key={i}>
@@ -125,7 +125,7 @@ const EccEvaluationTable = (props: any) => {
                 return (
                   <>
                     <Link
-                      to={`/preTestResult/${props.studentInfo.uid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
+                      to={`/preTestResult/${props.studentInfo.studentUid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
                       style={{ textDecoration: "none" }}
                     >
                       <TableBody key={i}>
@@ -142,7 +142,7 @@ const EccEvaluationTable = (props: any) => {
                 return (
                   <>
                     <Link
-                      to={`/postTestResult/${props.studentInfo.uid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
+                      to={`/postTestResult/${props.studentInfo.studentUid}?bigCategory=${a.bigCategory}&smallCategory=${a.smallCategory}&date=${a.date}`}
                       style={{ textDecoration: "none" }}
                     >
                       <TableBody key={i}>

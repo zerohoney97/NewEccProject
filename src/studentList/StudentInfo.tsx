@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../util/NavBar";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ import {
   PreEccEvaButton,
   PostEccEvaButton,
   MiddleContainer,
+  Content,
 } from "./studentListStyleComponent";
 import EccEvaluationTable from "./EccEvaluationTable";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
@@ -19,8 +20,10 @@ import { ReactComponent as Camera } from "../Resource/svg/camera.svg";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import axios from "axios";
 import { serverUrl } from "../util/globalVariants";
+import { async } from "@firebase/util";
 
 const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
+  const [isLoading, setIsLoadong] = useState<boolean>(true);
   const [toggle, setToggle] = useState(false);
   // 학생의 사전평가 기록
   const [studentPreEvaluationData, setStudentPreEvaluationData] = useState("");
@@ -33,24 +36,58 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   const studentInfo = useSelector((state: any) => {
     return state.studentInformation;
   });
-  useEffect(() => {
-    axios
-      .get(`${serverUrl}/getStudentPreEvaluationData`, {
-        params: { studentData: studentInfo },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setStudentPreEvaluationData(res.data);
-      });
+  // 빈공간 클릭시 닫기
+  const closeDropDown = useCallback(
+    (e: any) => {
+      console.log(toggle);
+      if (toggle) {
+        setToggle(false);
+      }
+    },
+    [toggle]
+  );
 
-    axios
-      .get(`${serverUrl}/getStudentPostEvaluationData`, {
-        params: { studentData: studentInfo },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setStudentPostEvaluationData(res.data);
-      });
+  // 동기적으로 사전평가 불러오기
+  const getStudentPreEvaluationData = async () => {
+    return new Promise<void>((resolve) => {
+      axios
+        .get(`${serverUrl}/getStudentPreEvaluationData`, {
+          params: { studentData: studentInfo },
+        })
+        .then((res) => {
+          setStudentPreEvaluationData(res.data);
+          resolve();
+        });
+    });
+  };
+  // 동기적으로 사후평가 불러오기
+  const getStudentPostEvaluationData = () => {
+    return new Promise<void>((resolve) => {
+      axios
+        .get(`${serverUrl}/getStudentPostEvaluationData`, {
+          params: { studentData: studentInfo },
+        })
+        .then((res) => {
+          setStudentPostEvaluationData(res.data);
+          setIsLoadong(false);
+          resolve();
+        });
+    });
+  };
+
+  //ecc data를 동기적으로 할당하는 함수
+  const setEccResultData = async () => {
+    await getStudentPreEvaluationData();
+    await getStudentPostEvaluationData();
+  };
+  useEffect(() => {
+    window.addEventListener("click", closeDropDown);
+
+    setEccResultData();
+
+    return () => {
+      window.removeEventListener("click", closeDropDown);
+    };
     // 같은 페이지에서 uid값만 바뀌므로 studentInfo로 변화 감지하여 데이터를 새로 불러온다.
   }, [studentInfo]);
   return (
@@ -83,20 +120,20 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                 {trigger}
                 <DropDownSVG />
                 <DropDownContents toggle={toggle}>
-                  <p
+                  <Content
                     onClick={() => {
                       setTrigger("사전평가");
                     }}
                   >
                     사전평가
-                  </p>
-                  <p
+                  </Content>
+                  <Content
                     onClick={() => {
                       setTrigger("사후평가");
                     }}
                   >
                     사후평가
-                  </p>
+                  </Content>
                 </DropDownContents>
               </DropDown>
             </div>
@@ -115,13 +152,13 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                   <Sort />
                 </span>
               </div>
-              {studentPreEvaluationData !== "" &&
-              studentPostEvaluationData !== "" ? (
+              {!isLoading ? (
                 <EccEvaluationTable
-                isMobile={isMobile}
+                  isMobile={isMobile}
                   studentInfo={studentInfo}
                   studentPreEvaluationData={studentPreEvaluationData}
                   studentPostEvaluationData={studentPostEvaluationData}
+                  isLoading={isLoading}
                   trigger={trigger}
                   setTrigger={setTrigger}
                 >
@@ -134,7 +171,9 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                     <PostEccEvaButton>사후평가</PostEccEvaButton>
                   </Link>
                 </EccEvaluationTable>
-              ) : null}
+              ) : (
+                <h2>데이터를 불러오고 있습니다..</h2>
+              )}
             </EvaluationList>
           </MiddleContainer>
         </StudentInfoContainer>
@@ -166,20 +205,20 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                 {trigger}
                 <DropDownSVG />
                 <DropDownContents toggle={toggle}>
-                  <p
+                  <Content
                     onClick={() => {
                       setTrigger("사전평가");
                     }}
                   >
                     사전평가
-                  </p>
-                  <p
+                  </Content>
+                  <Content
                     onClick={() => {
                       setTrigger("사후평가");
                     }}
                   >
                     사후평가
-                  </p>
+                  </Content>
                 </DropDownContents>
               </DropDown>
             </div>
@@ -198,13 +237,13 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                   <Sort />
                 </span>
               </div>
-              {studentPreEvaluationData !== "" &&
-              studentPostEvaluationData !== "" ? (
+              {!isLoading ? (
                 <EccEvaluationTable
                   studentInfo={studentInfo}
                   studentPreEvaluationData={studentPreEvaluationData}
                   studentPostEvaluationData={studentPostEvaluationData}
                   trigger={trigger}
+                  isLoading={isLoading}
                   setTrigger={setTrigger}
                 >
                   <Link to="/preTest">
@@ -216,7 +255,9 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                     <PostEccEvaButton>사후평가</PostEccEvaButton>
                   </Link>
                 </EccEvaluationTable>
-              ) : null}
+              ) : (
+                <h2>데이터를 불러오고 있습니다..</h2>
+              )}
             </EvaluationList>
           </MiddleContainer>
         </StudentInfoContainer>
