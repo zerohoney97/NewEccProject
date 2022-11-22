@@ -7,6 +7,14 @@ export interface studentList {
   _id: string;
 }
 
+export interface preTestResult {
+  result: any;
+  studentUid: string;
+  date: string;
+  bigCategory: string;
+  smallCategory: string;
+}
+
 export interface clickedStudentInfo {
   name: string;
   attrClass: string;
@@ -15,8 +23,15 @@ export interface clickedStudentInfo {
   gender: string;
 }
 
-export interface postTestResultType{
-  content:string;
-  score:string
+export interface postTestResult {
+  result: any;
+  studentUid: string;
+  date: string;
+  bigCategory: string;
+  smallCategory: string;
+}
 
+export interface postTestScoreInResult {
+  content: string;
+  score: string;
 }

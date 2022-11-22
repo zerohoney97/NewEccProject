@@ -62,7 +62,7 @@ function App() {
           element={<FindUserPass isMobile={isMobile}></FindUserPass>}
         />
         <Route
-          path="/studentList"
+          path="/"
           element={<StudentList isMobile={isMobile}></StudentList>}
         />
         <Route

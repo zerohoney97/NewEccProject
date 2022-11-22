@@ -2,9 +2,9 @@ import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 import styled from "styled-components";
-import { postTestResultType } from "../util/Type";
+import { postTestScoreInResult } from "../util/Type";
 // 결과임시저장
-let resultArray: postTestResultType[] = Array();
+let resultArray: postTestScoreInResult[] = Array();
 // filter함수를 위한 임시 똑같은 임시 변수
 let newArray: any;
 
@@ -15,7 +15,7 @@ const PostTestTable = ({
   isMobile,
 }: {
   tableData: any;
-  postTestResult: postTestResultType[];
+  postTestResult: postTestScoreInResult[];
   setPostTestResult: any;
   isMobile: boolean;
 }) => {

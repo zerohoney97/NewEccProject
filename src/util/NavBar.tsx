@@ -81,7 +81,7 @@ const NavBar = ({
       {isMobile ? (
         <>
           <NavBarContainer>
-            <Link to="/studentList">
+            <Link to="/">
               <EccLogo style={{ width: 76, height: 30.74 }} />
             </Link>
             <SearchBar
@@ -140,7 +140,7 @@ const NavBar = ({
       ) : (
         <>
           <NavBarContainer>
-            <Link to="/studentList">
+            <Link to="/">
               <EccLogo style={{ width: 76, height: 30.74 }} />
             </Link>
             <span style={{ display: "flex", marginLeft: 60 }}>

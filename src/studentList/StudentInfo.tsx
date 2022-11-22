@@ -14,23 +14,27 @@ import {
   MiddleContainer,
   Content,
 } from "./studentListStyleComponent";
+import { preTestResult, postTestResult } from "../util/Type";
 import EccEvaluationTable from "./EccEvaluationTable";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
 import { ReactComponent as Camera } from "../Resource/svg/camera.svg";
 import { ReactComponent as Sort } from "../Resource/svg/sort.svg";
 import axios from "axios";
 import { serverUrl } from "../util/globalVariants";
-import { async } from "@firebase/util";
 
 const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
+  // 데이터를 불러오는 상태인지 확인하기 위한 state
   const [isLoading, setIsLoadong] = useState<boolean>(true);
   const [toggle, setToggle] = useState(false);
   // 학생의 사전평가 기록
-  const [studentPreEvaluationData, setStudentPreEvaluationData] = useState("");
+  const [studentPreEvaluationData, setStudentPreEvaluationData] = useState<
+    preTestResult[] | null
+  >(null);
   //학생의 사후평가 기록
-  const [studentPostEvaluationData, setStudentPostEvaluationData] =
-    useState("");
-
+  const [studentPostEvaluationData, setStudentPostEvaluationData] = useState<
+    postTestResult[] | null
+  >(null);
+  let tempArray: preTestResult[];
   // 사전/사후평가를 바꾸는 트리거
   const [trigger, setTrigger] = useState<string>("사전평가");
   const studentInfo = useSelector((state: any) => {
@@ -79,6 +83,39 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   const setEccResultData = async () => {
     await getStudentPreEvaluationData();
     await getStudentPostEvaluationData();
+  };
+  // [
+  //   {date:"2022-10-30"},
+  //   {date:"1999-10-30"},
+  //   {date:"2005-12-03"},
+  //   {date:"2005-12-30"},
+  // ]
+  // 시간순으로 정리하는 함수
+  const sortByRecentDate = useCallback(
+    async (preResult: preTestResult[], postResult: preTestResult[]) => {
+      return new Promise<any>((resolve) => {
+        if (trigger === "사전평가") {
+          tempArray = preResult.sort((a: preTestResult, b: preTestResult) => {
+            return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+          });
+          resolve(tempArray);
+        } else {
+          tempArray = postResult.sort((a: preTestResult, b: preTestResult) => {
+            return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+          });
+          resolve(tempArray);
+        }
+      });
+    },
+    [trigger]
+  );
+
+  const setSortedData = async () => {
+    const newArray: preTestResult[] = await sortByRecentDate(
+      studentPreEvaluationData as preTestResult[],
+      studentPostEvaluationData as preTestResult[]
+    );
+    setStudentPreEvaluationData([...newArray]);
   };
   useEffect(() => {
     window.addEventListener("click", closeDropDown);
@@ -147,7 +184,12 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                   영역
                   <Sort />
                 </span>
-                <span>
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setSortedData();
+                  }}
+                >
                   검사날짜
                   <Sort />
                 </span>
@@ -232,7 +274,12 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                   영역
                   <Sort />
                 </span>
-                <span>
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setSortedData();
+                  }}
+                >
                   검사날짜
                   <Sort />
                 </span>

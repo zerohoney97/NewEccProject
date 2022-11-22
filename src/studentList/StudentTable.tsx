@@ -161,7 +161,7 @@ const Table = ({
                     );
                   }}
                 >
-                  <GotoInfo className="goto-info" />
+                  <GotoInfo style={{cursor:'pointer'}} className="goto-info" />
                 </Link>
               </TableBody>
             )

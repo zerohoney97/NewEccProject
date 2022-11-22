@@ -12,7 +12,7 @@ import {
   DropDownContentsSmallCategory,
 } from "./evaluationStyleComponent";
 import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
-import { postTestResultType } from "../util/Type";
+import { postTestScoreInResult } from "../util/Type";
 import { useDispatch, useSelector } from "react-redux";
 import PostTestTable from "./PostTestTable";
 import axios from "axios";
@@ -22,7 +22,7 @@ const PostTest = ({ isMobile }: { isMobile: boolean }) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
-const navigate=useNavigate();
+  const navigate = useNavigate();
 
   // 대영역
   const [bigToggle, setBigToggle] = useState<boolean>(false);
@@ -35,10 +35,10 @@ const navigate=useNavigate();
   const [tableData, setTableData] = useState<any>(null);
   const selectedBigCategory = useRef<any>();
   // 평가결과
-  const [postTestResult, setPostTestResult] = useState<postTestResultType[]>(
+  const [postTestResult, setPostTestResult] = useState<postTestScoreInResult[]>(
     []
   );
-
+  
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
       axios
@@ -299,16 +299,13 @@ const navigate=useNavigate();
             </BackButton>
             <NextButton
               onClick={() => {
-                let time = new Date();
-                let month = time.getMonth() + 1;
-                let currentTime =
-                  time.getFullYear() +
-                  "/" +
-                  month +
-                  "/" +
-                  time.getDate() +
-                  "/" +
-                  time.getHours();
+                let today = new Date();
+
+                let year = today.getFullYear();
+                let month = ("0" + (today.getMonth() + 1)).slice(-2);
+                let day = ("0" + today.getDate()).slice(-2);
+
+                let currentTime = year + "-" + month + "-" + day;
                 axios
                   .post(`${serverUrl}/putPostEccData`, {
                     result: postTestResult,
@@ -318,9 +315,9 @@ const navigate=useNavigate();
                     smallCategory: smallCategoryName,
                   })
                   .then((res) => {
-                    navigate('/studentList');
+                    navigate("/ ");
                   });
-                  navigate('/studentList');
+                navigate("/ ");
 
                 console.log(postTestResult);
               }}
@@ -420,16 +417,13 @@ const navigate=useNavigate();
             </BackButton>
             <NextButton
               onClick={() => {
-                let time = new Date();
-                let month = time.getMonth() + 1;
-                let currentTime =
-                  time.getFullYear() +
-                  "/" +
-                  month +
-                  "/" +
-                  time.getDate() +
-                  "/" +
-                  time.getHours();
+                let today = new Date();
+
+                let year = today.getFullYear();
+                let month = ("0" + (today.getMonth() + 1)).slice(-2);
+                let day = ("0" + today.getDate()).slice(-2);
+
+                let currentTime = year + "-" + month + "-" + day;
                 axios
                   .post(`${serverUrl}/putPostEccData`, {
                     result: postTestResult,
@@ -439,15 +433,14 @@ const navigate=useNavigate();
                     smallCategory: smallCategoryName,
                   })
                   .then((res) => {
-                    navigate('/studentList');
-                    
+                    navigate("/ ");
                   });
-                  navigate('/studentList');
-
+                navigate("/ ");
               }}
             >
               평가완료
             </NextButton>
+          
           </ButtonContainer>
         </PostTestContainer>
       )}

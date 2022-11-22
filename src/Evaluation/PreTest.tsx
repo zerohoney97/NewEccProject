@@ -20,7 +20,7 @@ const PreTest = ({ isMobile }: { isMobile: boolean }) => {
   const selectedStudentInformaion = useSelector((state: any) => {
     return state.studentInformation;
   });
-const navigate=useNavigate();
+  const navigate = useNavigate();
   // 대영역
   const [bigToggle, setBigToggle] = useState<boolean>(false);
   const [bigCategoryName, setBigCategoryName] = useState<string>("대항목");
@@ -240,14 +240,18 @@ const navigate=useNavigate();
     <>
       {isMobile ? (
         <PreTestContainer>
-           <h1>사전평가</h1>
-            <div style={{ alignSelf: "end",margin:'auto'}}>
-              <span style={{ color: "#999999" }}>반,이름:</span>
-              <span style={{ fontWeight: "bold" }}> {selectedStudentInformaion.attrClass},{selectedStudentInformaion.name}</span>
-              <span style={{ color: "#999999" }}> 대문항:</span>
-              <span style={{ fontWeight: "bold" }}> {bigCategoryName}</span>
-              <span style={{ color: "#999999" }}> 소문항:</span>
-              <span style={{ fontWeight: "bold" }}> {smallCategoryName}</span>
+          <h1>사전평가</h1>
+          <div style={{ alignSelf: "end", margin: "auto" }}>
+            <span style={{ color: "#999999" }}>반,이름:</span>
+            <span style={{ fontWeight: "bold" }}>
+              {" "}
+              {selectedStudentInformaion.attrClass},
+              {selectedStudentInformaion.name}
+            </span>
+            <span style={{ color: "#999999" }}> 대문항:</span>
+            <span style={{ fontWeight: "bold" }}> {bigCategoryName}</span>
+            <span style={{ color: "#999999" }}> 소문항:</span>
+            <span style={{ fontWeight: "bold" }}> {smallCategoryName}</span>
           </div>
           <div
             style={{
@@ -324,16 +328,13 @@ const navigate=useNavigate();
             </BackButton>
             <NextButton
               onClick={() => {
-                let time = new Date();
-                let month = time.getMonth() + 1;
-                let currentTime =
-                  time.getFullYear() +
-                  "/" +
-                  month +
-                  "/" +
-                  time.getDate() +
-                  "/" +
-                  time.getHours();
+                let today = new Date();
+
+                let year = today.getFullYear();
+                let month = ("0" + (today.getMonth() + 1)).slice(-2);
+                let day = ("0" + today.getDate()).slice(-2);
+
+                let currentTime = year + "-" + month + "-" + day;
                 axios
                   .post(`${serverUrl}/putPreEccData`, {
                     result: preTestResult,
@@ -343,10 +344,9 @@ const navigate=useNavigate();
                     smallCategory: smallCategoryName,
                   })
                   .then((res) => {
-                    navigate('/studentList');
-
+                    navigate("/ ");
                   });
-                navigate('/studentList');
+                navigate("/ ");
 
                 console.log(preTestResult);
               }}
@@ -359,14 +359,17 @@ const navigate=useNavigate();
         <PreTestContainer>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h1>사전평가</h1>
-            <div style={{ alignSelf: "end"}}>
+            <div style={{ alignSelf: "end" }}>
               <span style={{ color: "#999999" }}>반,이름:</span>
-              <span style={{ fontWeight: "bold" }}> {selectedStudentInformaion.attrClass},{selectedStudentInformaion.name}</span>
+              <span style={{ fontWeight: "bold" }}>
+                {selectedStudentInformaion.attrClass},
+                {selectedStudentInformaion.name}
+              </span>
               <span style={{ color: "#999999" }}> 대문항:</span>
               <span style={{ fontWeight: "bold" }}> {bigCategoryName}</span>
               <span style={{ color: "#999999" }}> 소문항:</span>
               <span style={{ fontWeight: "bold" }}> {smallCategoryName}</span>
-          </div>
+            </div>
           </div>
           <div
             style={{
@@ -443,16 +446,13 @@ const navigate=useNavigate();
             </BackButton>
             <NextButton
               onClick={() => {
-                let time = new Date();
-                let month = time.getMonth() + 1;
-                let currentTime =
-                  time.getFullYear() +
-                  "/" +
-                  month +
-                  "/" +
-                  time.getDate() +
-                  "/" +
-                  time.getHours();
+                let today = new Date();
+
+                let year = today.getFullYear();
+                let month = ("0" + (today.getMonth() + 1)).slice(-2);
+                let day = ("0" + today.getDate()).slice(-2);
+
+                let currentTime = year + "-" + month + "-" + day;
                 axios
                   .post(`${serverUrl}/putPreEccData`, {
                     result: preTestResult,
@@ -462,9 +462,9 @@ const navigate=useNavigate();
                     smallCategory: smallCategoryName,
                   })
                   .then((res) => {
-                    navigate('/studentList');
+                    navigate("/");
                   });
-                  navigate('/studentList');
+                navigate("/ ");
               }}
             >
               평가완료
