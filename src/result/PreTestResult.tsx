@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import NavBar from "../util/NavBar";
+import styled from "styled-components";
+
 import {
   PreTestContainer,
   ButtonContainer,
   BackButton,
+  NextButton,
 } from "../Evaluation/evaluationStyleComponent";
-import { ReactComponent as DropDownSVG } from "../Resource/svg/dropDown.svg";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PreTestResultTable from "./PreTestResultTable";
 import axios from "axios";
@@ -22,6 +24,20 @@ const PreTestResult = ({ isMobile }: { isMobile: boolean }) => {
   const bigCategory = searchParams.get("bigCategory");
   const smallCategory = searchParams.get("smallCategory");
   const date = searchParams.get("date");
+
+  const StyledLink = styled(Link)`
+    width: 30%;
+    border: 1px solid white;
+    background: #3763ff;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+
   const filterdResult = async (data: any) => {
     data.forEach((a: any) => {
       if (
@@ -53,12 +69,11 @@ const PreTestResult = ({ isMobile }: { isMobile: boolean }) => {
     <>
       {isMobile ? (
         <PreTestContainer>
-          <div style={{  justifyContent: "space-between" }}>
+          <div style={{ justifyContent: "space-between" }}>
             <h1>사전평가</h1>
             <div style={{ alignSelf: "end" }}>
               <span style={{ color: "#999999" }}>반,이름:</span>
               <span style={{ fontWeight: "bold" }}>
-                {" "}
                 {selectedStudentInformaion.attrClass},
                 {selectedStudentInformaion.name}
               </span>
@@ -129,6 +144,11 @@ const PreTestResult = ({ isMobile }: { isMobile: boolean }) => {
             >
               이전으로
             </BackButton>
+            <StyledLink
+              to={`/preTestResultCompare/${selectedStudentInformaion.studentUid}`}
+            >
+              <span>변화보기</span>
+            </StyledLink>
           </ButtonContainer>
         </PreTestContainer>
       )}

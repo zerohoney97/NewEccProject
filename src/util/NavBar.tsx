@@ -39,6 +39,7 @@ const NavBar = ({
   const dropDownContents = useRef<any>();
   const [toggle, setToggle] = useState<boolean>(false);
   const [isLogined, setIsLogined] = useState<boolean>(false);
+  const navBarContainer = useRef<any>(null);
   const teacherInfo = useSelector((state: any) => {
     return state.teacherInfo;
   });
@@ -68,6 +69,15 @@ const NavBar = ({
       })
     );
   };
+  const closeDropDown: any = useCallback(
+    (e: any) => {
+      if (!navBarContainer.current.contains(e.target)) {
+        setToggle((state) => false);
+      }
+    },
+    [toggle]
+  );
+
   const handleChange = useCallback(
     (e: any) => {
       setInputData(e.target.value);
@@ -76,11 +86,18 @@ const NavBar = ({
     [inputData]
   );
 
+  useEffect(() => {
+    window.addEventListener("click", closeDropDown);
+
+    return () => {
+      window.removeEventListener("click", closeDropDown);
+    };
+  });
   return (
     <>
       {isMobile ? (
         <>
-          <NavBarContainer>
+          <NavBarContainer ref={navBarContainer}>
             <Link to="/">
               <EccLogo style={{ width: 76, height: 30.74 }} />
             </Link>
@@ -139,7 +156,7 @@ const NavBar = ({
         </>
       ) : (
         <>
-          <NavBarContainer>
+          <NavBarContainer ref={navBarContainer}>
             <Link to="/">
               <EccLogo style={{ width: 76, height: 30.74 }} />
             </Link>

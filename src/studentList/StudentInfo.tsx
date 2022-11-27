@@ -37,15 +37,16 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   let tempArray: preTestResult[];
   // 사전/사후평가를 바꾸는 트리거
   const [trigger, setTrigger] = useState<string>("사전평가");
+  const container = useRef<any>(null);
   const studentInfo = useSelector((state: any) => {
     return state.studentInformation;
   });
-  // 빈공간 클릭시 닫기
-  const closeDropDown = useCallback(
+
+  // 빈공간 클릭시 닫기(middlecontainer 에 ref로 접근하고 이 안에 내가 클릭한 타겟이 있는지 유무를 따져 토글을 닫아버림)
+  const closeDropDown: any = useCallback(
     (e: any) => {
-      console.log(toggle);
-      if (toggle) {
-        setToggle(false);
+      if (!container.current.contains(e.target)) {
+        setToggle((state) => false);
       }
     },
     [toggle]
@@ -93,6 +94,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   // 시간순으로 정리하는 함수
   const sortByRecentDate = useCallback(
     async (preResult: preTestResult[], postResult: preTestResult[]) => {
+      console.log(toggle);
       return new Promise<any>((resolve) => {
         if (trigger === "사전평가") {
           tempArray = preResult.sort((a: preTestResult, b: preTestResult) => {
@@ -119,7 +121,6 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   };
   useEffect(() => {
     window.addEventListener("click", closeDropDown);
-
     setEccResultData();
 
     return () => {
@@ -137,7 +138,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
           <h1 style={{ display: "inline-block" }}>{studentInfo.name}</h1>
           <span>{studentInfo.attrClass} 반</span>
           <DivideLine />
-          <MiddleContainer>
+          <MiddleContainer ref={container}>
             <div
               style={{
                 display: "flex",
@@ -154,7 +155,6 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
                   setToggle(!toggle);
                 }}
               >
-                {trigger}
                 <DropDownSVG />
                 <DropDownContents toggle={toggle}>
                   <Content
@@ -178,11 +178,9 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
               <div style={{ display: "flex", justifyContent: "space-around" }}>
                 <span>
                   카테고리
-                  <Sort />
                 </span>
                 <span>
                   영역
-                  <Sort />
                 </span>
                 <span
                   style={{ cursor: "pointer" }}
@@ -227,7 +225,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
           <h1 style={{ display: "inline-block" }}>{studentInfo.name}</h1>
           <span>{studentInfo.attrClass} 반</span>
           <DivideLine />
-          <MiddleContainer>
+          <MiddleContainer ref={container}>
             <div
               style={{
                 display: "flex",
@@ -268,11 +266,9 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
               <div style={{ display: "flex", justifyContent: "space-around" }}>
                 <span>
                   카테고리
-                  <Sort />
                 </span>
                 <span>
                   영역
-                  <Sort />
                 </span>
                 <span
                   style={{ cursor: "pointer" }}

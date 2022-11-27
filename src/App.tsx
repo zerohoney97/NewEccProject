@@ -13,6 +13,7 @@ import StudentInfo from "./studentList/StudentInfo";
 import PreTest from "./Evaluation/PreTest";
 import PreTestResult from "./result/PreTestResult";
 import PostTestResult from "./result/PostTestResult";
+import CompareResult from "./result/CompareResult";
 import "./App.css";
 import PostTest from "./Evaluation/PostTest";
 import NavBar from "./util/NavBar";
@@ -89,6 +90,9 @@ function App() {
           path="/postTestResult/:uid"
           element={<PostTestResult isMobile={isMobile}></PostTestResult>}
         />
+        <Route
+        path="/preTestResultCompare/:uid"
+        element={<CompareResult isMobile={isMobile}></CompareResult>}/>
       </Routes>
     </div>
   );

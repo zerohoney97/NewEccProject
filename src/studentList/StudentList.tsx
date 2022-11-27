@@ -28,14 +28,13 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
   const callBackFunction = async (entries: any, observer: any) => {
     const [entry] = entries;
     if (entry.isIntersecting) {
-      console.log('as')
+      console.log("as");
       observer.unobserve(entry.target);
       // 관찰됐을 때 연속 실행을 막기 위해 동기 promise를 사용
       await promiseTimeOut().then(() => {
         setPage(page + 1);
       });
       observer.observe(entry.target);
-
     }
   };
 
@@ -48,10 +47,17 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
     setStudentList([...element]);
   };
 
+  // 학생이름 내림차순 정렬
+  const sortStudentByName = () => {
+    const tempArray = studentList.sort((a, b) => {
+      return a.name > b.name ? -1 : a.name < b.name ? 1 : 0;
+    });
+    setStudentList([...tempArray]);
+  };
   const teacherInfo = useSelector((state: any) => {
     return state.teacherInfo;
   });
-
+  console.log(studentList);
   useEffect(() => {
     axios
       .get(`${serverUrl}/getStudentInformationByTeacher`, {
@@ -93,15 +99,17 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
               학생리스트
             </h1>
             <StudentTableHead>
-              <span>
+            <span
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  sortStudentByName();
+                }}
+              >
                 이름
                 <Sort />
               </span>
               <span>생년월일</span>
-              <span>
-                평가날짜
-                <Sort />
-              </span>
+              <span>평가날짜</span>
               <div style={{ width: 30 }}></div>
             </StudentTableHead>
             {studentList !== null && (
@@ -140,18 +148,18 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
             </div>
 
             <StudentTableHead>
-              <span>
+              <span
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  sortStudentByName();
+                }}
+              >
                 이름
                 <Sort />
               </span>
-              <span>
-                반<Sort />
-              </span>
+              <span>반</span>
               <span>생년월일</span>
-              <span>
-                평가날짜
-                <Sort />
-              </span>
+              <span>평가날짜</span>
               <span>성별</span>
               <div style={{ width: 30 }}></div>
             </StudentTableHead>
