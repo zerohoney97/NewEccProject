@@ -13,7 +13,7 @@ import { useSearchParams } from "react-router-dom";
 import { serverUrl } from "../util/globalVariants";
 
 const CompareResult = ({ isMobile }: { isMobile: boolean }) => {
-  return <>성공</>;
+  return <>{isMobile ? <></> : <></>}</>;
 };
 
 export default CompareResult;

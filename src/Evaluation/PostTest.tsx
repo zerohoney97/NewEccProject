@@ -42,7 +42,7 @@ const PostTest = ({ isMobile }: { isMobile: boolean }) => {
   useEffect(() => {
     if (bigCategoryName !== "소항목" && smallCategoryName !== "소항목") {
       axios
-        .get(`${serverUrl}/getEccList`, {
+        .get(`/getEccList`, {
           params: { data: bigCategoryName + "/" + smallCategoryName },
         })
         .then((res) => {
@@ -307,7 +307,7 @@ const PostTest = ({ isMobile }: { isMobile: boolean }) => {
 
                 let currentTime = year + "-" + month + "-" + day;
                 axios
-                  .post(`${serverUrl}/putPostEccData`, {
+                  .post(`/putPostEccData`, {
                     result: postTestResult,
                     studentUid: selectedStudentInformaion.studentUid,
                     date: currentTime,
@@ -425,7 +425,7 @@ const PostTest = ({ isMobile }: { isMobile: boolean }) => {
 
                 let currentTime = year + "-" + month + "-" + day;
                 axios
-                  .post(`${serverUrl}/putPostEccData`, {
+                  .post(`/putPostEccData`, {
                     result: postTestResult,
                     studentUid: selectedStudentInformaion.studentUid,
                     date: currentTime,

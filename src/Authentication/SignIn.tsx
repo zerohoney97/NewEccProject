@@ -52,7 +52,7 @@ const SignIn = ({ isMobile }: { isMobile: boolean }) => {
     signInWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
         axios
-          .get(`${serverUrl}/getTeacherInformation`, {
+          .get(`/getTeacherInformation`, {
             params: { uid: userCredential.user.uid },
           })
           .then((result: any) => {
@@ -61,7 +61,7 @@ const SignIn = ({ isMobile }: { isMobile: boolean }) => {
               name: result.data.name,
             };
             dispatch(setTeacherUidAndName(information));
-            navigate("/studentList");
+            navigate("/");
           });
       })
       .catch((error) => {

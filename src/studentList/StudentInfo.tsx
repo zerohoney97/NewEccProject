@@ -56,7 +56,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   const getStudentPreEvaluationData = async () => {
     return new Promise<void>((resolve) => {
       axios
-        .get(`${serverUrl}/getStudentPreEvaluationData`, {
+        .get(`/getStudentPreEvaluationData`, {
           params: { studentData: studentInfo },
         })
         .then((res) => {
@@ -69,7 +69,7 @@ const StudentInfo = ({ isMobile }: { isMobile: boolean }) => {
   const getStudentPostEvaluationData = () => {
     return new Promise<void>((resolve) => {
       axios
-        .get(`${serverUrl}/getStudentPostEvaluationData`, {
+        .get(`/getStudentPostEvaluationData`, {
           params: { studentData: studentInfo },
         })
         .then((res) => {
