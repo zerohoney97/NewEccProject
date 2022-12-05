@@ -54,7 +54,7 @@ const PreTestResult = ({ isMobile }: { isMobile: boolean }) => {
   useEffect(() => {
     // 학생의 사전평가 정보를 불러옴
     axios
-      .get(`/getStudentPreEvaluationData`, {
+      .get(`${serverUrl}/getStudentPreEvaluationData`, {
         params: { studentData: selectedStudentInformaion },
       })
       .then((res) => {

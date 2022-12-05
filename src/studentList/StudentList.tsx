@@ -60,7 +60,7 @@ const StudentList = ({ isMobile }: { isMobile: boolean }) => {
   console.log(studentList);
   useEffect(() => {
     axios
-      .get(`/getStudentInformationByTeacher`, {
+      .get(`${serverUrl}/getStudentInformationByTeacher`, {
         params: { data: teacherInfo.uid },
       })
       .then((result) => {

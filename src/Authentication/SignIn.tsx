@@ -52,7 +52,7 @@ const SignIn = ({ isMobile }: { isMobile: boolean }) => {
     signInWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
         axios
-          .get(`/getTeacherInformation`, {
+          .get(`${serverUrl}/getTeacherInformation`, {
             params: { uid: userCredential.user.uid },
           })
           .then((result: any) => {

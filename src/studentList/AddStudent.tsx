@@ -35,7 +35,7 @@ const AddStudent = ({ isMobile }: { isMobile: boolean }) => {
 
   //   then이 안 먹혀서 쓰는 함수
   const postDataToDB = async () => {
-    await axios.post(`/addStudent`, {
+    await axios.post(`${serverUrl}/addStudent`, {
       attrClass: attrClass.current.value,
       birth: birth.current.value,
       gender: gender.current.value,

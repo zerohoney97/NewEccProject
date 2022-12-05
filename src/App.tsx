@@ -21,6 +21,7 @@ import AddStudent from "./studentList/AddStudent";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { studentList } from "./util/Type";
+import {serverUrl} from './util/globalVariants'
 
 function App() {
   const [studentList, setStudentList] = useState<studentList[]>([]);
@@ -28,7 +29,7 @@ function App() {
     return state.teacherInfo.uid;
   });
   useEffect(() => {
-    axios.get("/getStudent").then((res) => {
+    axios.get(`${serverUrl}/getStudent`).then((res) => {
       let tempArray = res.data.filter((a: any) => {
         return a.uid === teacherUid;
       });

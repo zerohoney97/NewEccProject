@@ -43,7 +43,7 @@ const FindUserEmail = ({ isMobile }: { isMobile: boolean }) => {
         style={{ marginTop: 30 }}
         onClick={() => {
           axios
-            .get(`/getTeacherEmail`, {
+            .get(`${serverUrl}/getTeacherEmail`, {
               params: {
                 name: name.current.value,
                 birth: birth.current.value,

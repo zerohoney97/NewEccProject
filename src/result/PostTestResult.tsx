@@ -25,7 +25,7 @@ const PostTestResult = ({ isMobile }: { isMobile: boolean }) => {
   useEffect(() => {
     // 학생의 사전평가 정보를 불러옴
     axios
-      .get(`/getStudentPostEvaluationData`, {
+      .get(`${serverUrl}/getStudentPostEvaluationData`, {
         params: { studentData: selectedStudentInformaion },
       })
       .then((res) => {

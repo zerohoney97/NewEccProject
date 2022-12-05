@@ -65,7 +65,7 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
   const birth = useRef<any>(null);
 
   useEffect(() => {
-    axios.get(`/getTeacher`).then((res) => {
+    axios.get(`${serverUrl}/getTeacher`).then((res) => {
       setTeacherNames((state: string[]) => {
         return res.data.map((a: any) => {
           return a.name;
@@ -219,7 +219,7 @@ const SignUp = ({ isMobile }: { isMobile: boolean }) => {
                 const user = userCredential.user;
                 console.log(user);
                 window.location.href = "/studentList";
-                axios.post(`/doingSignUp`, {
+                axios.post(`${serverUrl}/doingSignUp`, {
                   name: userName.current.value,
                   birth: birth.current.value,
                   email: email.current.value,

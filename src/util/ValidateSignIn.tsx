@@ -34,7 +34,7 @@ const ValidateSignIn = () => {
 
         let uid = user.uid;
         axios
-          .get(`/getTeacherInformation`, { params: { uid: uid } })
+          .get(`${serverUrl}/getTeacherInformation`, { params: { uid: uid } })
           .then((result) => {
             const information = {
               uid: uid,
